@@ -9,13 +9,11 @@ void main() {
 }
 
 class EurekaLearn extends StatelessWidget {
-  final mode;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "EurekaLearn",
-      themeMode: isdark() ? ThemeMode.dark : ThemeMode.system,
       theme: ThemeData(
           primaryColorBrightness: Brightness.light,
           primaryColorDark: Colors.black,
@@ -47,10 +45,22 @@ class _HomeState extends State<Home> {
     return Scaffold(
         drawer: AppDrawer(),
         body: Center(
-            child: FutureBuilder<bool>(
-                future: Storage.getDarkmode(),
-                builder: (context, mode) => Switch(
-                    value: mode.data ?? false,
-                    onChanged: (value) => Storage.setDarkmode(value)))));
+            child: ListView(
+          children: _items.map((widget) => widget).toList()
+            ..followedBy(_followed.map((widget) => widget)),
+        )));
   }
 }
+
+List<Widget> _items = [
+  Text("Lorem ipsum"),
+  Text("Lorem ipsum"),
+  Text("Lorem ipsum"),
+  Text("Lorem ipsum"),
+  Text("Lorem ipsum"),
+];
+List<Widget> _followed = [
+  Container(
+    child: Center(child: Text("followed by")),
+  )
+];
