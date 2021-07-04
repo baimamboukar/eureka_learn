@@ -5,6 +5,8 @@ class Palette {
   static Color secondary = Colors.orange;
   static Color success = Colors.lightGreenAccent;
   static Color error = Colors.redAccent;
+  static Color light = Colors.white;
+  static Color dark = Colors.black;
   static LinearGradient linearGradient = LinearGradient(colors: [
     Colors.blue,
     Colors.blue.withOpacity(0.7),
