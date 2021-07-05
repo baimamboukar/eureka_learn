@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -77,22 +79,19 @@ class _HomeState extends State<Home> {
         body: CustomScrollView(slivers: [
           SliverToBoxAdapter(
             child: Container(
-                height: Screen.height(context) * 0.20,
+                height: Screen.height(context) * 0.25,
                 decoration: BoxDecoration(
-                    gradient: Palette.linearGradient,
+                    //gradient: Palette.linearGradient,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0))),
                 child: Column(
                   children: [
                     Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CircleAvatar(
-                                child: Text("🙎",
-                                    style: TextStyle(fontSize: 22.0))),
                             Text.rich(TextSpan(text: "Hi, ", children: [
                               TextSpan(
                                   text: "Zarathustra",
@@ -102,7 +101,44 @@ class _HomeState extends State<Home> {
                                   )),
                             ]))
                           ],
-                        ))
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 4.0),
+                      child: TextFormField(
+                          autofocus: false,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 3,
+                          maxLength: 1000,
+                          decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Palette.primary, width: 1),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Palette.primary, width: 0.50),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              prefix: Text("✍️"),
+                              filled: true,
+                              fillColor: Colors.grey.shade200)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                        children: [
+                          ActionButton(
+                              label: "add file",
+                              icon: Text("🖇️"),
+                              callback: () => print("exporting...")),
+                          const SizedBox(width: 10.0),
+                          ActionButton(
+                              label: "add photo",
+                              icon: Icon(LineIcons.photoVideo),
+                              callback: () => print("exporting..."))
+                        ],
+                      ),
+                    )
                   ],
                 )),
           ),
