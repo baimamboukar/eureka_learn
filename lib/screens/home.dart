@@ -6,23 +6,18 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Browsing by categories..."),
-        )),
-        SliverToBoxAdapter(
-          child: Container(
-              height: 55.0,
-              child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children:
-                      subjects.map((label) => Label(model: label)).toList())),
-        ),
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        Text("Pyooooooooooooki"),
+        Container(
+            height: 55.0,
+            child: ListView(
+                scrollDirection: Axis.horizontal,
+                children:
+                    subjects.map((label) => Label(model: label)).toList()))
       ],
-    );
+    ));
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:eureka_learn/screens/login.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

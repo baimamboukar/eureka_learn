@@ -72,75 +72,37 @@ class Home extends HookWidget {
     final navigationIndex = useProvider(navigationIndexProvider);
 
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(LineIcons.tasks), onPressed: () => print("move")),
-            title: Logo(),
-            actions: [
-              IconButton(
-                icon: Icon(LineIcons.bell),
-                onPressed: () => print("we move"),
-              ),
-            ]),
-        drawer: AppDrawer(),
-        body: Scaffold(
-          body: AnimatedSwitcher(
-            duration: Duration(milliseconds: 1200),
-            transitionBuilder: (child, animation) => ScaleTransition(
-              scale: animation,
-              child: Expanded(
-                child: IndexedStack(
-                  key: ValueKey<int>(navigationIndex.state),
-                  index: navigationIndex.state,
-                  children: [Logo(), Home()],
-                ),
-              ),
+      key: _scaffoldKey,
+      appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(LineIcons.tasks), onPressed: () => print("move")),
+          title: Logo(),
+          actions: [
+            IconButton(
+              icon: Icon(LineIcons.bell),
+              onPressed: () => print("we move"),
             ),
-            child: IndexedStack(
-              key: ValueKey<int>(navigationIndex.state),
-              index: navigationIndex.state,
-              children: [
-                IndexedStack(
-                  index: navigationIndex.state,
-                  children: [Logo(), Home()],
-                ),
-              ],
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: navigationIndex.state,
-            onTap: (index) {
-              navigationIndex.state = index;
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Text("📚"), label: "Home", tooltip: "news and feed"),
-              BottomNavigationBarItem(
-                  icon: Text("🔥"),
-                  label: "Questions",
-                  tooltip: "news and feed"),
-              BottomNavigationBarItem(
-                  icon: Text("📚"), label: "Quizz", tooltip: "news and feed"),
-              BottomNavigationBarItem(
-                  icon: Text("🔥"), label: "Grow", tooltip: "news and feed"),
-            ],
-          ),
-        ));
+          ]),
+      drawer: AppDrawer(),
+      body: screens[navigationIndex.state],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationIndex.state,
+        onTap: (index) {
+          navigationIndex.state = index;
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Text("📚"), label: "Home", tooltip: "news and feed"),
+          BottomNavigationBarItem(
+              icon: Text("🔥"), label: "Questions", tooltip: "news and feed"),
+          BottomNavigationBarItem(
+              icon: Text("📚"), label: "Quizz", tooltip: "news and feed"),
+          BottomNavigationBarItem(
+              icon: Text("🔥"), label: "Grow", tooltip: "news and feed"),
+        ],
+      ),
+    );
   }
 }
 
-List<LabelModel> subjects = [
-  LabelModel(title: "All", iconPath: "🔥", active: false),
-  LabelModel(title: "Chemestry", iconPath: "🌡️", active: false),
-  LabelModel(title: "Geography", iconPath: "🌍", active: false),
-  LabelModel(title: "Biology", iconPath: "🔬", active: false),
-  LabelModel(title: "Maths", iconPath: "📈", active: false),
-  LabelModel(title: "Csc", iconPath: "💻", active: false),
-  LabelModel(title: "Physics", iconPath: "🚀", active: false),
-  LabelModel(title: "Philosophy", iconPath: "📚", active: false),
-];
-
-List<Widget> screens = [
-  Home(),
-];
+List<Widget> screens = [Home(), Logo(), Home(), Logo()];
