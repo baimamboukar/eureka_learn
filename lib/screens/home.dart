@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -85,13 +88,15 @@ class All extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
             height: 110.0,
-            child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: Colors.primaries
-                    .map((color) => SubjectBox(
-                          color: color,
-                        ))
-                    .toList())),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: subjects.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: subjectsBox[index]);
+              },
+            )),
       ))
     ]);
   }
@@ -106,6 +111,30 @@ List<LabelModel> subjects = [
   LabelModel(title: "Csc", iconPath: "💻", active: false),
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
+];
+
+var imagesRoot = "assets/icons/png";
+List<SubjectBox> subjectsBox = [
+  SubjectBox(
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      subject: "Chemestry",
+      imagePath: "$imagesRoot/chemestry.png"),
+  SubjectBox(
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      subject: "Maths",
+      imagePath: "$imagesRoot/maths.png"),
+  SubjectBox(
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      subject: "Biology",
+      imagePath: "$imagesRoot/biology.png"),
+  SubjectBox(
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      subject: "Geography",
+      imagePath: "$imagesRoot/geography.png"),
+  SubjectBox(
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      subject: "Philosophy",
+      imagePath: "$imagesRoot/philosophy.png"),
 ];
 // Container(
 //             height: 55.0,

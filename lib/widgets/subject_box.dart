@@ -11,14 +11,33 @@ class SubjectBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
-      width: 100.0,
-      decoration: BoxDecoration(
+        height: 100.0,
+        width: 100.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: [
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(subject ?? "subject")),
+              Align(
+                  alignment: Alignment.topCenter,
+                  child: Image(
+                      height: 60.0,
+                      image: AssetImage(
+                          imagePath ?? "assets/icons/png/chemestry.png")))
+            ],
+          ),
+        ),
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 1.0,
+              color: Colors.white54,
+            )
+          ],
           gradient: Palette.gradientWith(color ?? Colors.blue),
-          image: DecorationImage(
-              image:
-                  AssetImage(imagePath ?? "assets/icons/png/chemestry.png"))),
-    );
+        ));
   }
 }
