@@ -89,20 +89,22 @@ class Home extends HookWidget {
             duration: Duration(milliseconds: 1200),
             transitionBuilder: (child, animation) => ScaleTransition(
               scale: animation,
-              child: IndexedStack(
-                key: ValueKey<int>(navigationIndex.state),
-                index: navigationIndex.state,
-                children: [Logo()],
+              child: Expanded(
+                child: IndexedStack(
+                  key: ValueKey<int>(navigationIndex.state),
+                  index: navigationIndex.state,
+                  children: [Logo(), Home()],
+                ),
               ),
             ),
             child: IndexedStack(
               key: ValueKey<int>(navigationIndex.state),
               index: navigationIndex.state,
               children: [
-                Scaffold(body: Center(child: Logo())),
-                Scaffold(body: Center(child: Logo())),
-                Scaffold(body: Center(child: Logo())),
-                Scaffold(body: Center(child: Logo()))
+                IndexedStack(
+                  index: navigationIndex.state,
+                  children: [Logo(), Home()],
+                ),
               ],
             ),
           ),
@@ -127,3 +129,18 @@ class Home extends HookWidget {
         ));
   }
 }
+
+List<LabelModel> subjects = [
+  LabelModel(title: "All", iconPath: "🔥", active: false),
+  LabelModel(title: "Chemestry", iconPath: "🌡️", active: false),
+  LabelModel(title: "Geography", iconPath: "🌍", active: false),
+  LabelModel(title: "Biology", iconPath: "🔬", active: false),
+  LabelModel(title: "Maths", iconPath: "📈", active: false),
+  LabelModel(title: "Csc", iconPath: "💻", active: false),
+  LabelModel(title: "Physics", iconPath: "🚀", active: false),
+  LabelModel(title: "Philosophy", iconPath: "📚", active: false),
+];
+
+List<Widget> screens = [
+  Home(),
+];
