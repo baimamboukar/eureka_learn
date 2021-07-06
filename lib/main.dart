@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +68,17 @@ class EurekaLearn extends StatelessWidget {
 
 GlobalKey _scaffoldKey = GlobalKey();
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
+List<LabelModel> subjects = [
+  LabelModel(title: "All", iconPath: "🔥", active: false),
+  LabelModel(title: "Chemestry", iconPath: "🌡️", active: false),
+  LabelModel(title: "Geography", iconPath: "🌍", active: false),
+  LabelModel(title: "Biology", iconPath: "🔬", active: false),
+  LabelModel(title: "Maths", iconPath: "📈", active: false),
+  LabelModel(title: "Csc", iconPath: "💻", active: false),
+  LabelModel(title: "Physics", iconPath: "🚀", active: false),
+  LabelModel(title: "Philosophy", iconPath: "📚", active: false),
+];
+List<Widget> _screens = [All(), Logo(), All(), Logo()];
 
 class Home extends HookWidget {
   @override
@@ -84,7 +98,20 @@ class Home extends HookWidget {
             ),
           ]),
       drawer: AppDrawer(),
-      body: screens[navigationIndex.state],
+      body: AnimatedSwitcher(
+        duration: Duration(milliseconds: 100),
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: IndexedStack(
+              key: ValueKey<int>(navigationIndex.state),
+              index: navigationIndex.state,
+              children: [All(), Logo(), All(), Logo()]),
+        ),
+        child: IndexedStack(
+            key: ValueKey<int>(navigationIndex.state),
+            index: navigationIndex.state,
+            children: [All(), Logo(), All(), Logo()]),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationIndex.state,
         onTap: (index) {
@@ -104,5 +131,3 @@ class Home extends HookWidget {
     );
   }
 }
-
-List<Widget> screens = [Home(), Logo(), Home(), Logo()];
