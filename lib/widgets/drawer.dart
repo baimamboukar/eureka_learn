@@ -21,12 +21,42 @@ class AppDrawer extends StatelessWidget {
           accountEmail: Text("eureka.learn@admin.cm"),
           accountName: Text("Alpha admin"),
         ),
-        ListTile(
-            onTap: () => Get.to(() => Login()),
-            leading: Icon(LineIcons.userShield),
-            title: Text("Authentication"),
-            trailing: Icon(LineIcons.angleRight))
+        for (var item in items..shuffle()) item
       ],
     ))));
+  }
+}
+
+List<DrawerItem> items = [
+  DrawerItem(
+      icon: Icon(LineIcons.themeco),
+      label: "Settings",
+      destination: FlutterLogo()),
+  DrawerItem(
+      icon: Icon(LineIcons.themeco),
+      label: "Profile",
+      destination: FlutterLogo()),
+  DrawerItem(
+      icon: Icon(LineIcons.medal),
+      label: "Challenges",
+      destination: FlutterLogo()),
+  DrawerItem(
+      icon: Icon(LineIcons.star), label: "Rate us", destination: FlutterLogo()),
+];
+
+class DrawerItem extends StatelessWidget {
+  final Widget? icon;
+  final String label;
+  final Widget? destination;
+  const DrawerItem({Key? key, this.icon, required this.label, this.destination})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        onTap: () => Get.to(() => destination),
+        leading: icon,
+        title: Text(label),
+        trailing: Icon(LineIcons.angleRight));
   }
 }
