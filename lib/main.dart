@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -78,7 +76,7 @@ List<LabelModel> subjects = [
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
-List<Widget> _screens = [All(), Logo(), All(), Logo()];
+List<Widget> _screens = [All(), Logo(withIcon: true), All(), Logo(withIcon: true)];
 
 class Home extends HookWidget {
   @override
@@ -91,7 +89,7 @@ class Home extends HookWidget {
           leading: IconButton(
               icon: Icon(LineIcons.tasks),
               onPressed: () => Scaffold.of(context).openDrawer),
-          title: Logo(),
+          title: Logo(withIcon: true,),
           actions: [
             IconButton(
               icon: Icon(LineIcons.bell),
@@ -111,7 +109,7 @@ class Home extends HookWidget {
         child: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
-            children: [All(), Logo(), All(), Logo()]),
+            children: [All(), Logo(withIcon: true), All(), Logo(withIcon: true)]),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationIndex.state,

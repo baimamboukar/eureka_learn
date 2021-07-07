@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,10 @@ List<DrawerItem> items = [
       label: "Settings",
       destination: FlutterLogo()),
   DrawerItem(
+      icon: Icon(LineIcons.identificationBadge),
+      label: "Authentication",
+      destination: Welcome()),
+  DrawerItem(
       icon: Icon(LineIcons.themeco),
       label: "Profile",
       destination: FlutterLogo()),
@@ -53,7 +58,7 @@ class DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        onTap: () => Get.to(() => destination),
+        onTap: () => Get.to(() => destination ?? FlutterLogo()),
         leading: icon,
         title: Text(label),
         trailing: Icon(LineIcons.angleRight));
