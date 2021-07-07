@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Palette {
@@ -14,4 +16,7 @@ class Palette {
   ]);
   static LinearGradient gradientWith(Color color) => LinearGradient(
       colors: [color, color.withOpacity(0.5), color.withAlpha(100)]);
+
+  static Color randomColor() =>
+      Colors.primaries[Random().nextInt(Colors.primaries.length)];
 }

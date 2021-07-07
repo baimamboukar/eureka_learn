@@ -46,7 +46,6 @@ class _PosterState extends State<Poster> {
                   autofocus: false,
                   keyboardType: TextInputType.multiline,
                   maxLines: 3,
-                  maxLength: 1000,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide:

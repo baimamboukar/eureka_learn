@@ -90,7 +90,7 @@ class All extends StatelessWidget {
             height: 110.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: subjects.length,
+              itemCount: subjectsBox.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -116,23 +116,23 @@ List<LabelModel> subjects = [
 var imagesRoot = "assets/icons/png";
 List<SubjectBox> subjectsBox = [
   SubjectBox(
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: Palette.randomColor(),
       subject: "Chemestry",
       imagePath: "$imagesRoot/chemestry.png"),
   SubjectBox(
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: Palette.randomColor(),
       subject: "Maths",
       imagePath: "$imagesRoot/maths.png"),
   SubjectBox(
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: Palette.randomColor(),
       subject: "Biology",
       imagePath: "$imagesRoot/biology.png"),
   SubjectBox(
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: Palette.randomColor(),
       subject: "Geography",
       imagePath: "$imagesRoot/geography.png"),
   SubjectBox(
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: Palette.randomColor(),
       subject: "Philosophy",
       imagePath: "$imagesRoot/philosophy.png"),
 ];

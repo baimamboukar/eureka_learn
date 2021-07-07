@@ -89,7 +89,8 @@ class Home extends HookWidget {
       key: _scaffoldKey,
       appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineIcons.tasks), onPressed: () => print("move")),
+              icon: Icon(LineIcons.tasks),
+              onPressed: () => Scaffold.of(context).openDrawer),
           title: Logo(),
           actions: [
             IconButton(
@@ -100,13 +101,13 @@ class Home extends HookWidget {
       drawer: AppDrawer(),
       body: AnimatedSwitcher(
         duration: Duration(milliseconds: 100),
-        transitionBuilder: (child, animation) => FadeTransition(
-          opacity: animation,
-          child: IndexedStack(
-              key: ValueKey<int>(navigationIndex.state),
-              index: navigationIndex.state,
-              children: [All(), Logo(), All(), Logo()]),
-        ),
+        // transitionBuilder: (child, animation) => FadeTransition(
+        //   opacity: animation,
+        //   child: IndexedStack(
+        //       key: ValueKey<int>(navigationIndex.state),
+        //       index: navigationIndex.state,
+        //       children: [All(), Logo(), All(), Logo()]),
+        // ),
         child: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
@@ -119,15 +120,17 @@ class Home extends HookWidget {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Text("📚"), label: "Home", tooltip: "news and feed"),
+              icon: Text("✨"), label: "Trending", tooltip: "news and feed"),
           BottomNavigationBarItem(
-              icon: Text("🔥"), label: "Questions", tooltip: "news and feed"),
+              icon: Text("🚀"), label: "Quizz", tooltip: "news and feed"),
           BottomNavigationBarItem(
-              icon: Text("📚"), label: "Quizz", tooltip: "news and feed"),
+              icon: Text("📚"), label: "Library", tooltip: "news and feed"),
           BottomNavigationBarItem(
-              icon: Text("🔥"), label: "Grow", tooltip: "news and feed"),
+              icon: Text("🤼‍♂️"), label: "Friends", tooltip: "news and feed"),
         ],
       ),
     );
   }
 }
+
+var emo = "✨🎫🎖🏅🥉🥈🥇🤼‍♂️📖🍁🚀🌝⚡";
