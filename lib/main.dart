@@ -76,7 +76,12 @@ List<LabelModel> subjects = [
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
-List<Widget> _screens = [All(), Logo(withIcon: true), All(), Logo(withIcon: true)];
+List<Widget> _screens = [
+  All(),
+  Logo(withIcon: true),
+  Library(),
+  Logo(withIcon: true)
+];
 
 class Home extends HookWidget {
   @override
@@ -89,7 +94,9 @@ class Home extends HookWidget {
           leading: IconButton(
               icon: Icon(LineIcons.tasks),
               onPressed: () => Scaffold.of(context).openDrawer),
-          title: Logo(withIcon: true,),
+          title: Logo(
+            withIcon: true,
+          ),
           actions: [
             IconButton(
               icon: Icon(LineIcons.bell),
@@ -109,7 +116,12 @@ class Home extends HookWidget {
         child: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
-            children: [All(), Logo(withIcon: true), All(), Logo(withIcon: true)]),
+            children: [
+              All(),
+              Logo(withIcon: true),
+              Library(),
+              Logo(withIcon: true)
+            ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationIndex.state,

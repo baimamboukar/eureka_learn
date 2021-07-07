@@ -33,8 +33,8 @@ class SubjectBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           boxShadow: [
             BoxShadow(
-              blurRadius: 1.0,
-              color: Colors.white54,
+              blurRadius: 2.0,
+              color: Colors.white30,
             )
           ],
           gradient: Palette.gradientWith(color ?? Colors.blue),

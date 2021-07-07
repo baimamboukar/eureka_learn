@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final String label;
-  final Function? callback;
-  const Button({Key? key, required this.label, this.callback})
+  final Function callback;
+  const Button({Key? key, required this.label, required this.callback})
       : super(key: key);
 
   @override
@@ -15,8 +15,9 @@ class Button extends StatelessWidget {
       child: Container(
           width: Screen.width(context) * 0.45,
           height: 40.0,
-          decoration: BoxDecoration(
-              color: Palette.light, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(spreadRadius: .1, blurRadius: 10, color: Palette.light)
+          ], color: Palette.light, borderRadius: BorderRadius.circular(20.0)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [Text(label)],

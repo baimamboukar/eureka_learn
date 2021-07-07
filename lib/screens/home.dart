@@ -112,29 +112,28 @@ List<LabelModel> subjects = [
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
-
-var imagesRoot = "assets/icons/png";
+var imagesRosot = "assets/icons/png";
 List<SubjectBox> subjectsBox = [
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Chemestry",
-      imagePath: "$imagesRoot/chemestry.png"),
+      imagePath: "$imagesRosot/chemestry.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Maths",
-      imagePath: "$imagesRoot/maths.png"),
+      imagePath: "$imagesRosot/maths.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Biology",
-      imagePath: "$imagesRoot/biology.png"),
+      imagePath: "$imagesRosot/biology.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Geography",
-      imagePath: "$imagesRoot/geography.png"),
+      imagePath: "$imagesRosot/geography.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Philosophy",
-      imagePath: "$imagesRoot/philosophy.png"),
+      imagePath: "$imagesRosot/philosophy.png"),
 ];
 // Container(
 //             height: 55.0,
