@@ -97,7 +97,11 @@ class All extends StatelessWidget {
                     child: subjectsBox[index]);
               },
             )),
-      ))
+      )),
+      SliverList(
+        delegate: SliverChildListDelegate.fixed(
+            posts.map((post) => Post(model: post)).toList()),
+      )
     ]);
   }
 }
@@ -124,10 +128,79 @@ List<SubjectBox> subjectsBox = [
       color: Palette.randomColor(),
       subject: "Philosophy",
       imagePath: "$imagesRosot/philosophy.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Physics",
+      imagePath: "$imagesRosot/atom.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Csc",
+      imagePath: "$imagesRosot/atom.png"),
 ];
-// Container(
-//             height: 55.0,
-//             child: ListView(
-//                 scrollDirection: Axis.horizontal,
-//                 children:
-//                     subjects.map((label) => Label(model: label)).toList())),
+
+List<PostModel> posts = [
+  PostModel(
+      withPicture: true,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "2 days",
+      postOwner: "Zarathustra nion",
+      comments: ["Waouh", "Meme situation"],
+      likesCount: 41,
+      tags: ["Maths", "Trigonometry", "sciences", "exam"]),
+  PostModel(
+      withPicture: false,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "30 min ago",
+      postOwner: "Bloomeureka",
+      comments: ["comme ci comme ca", "Por favor"],
+      likesCount: 20,
+      tags: ["Java", "Life"]),
+  PostModel(
+      withPicture: true,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "2 days",
+      postOwner: "Zarathustra nion",
+      comments: ["Waouh", "Meme situation"],
+      likesCount: 41,
+      tags: ["Geo", "Maths"]),
+  PostModel(
+      withPicture: false,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "30 min ago",
+      postOwner: "Bloomeureka",
+      comments: ["comme ci comme ca", "Por favor"],
+      likesCount: 20,
+      tags: ["Java", "data structures", "arrays", "sorting"]),
+  PostModel(
+      withPicture: true,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "2 days",
+      postOwner: "Zarathustra nion",
+      comments: ["Waouh", "Meme situation"],
+      likesCount: 41,
+      tags: ["Geo", "Maths"]),
+  PostModel(
+      withPicture: false,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "30 min ago",
+      postOwner: "Bloomeureka",
+      comments: ["comme ci comme ca", "Por favor"],
+      likesCount: 20,
+      tags: ["Java", "Life"]),
+  PostModel(
+      withPicture: true,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "2 days",
+      postOwner: "Zarathustra nion",
+      comments: ["Waouh", "Meme situation"],
+      likesCount: 41,
+      tags: ["Geo", "Maths"]),
+  PostModel(
+      withPicture: false,
+      picturePath: "assets/icons/png/biology.png",
+      timeAgo: "30 min ago",
+      postOwner: "Bloomeureka",
+      comments: ["comme ci comme ca", "Por favor"],
+      likesCount: 20,
+      tags: ["Java", "Life"]),
+];

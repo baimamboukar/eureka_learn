@@ -99,6 +99,10 @@ class Home extends HookWidget {
           ),
           actions: [
             IconButton(
+              icon: Icon(LineIcons.search),
+              onPressed: () => print("we move"),
+            ),
+            IconButton(
               icon: Icon(LineIcons.bell),
               onPressed: () => print("we move"),
             ),
@@ -127,11 +131,15 @@ class Home extends HookWidget {
           BottomNavigationBarItem(
               icon: Text("✨"), label: "Trending", tooltip: "news and feed"),
           BottomNavigationBarItem(
-              icon: Text("🚀"), label: "Quizz", tooltip: "news and feed"),
+              icon: Text("🎖"), label: "Quizz", tooltip: "Evaluate yourself"),
           BottomNavigationBarItem(
-              icon: Text("📚"), label: "Library", tooltip: "news and feed"),
+              icon: Text("📚"),
+              label: "Library",
+              tooltip: "Thousand of ressources at your disposal"),
           BottomNavigationBarItem(
-              icon: Text("🤼‍♂️"), label: "Friends", tooltip: "news and feed"),
+              icon: Text("🤼‍♂️📖"),
+              label: "Classes",
+              tooltip: "learn and grow together"),
         ],
       ),
     );

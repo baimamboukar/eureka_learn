@@ -11,8 +11,8 @@ class SubjectBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 100.0,
-        width: 100.0,
+        height: 80.0,
+        width: 90.0,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Stack(
@@ -23,7 +23,7 @@ class SubjectBox extends StatelessWidget {
               Align(
                   alignment: Alignment.topCenter,
                   child: Image(
-                      height: 60.0,
+                      height: 50.0,
                       image: AssetImage(
                           imagePath ?? "assets/icons/png/chemestry.png")))
             ],

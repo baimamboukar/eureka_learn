@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
@@ -16,6 +17,9 @@ class AppDrawer extends StatelessWidget {
                 child: ListView(
       children: [
         UserAccountsDrawerHeader(
+          otherAccountsPictures: [
+            Logo(withIcon: true),
+          ],
           decoration: BoxDecoration(gradient: Palette.linearGradient),
           margin: null,
           accountEmail: Text("eureka.learn@admin.cm"),

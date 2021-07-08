@@ -32,12 +32,21 @@ class Welcome extends StatelessWidget {
                 const SizedBox(height: 5.0),
                 Text("Hack your success now and future proof yourself"),
                 const SizedBox(height: 30.0),
-                Button(label: "SignIn 🛡", callbackDestination: Login()),
+                GestureDetector(
+                  onTap: () => Get.to(() => Login()),
+                  child: Button(
+                    color: Palette.light,
+                    label: "Login 🛡",
+                  ),
+                ),
                 const SizedBox(height: 15.0),
-                InkWell(
-                    onTap: () => Get.to(() => Login()),
-                    child: Button(
-                        label: "Login 🛡", callbackDestination: Login())),
+                GestureDetector(
+                  onTap: () => Get.to(() => Login()),
+                  child: Button(
+                    color: Palette.light,
+                    label: "SignUp 🛡",
+                  ),
+                ),
                 const SizedBox(height: 100.0),
                 Text("You can quick login using touch ID 😉"),
                 const SizedBox(height: 10.0),
