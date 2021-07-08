@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
   final bool withIcon;
-  const Logo({Key? key, required this.withIcon}) : super(key: key);
+  final double? size;
+  const Logo({Key? key, required this.withIcon, this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class Logo extends StatelessWidget {
           TextSpan(
               text: "eureka",
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: size ?? 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.amber)),
           TextSpan(text: "learn")

@@ -1,3 +1,4 @@
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -5,6 +6,13 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: CustomScrollView());
+    return Scaffold(
+        body: CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Center(child: Logo(withIcon: true)),
+        )
+      ],
+    ));
   }
 }

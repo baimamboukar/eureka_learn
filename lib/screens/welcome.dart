@@ -27,16 +27,17 @@ class Welcome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("🤓", style: TextStyle(fontSize: 50.0)),
-                Logo(withIcon: false),
+                Text("🤓", style: TextStyle(fontSize: 64.0)),
+                Logo(withIcon: false, size: 42.0),
                 const SizedBox(height: 5.0),
                 Text("Hack your success now and future proof yourself"),
                 const SizedBox(height: 30.0),
-                Button(
-                    label: "SignIn 🛡", callback: () => Get.to(() => Login())),
+                Button(label: "SignIn 🛡", callbackDestination: Login()),
                 const SizedBox(height: 15.0),
-                Button(
-                    label: "Login 🛡", callback: () => Get.to(() => Login())),
+                InkWell(
+                    onTap: () => Get.to(() => Login()),
+                    child: Button(
+                        label: "Login 🛡", callbackDestination: Login())),
                 const SizedBox(height: 100.0),
                 Text("You can quick login using touch ID 😉"),
                 const SizedBox(height: 10.0),
