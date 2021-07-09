@@ -86,7 +86,7 @@ class _LibraryState extends State<Library> {
                                   -rotation * Screen.width(context) * 0.8)
                               ..scale(1 + rotation),
                             child: Book(
-                                imagePath: "assets/icons/jpeg/cover2.JPG",
+                                imagePath: "assets/icons/png/cover5.jpg",
                                 author: "Jack le Rouge",
                                 name: "The passion of the Christ",
                                 tags: ["Science", "Politics", "Self driving"]));
