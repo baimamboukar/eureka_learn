@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:eureka_learn/screens/login.dart';
 import 'package:eureka_learn/utils/palette.dart';
-import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,15 @@ class Welcome extends StatelessWidget {
                 Text("🤓", style: TextStyle(fontSize: 64.0)),
                 Logo(withIcon: false, size: 42.0),
                 const SizedBox(height: 5.0),
-                Text("Hack your success now and future proof yourself"),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText("Hack your success now",
+                        speed: const Duration(milliseconds: 100), cursor: "⚡"),
+                  ],
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                  repeatForever: true,
+                ),
                 const SizedBox(height: 30.0),
                 GestureDetector(
                   onTap: () => Get.to(() => Login()),
