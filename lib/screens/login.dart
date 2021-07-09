@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,15 @@ class Login extends StatelessWidget {
                 Text("🤓", style: TextStyle(fontSize: 64.0)),
                 Logo(
                   withIcon: false,
+                ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText("Hack your success now",
+                        speed: const Duration(milliseconds: 100), cursor: "⚡"),
+                  ],
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                  repeatForever: true,
                 ),
                 const SizedBox(height: 30.0),
                 Input(

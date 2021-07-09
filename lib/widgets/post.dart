@@ -70,6 +70,17 @@ class Post extends StatelessWidget {
                   Text("Share"),
                   Text("Save")
                 ],
+              ),
+              Divider(),
+              Row(
+                children: [
+                  Chip(
+                    backgroundColor: Palette.primary.withOpacity(0.15),
+                    side: BorderSide(
+                        color: Palette.primary.withOpacity(0.5), width: 0.60),
+                    label: Text(model.comments[0]),
+                  )
+                ],
               )
             ],
           ),
