@@ -54,7 +54,7 @@ class EurekaLearn extends StatelessWidget {
           primarySwatch: Colors.grey,
           primaryColor: Colors.black,
           brightness: Brightness.dark,
-          backgroundColor: const Color(0xFF212239),
+          backgroundColor: const Color(0xFF1C1C27),
           accentColor: Colors.white,
           dividerColor: Colors.black12,
           textTheme:
