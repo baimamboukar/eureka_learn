@@ -6,6 +6,7 @@ import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 List<LabelModel> subjects = [
   LabelModel(title: "All", iconPath: "🔥", active: false),
@@ -18,27 +19,35 @@ List<LabelModel> subjects = [
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
 
-// class Library extends StatefulWidget {
-//   Library({Key? key}) : super(key: key);
+class Library extends StatefulHookWidget {
+  Library({Key? key}) : super(key: key);
 
-//   @override
-//   _LibraryState createState() => _LibraryState();
-// }
+  @override
+  _LibraryState createState() => _LibraryState();
+}
 
-class Library extends HookWidget {
-  final pageController = usePageController();
+class _LibraryState extends State<Library> {
+  final pageController = PageController();
   final scrollNotifier = ValueNotifier(0.0);
+  final page = StateProvider<double>((ref) => 0.0);
   ValueChanged<int> index = ((value) => 0);
 
   void listenScroll() => scrollNotifier.value = pageController.page ?? 0.0;
 
+  @override
   void initState() {
     pageController.addListener(listenScroll);
+    super.initState();
   }
 
   @override
+  void dispose() {
+    pageController.removeListener(listenScroll);
+    pageController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
-    initState();
     return Scaffold(
         body: Stack(
       children: [

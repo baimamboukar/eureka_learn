@@ -1,6 +1,7 @@
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:like_button/like_button.dart';
 
 class Post extends StatelessWidget {
   final PostModel model;
@@ -61,7 +62,10 @@ class Post extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("${model.likesCount} likes"),
+                  LikeButton(
+                    likeCount: model.likesCount,
+                    likeCountAnimationType: LikeCountAnimationType.part,
+                  ),
                   Text(" Comments"),
                   Text("Share"),
                   Text("Save")
