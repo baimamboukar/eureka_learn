@@ -1,15 +1,21 @@
+import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(ProviderScope(child: EurekaLearn()));
 }
 
@@ -148,3 +154,18 @@ class Home extends HookWidget {
 }
 
 var emo = "✨🎫🎖🏅🥉🥈🥇🤼‍♂️📖🍁🚀🌝⚡";
+
+class Root extends HookWidget {
+  const Root({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = useProvider(authStateProvider);
+    return user.when(
+        data: (user) => Home(),
+        loading: () => SpinKitCircle(
+              duration: Duration(milliseconds: 2000),
+            ),
+        error: (err, stackTree) => Text("lol"));
+  }
+}

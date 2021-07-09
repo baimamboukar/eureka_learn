@@ -1,14 +1,18 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final auth = useProvider(authProvider);
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -75,9 +79,15 @@ class Signup extends StatelessWidget {
                 Text("Forgot your password ?",
                     style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
-                Button(
-                  label: "Signup",
-                  color: Palette.primary,
+                GestureDetector(
+                  onTap: () {
+                    auth.signUp(
+                        email: "lorem.ipsum@jock.me", password: "Shooter_8113");
+                  },
+                  child: Button(
+                    label: "Signup",
+                    color: Palette.primary,
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 Divider(
