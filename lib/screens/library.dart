@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:eureka_learn/main.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/book.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -48,6 +49,7 @@ class _LibraryState extends State<Library> {
   }
 
   Widget build(BuildContext context) {
+    final activeIndex = useProvider(activeIndexProvider);
     return Scaffold(
         body: Stack(
       children: [
@@ -58,7 +60,7 @@ class _LibraryState extends State<Library> {
         Align(
           alignment: Alignment.bottomCenter,
           child: IndexedStack(
-            index: 0,
+            index: activeIndex.state,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0) +
@@ -75,26 +77,18 @@ class _LibraryState extends State<Library> {
                         final rotation = percentage.clamp(0.0, 1.0);
                         final rotationSqrt = pow(rotation, 0.5);
                         if (index == 1) print(percentage);
-                        return Column(
-                          children: [
-                            Transform(
-                              alignment: Alignment.centerLeft,
-                              transform: Matrix4.identity()
-                                ..setEntry(2, 3, 0.002)
-                                ..rotateY(1.8 * rotationSqrt)
-                                ..translate(
-                                    -rotation * Screen.width(context) * 0.8)
-                                ..scale(1 + rotation),
-                              child: Image(
-                                  height: 300.0,
-                                  width: 150.0,
-                                  image: AssetImage(
-                                      "assets/icons/png/chemestry.png")),
-                            ),
-                            Text("Breaking Bad"),
-                            Text("Erika Jefferson, Edt BrightBooks")
-                          ],
-                        );
+                        return Transform(
+                            alignment: Alignment.centerLeft,
+                            transform: Matrix4.identity()
+                              ..setEntry(2, 3, 0.002)
+                              ..rotateY(1.8 * rotationSqrt)
+                              ..translate(
+                                  -rotation * Screen.width(context) * 0.8)
+                              ..scale(1 + rotation),
+                            child: Book(
+                                author: "Jack le Rouge",
+                                name: "The passion of the Christ",
+                                tags: ["Science", "Politics", "Self driving"]));
                       },
                     ),
                   ),
@@ -109,8 +103,10 @@ class _LibraryState extends State<Library> {
               Logo(
                 withIcon: true,
               ),
-              Logo(
-                withIcon: true,
+              Center(
+                child: Logo(
+                  withIcon: true,
+                ),
               ),
               Logo(
                 withIcon: true,
