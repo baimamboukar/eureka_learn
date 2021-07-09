@@ -56,6 +56,7 @@ class _PosterState extends State<Poster> {
                               BorderSide(color: Palette.primary, width: 0.50),
                           borderRadius: BorderRadius.circular(20.0)),
                       prefix: Text("✍️"),
+                      hintText: "What comes in your mind ? ",
                       filled: true,
                       fillColor: Colors.grey.shade200)),
             ),

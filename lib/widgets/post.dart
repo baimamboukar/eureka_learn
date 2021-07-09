@@ -63,6 +63,11 @@ class Post extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   LikeButton(
+                    likeBuilder: (liked) {
+                      return Icon(liked ? LineIcons.starAlt : LineIcons.star,
+                          size: 25.0,
+                          color: liked ? Colors.amberAccent : Colors.grey);
+                    },
                     likeCount: model.likesCount,
                     likeCountAnimationType: LikeCountAnimationType.part,
                   ),

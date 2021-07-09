@@ -37,6 +37,8 @@ List<DrawerItem> items = [
       label: "Settings",
       destination: FlutterLogo()),
   DrawerItem(
+      icon: Icon(LineIcons.save), label: "Saved", destination: FlutterLogo()),
+  DrawerItem(
       icon: Icon(LineIcons.identificationBadge),
       label: "Authentication",
       destination: Welcome()),

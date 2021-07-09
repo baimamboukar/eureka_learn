@@ -60,6 +60,7 @@ class EurekaLearn extends StatelessWidget {
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
       home: Home(),
+      themeMode: ThemeMode.dark,
     );
   }
 }

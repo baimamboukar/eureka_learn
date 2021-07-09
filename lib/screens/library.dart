@@ -84,7 +84,6 @@ class _LibraryState extends State<Library> {
                               ..rotateY(1.8 * rotationSqrt)
                               ..translate(
                                   -rotation * Screen.width(context) * 0.8)
-                              ..rotateZ(90.0)
                               ..scale(1 + rotation),
                             child: Book(
                                 imagePath: "assets/icons/png/cover5.jpg",
