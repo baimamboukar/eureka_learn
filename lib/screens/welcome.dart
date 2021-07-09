@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:eureka_learn/screens/login.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class Welcome extends StatelessWidget {
                 ),
                 const SizedBox(height: 15.0),
                 GestureDetector(
-                  onTap: () => Get.to(() => Login()),
+                  onTap: () => Get.to(() => Signup()),
                   child: Button(
                     color: Palette.light,
                     label: "SignUp 🛡",

@@ -80,10 +80,11 @@ class _LibraryState extends State<Library> {
                         return Transform(
                             alignment: Alignment.centerLeft,
                             transform: Matrix4.identity()
-                              ..setEntry(2, 3, 0.002)
+                              ..setEntry(2, 3, 0.0015)
                               ..rotateY(1.8 * rotationSqrt)
                               ..translate(
                                   -rotation * Screen.width(context) * 0.8)
+                              ..rotateZ(90.0)
                               ..scale(1 + rotation),
                             child: Book(
                                 imagePath: "assets/icons/png/cover5.jpg",
