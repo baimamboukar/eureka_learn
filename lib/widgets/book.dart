@@ -38,7 +38,7 @@ class Book extends StatelessWidget {
                 fontSize: 20.0),
           ),
           const SizedBox(height: 10.0),
-          Text(author,
+          Text("✍️ $author",
               style: TextStyle(color: Palette.primary.withOpacity(0.5))),
           Wrap(
             spacing: 3.0,

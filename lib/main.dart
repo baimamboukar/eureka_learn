@@ -1,4 +1,5 @@
 import 'package:eureka_learn/providers/auth_providers.dart';
+import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -19,10 +20,11 @@ void main() async {
   runApp(ProviderScope(child: EurekaLearn()));
 }
 
-class EurekaLearn extends StatelessWidget {
+class EurekaLearn extends HookWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final theme = useProvider(darkModeProvider);
     return GetMaterialApp(
       title: "EurekaLearn",
       theme: ThemeData(
@@ -66,7 +68,7 @@ class EurekaLearn extends StatelessWidget {
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
       home: Home(),
-      themeMode: ThemeMode.dark,
+      themeMode: theme.state ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

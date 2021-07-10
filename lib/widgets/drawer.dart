@@ -35,7 +35,7 @@ List<DrawerItem> items = [
   DrawerItem(
       icon: Icon(LineIcons.themeco),
       label: "Settings",
-      destination: FlutterLogo()),
+      destination: Settings()),
   DrawerItem(
       icon: Icon(LineIcons.save), label: "Saved", destination: FlutterLogo()),
   DrawerItem(

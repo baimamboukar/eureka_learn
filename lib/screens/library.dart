@@ -87,9 +87,9 @@ class _LibraryState extends State<Library> {
                               ..scale(1 + rotation),
                             child: Book(
                                 imagePath: "assets/icons/png/cover5.jpg",
-                                author: "Jack le Rouge",
-                                name: "The passion of the Christ",
-                                tags: ["Science", "Politics", "Self driving"]));
+                                author: "Brave Author Eureka",
+                                name: "Eurekaboom Inside",
+                                tags: ["Science", "History", "Supernatural"]));
                       },
                     ),
                   ),
