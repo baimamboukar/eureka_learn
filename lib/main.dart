@@ -119,13 +119,13 @@ class Home extends HookWidget {
       drawer: AppDrawer(),
       body: AnimatedSwitcher(
         duration: Duration(milliseconds: 100),
-        // transitionBuilder: (child, animation) => ScaleTransition(
-        //   scale: animation,
-        //   child: IndexedStack(
-        //       key: ValueKey<int>(navigationIndex.state),
-        //       index: navigationIndex.state,
-        //       children: _screens),
-        // ),
+        transitionBuilder: (child, animation) => ScaleTransition(
+          scale: animation,
+          child: IndexedStack(
+              key: ValueKey<int>(navigationIndex.state),
+              index: navigationIndex.state,
+              children: _screens),
+        ),
         child: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
