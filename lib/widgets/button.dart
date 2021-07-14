@@ -1,7 +1,5 @@
 import 'package:eureka_learn/utils/screen.dart';
-import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Button extends StatelessWidget {
   final String label;
