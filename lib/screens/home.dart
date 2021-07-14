@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
