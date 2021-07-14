@@ -13,6 +13,9 @@ class Signup extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final auth = useProvider(authProvider);
+    final nameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -43,7 +46,7 @@ class Signup extends HookWidget {
                     icon: LineIcons.userAlt,
                     context: context,
                     type: TextInputType.text,
-                    controller: TextEditingController(),
+                    controller: nameController,
                     label: "name",
                     hint: "Enter your names",
                     isPassword: false,
@@ -52,7 +55,7 @@ class Signup extends HookWidget {
                     icon: LineIcons.inbox,
                     context: context,
                     type: TextInputType.text,
-                    controller: TextEditingController(),
+                    controller: emailController,
                     label: "email",
                     hint: "Enter your email",
                     isPassword: false,
@@ -82,7 +85,8 @@ class Signup extends HookWidget {
                 GestureDetector(
                   onTap: () {
                     auth.signUp(
-                        email: "lorem.ipsum@jock.me", password: "Shooter_8113");
+                        email: emailController.text,
+                        password: passwordController.text);
                   },
                   child: Button(
                     label: "Signup",
