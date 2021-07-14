@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,8 +67,8 @@ class EurekaLearn extends HookWidget {
           dividerColor: Colors.black12,
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
-      home: Root(),
       themeMode: theme.state ? ThemeMode.dark : ThemeMode.light,
+      home: Root(),
     );
   }
 }
@@ -140,31 +139,41 @@ class Home extends HookWidget {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Text("✨"), label: "Trending", tooltip: "news and feed"),
+              icon: Icon(LineIcons.fire),
+              label: "Trending",
+              tooltip: "news and feed"),
           BottomNavigationBarItem(
-              icon: Text("🎖"), label: "Quizz", tooltip: "Evaluate yourself"),
+              icon: Icon(LineIcons.medal),
+              label: "Quizz",
+              tooltip: "Evaluate yourself"),
           BottomNavigationBarItem(
-              icon: Text("📚"),
+              icon: Icon(LineIcons.bookOfTheDead),
               label: "Library",
               tooltip: "Thousand of ressources at your disposal"),
           BottomNavigationBarItem(
-              icon: Text("🤼‍♂️📖"),
+              icon: Icon(LineIcons.userFriends),
               label: "Classes",
               tooltip: "learn and grow together"),
         ],
       ),
     );
-  }
+  }d
 }
 
-class Root extends HookWidget {
+class Root extends ConsumerWidget {
   const Root({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final user = useProvider(authStateProvider);
+  Widget build(BuildContext context, ScopedReader watch) {
+    final user = watch(authStateProvider);
     return user.when(
-        data: (user) => user != null ? Home() : Login(),
+        data: (currentUser) {
+          if (currentUser != null) {
+            return Home();
+          } else {
+            return Login();
+          }
+        },
         loading: () => CircularProgressIndicator(),
         error: (err, stackTree) => Text("lol"));
   }
