@@ -1,5 +1,6 @@
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
+import 'package:eureka_learn/screens/login.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -67,7 +68,7 @@ class EurekaLearn extends HookWidget {
           dividerColor: Colors.black12,
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
-      home: Home(),
+      home: Root(),
       themeMode: theme.state ? ThemeMode.dark : ThemeMode.light,
     );
   }
@@ -85,6 +86,7 @@ List<LabelModel> subjects = [
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
+
 List<Widget> _screens = [
   All(),
   Logo(withIcon: true),
@@ -155,8 +157,6 @@ class Home extends HookWidget {
   }
 }
 
-var emo = "✨🎫🎖🏅🥉🥈🥇🤼‍♂️📖🍁🚀🌝⚡";
-
 class Root extends HookWidget {
   const Root({Key? key}) : super(key: key);
 
@@ -164,10 +164,8 @@ class Root extends HookWidget {
   Widget build(BuildContext context) {
     final user = useProvider(authStateProvider);
     return user.when(
-        data: (user) => Home(),
-        loading: () => SpinKitCircle(
-              duration: Duration(milliseconds: 2000),
-            ),
+        data: (user) => user != null ? Home() : Login(),
+        loading: () => CircularProgressIndicator(),
         error: (err, stackTree) => Text("lol"));
   }
 }
