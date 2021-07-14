@@ -1,7 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Login extends StatelessWidget {
@@ -80,9 +82,12 @@ class Login extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                Text("Don't have account? Sign Up there...",
-                    style: TextStyle(
-                        color: Palette.primary, fontWeight: FontWeight.bold)),
+                GestureDetector(
+                  onTap: () => Get.to(() => Signup()),
+                  child: Text("Don't have account? Sign Up there...",
+                      style: TextStyle(
+                          color: Palette.primary, fontWeight: FontWeight.bold)),
+                ),
               ],
             ),
           ),

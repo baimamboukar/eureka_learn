@@ -7,15 +7,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Signup extends HookWidget {
+class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final auth = useProvider(authProvider);
-    final nameController = useTextEditingController();
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
+  Widget build(BuildContext context, ScopedReader watch) {
+    final auth = watch(authProvider);
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -73,7 +73,7 @@ class Signup extends HookWidget {
                     icon: LineIcons.lock,
                     context: context,
                     type: TextInputType.text,
-                    controller: TextEditingController(),
+                    controller: passwordController,
                     label: "password",
                     hint: "Enter your password",
                     isPassword: true,

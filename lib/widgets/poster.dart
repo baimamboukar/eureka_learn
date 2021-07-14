@@ -41,7 +41,7 @@ class _PosterState extends State<Poster> {
                 )),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
               child: TextFormField(
                   autofocus: false,
                   keyboardType: TextInputType.multiline,

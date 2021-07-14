@@ -133,6 +133,7 @@ class Home extends HookWidget {
             children: _screens),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 10.0,
         currentIndex: navigationIndex.state,
         onTap: (index) {
           navigationIndex.state = index;
@@ -147,17 +148,17 @@ class Home extends HookWidget {
               label: "Quizz",
               tooltip: "Evaluate yourself"),
           BottomNavigationBarItem(
-              icon: Icon(LineIcons.bookOfTheDead),
+              icon: Icon(LineIcons.lightbulb),
               label: "Library",
               tooltip: "Thousand of ressources at your disposal"),
           BottomNavigationBarItem(
               icon: Icon(LineIcons.userFriends),
-              label: "Classes",
+              label: "Groups",
               tooltip: "learn and grow together"),
         ],
       ),
     );
-  }d
+  }
 }
 
 class Root extends ConsumerWidget {
@@ -165,16 +166,11 @@ class Root extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(authStateProvider);
-    return user.when(
-        data: (currentUser) {
-          if (currentUser != null) {
-            return Home();
-          } else {
-            return Login();
-          }
-        },
-        loading: () => CircularProgressIndicator(),
-        error: (err, stackTree) => Text("lol"));
+    final user = watch(authStateProvider).data?.value;
+    if (user != null) {
+      return Home();
+    } else {
+      return Login();
+    }
   }
 }

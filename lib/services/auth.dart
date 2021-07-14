@@ -20,6 +20,7 @@ class Authentication {
 
   Future<String?> signUp(
       {required String email, required String password}) async {
+    print("le massacre dus sign in");
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
