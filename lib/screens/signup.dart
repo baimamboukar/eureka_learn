@@ -84,7 +84,9 @@ class Signup extends ConsumerWidget {
                 const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
-                    auth.signupUser();
+                    auth.signupUser(
+                        mail: emailController.text,
+                        pass: passwordController.text);
                   },
                   child: Button(
                     label: "Signup",

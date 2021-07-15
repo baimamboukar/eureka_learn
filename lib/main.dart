@@ -167,11 +167,12 @@ class Root extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(authStateProvider).data?.value;
-    if (user != null) {
-      return Home();
-    } else {
-      return Login();
-    }
+    final user = watch(authStateProvider);
+
+    return user.when(
+        loading: () => CircularProgressIndicator(),
+        error: (_, __) => Text("Something went wrong"),
+        data: (authenticatedUser) =>
+            authenticatedUser != null ? Home() : Login());
   }
 }
