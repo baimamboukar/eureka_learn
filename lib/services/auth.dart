@@ -4,38 +4,16 @@ class Authentication {
   final FirebaseAuth _firebaseAuth;
   Authentication(this._firebaseAuth);
 
-  // with StreamProvider we listen to these changes
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-
-  Future<String?> signIn(
-      {required String email, required String password}) async {
-    print(_firebaseAuth);
+  void loginUser({required String mail, required String pass}) {
     try {
-      print("inside try block");
-      final response = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      print("after await....");
-      print(response);
-      return 'Signed in';
+      _firebaseAuth.signInWithEmailAndPassword(email: mail, password: pass);
     } on FirebaseAuthException catch (err) {
-      return err.message;
+      print(err.message);
     }
   }
 
-  Future<String?> signUp(
-      {required String email, required String password}) async {
-    print("le massacre du sign in");
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print("done well");
-      return 'Signed up ';
-    } on FirebaseAuthException catch (e) {
-      return e.message;
-    }
-  }
-
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  void signupUser() {
+    print("lorem son");
   }
 }

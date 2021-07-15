@@ -134,6 +134,7 @@ class Home extends HookWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 10.0,
+        showUnselectedLabels: false,
         currentIndex: navigationIndex.state,
         onTap: (index) {
           navigationIndex.state = index;

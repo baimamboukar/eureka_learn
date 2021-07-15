@@ -66,9 +66,8 @@ class Login extends HookWidget {
                     style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
                 GestureDetector(
-                  onTap: () => _auth.signIn(
-                      email: emailController.text,
-                      password: passwordController.text),
+                  onTap: () => _auth.loginUser(
+                      mail: "baimamboukar@gmail.com", pass: "123456"),
                   child: Button(
                     label: "Login",
                     color: Palette.primary,
