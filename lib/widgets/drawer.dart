@@ -42,8 +42,8 @@ class AppDrawer extends HookWidget {
 
 List<dynamic> items = [
   DrawerItem(
-      icon: Icon(LineIcons.signature),
-      label: "Logout",
+      icon: Icon(LineIcons.algolia),
+      label: "Settings",
       destination: Settings()),
   DrawerItem(
       icon: Icon(LineIcons.save), label: "Saved", destination: FlutterLogo()),

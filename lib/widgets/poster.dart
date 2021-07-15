@@ -25,7 +25,7 @@ class _PosterState extends State<Poster> {
         child: Column(
           children: [
             Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -41,7 +41,7 @@ class _PosterState extends State<Poster> {
                 )),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
               child: TextFormField(
                   autofocus: false,
                   keyboardType: TextInputType.multiline,
@@ -61,7 +61,7 @@ class _PosterState extends State<Poster> {
                       fillColor: Colors.grey.shade200)),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, top: 10.0),
               child: Row(
                 children: [
                   ActionButton(

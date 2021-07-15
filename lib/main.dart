@@ -113,9 +113,8 @@ class Home extends HookWidget {
               onPressed: () => print("we move"),
             ),
             IconButton(
-              icon: Icon(LineIcons.bell),
-              onPressed: () => print("we move"),
-            ),
+                icon: Icon(LineIcons.bell),
+                onPressed: () => Get.to(() => Notifications())),
           ]),
       drawer: AppDrawer(),
       body: AnimatedSwitcher(
