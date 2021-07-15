@@ -1,16 +1,22 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Login extends StatelessWidget {
+class Login extends HookWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _auth = useProvider(authProvider);
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -41,7 +47,7 @@ class Login extends StatelessWidget {
                     icon: LineIcons.userAlt,
                     context: context,
                     type: TextInputType.text,
-                    controller: TextEditingController(),
+                    controller: emailController,
                     label: "username",
                     hint: "Enter your username",
                     isPassword: false,
@@ -50,7 +56,7 @@ class Login extends StatelessWidget {
                     icon: LineIcons.lock,
                     context: context,
                     type: TextInputType.text,
-                    controller: TextEditingController(),
+                    controller: passwordController,
                     label: "password",
                     hint: "Enter your password",
                     isPassword: true,
@@ -59,9 +65,14 @@ class Login extends StatelessWidget {
                 Text("Forgot your password ?",
                     style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
-                Button(
-                  label: "Login",
-                  color: Palette.primary,
+                GestureDetector(
+                  onTap: () => _auth.signIn(
+                      email: emailController.text,
+                      password: passwordController.text),
+                  child: Button(
+                    label: "Login",
+                    color: Palette.primary,
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 Divider(

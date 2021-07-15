@@ -9,9 +9,13 @@ class Authentication {
 
   Future<String?> signIn(
       {required String email, required String password}) async {
+    print(_firebaseAuth);
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      print("inside try block");
+      final response = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+      print("after await....");
+      print(response);
       return 'Signed in';
     } on FirebaseAuthException catch (err) {
       return err.message;
