@@ -16,4 +16,8 @@ class Authentication {
   void signupUser() {
     print("lorem son");
   }
+
+  void logoutUser() {
+    _firebaseAuth.signOut();
+  }
 }
