@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 class ActionButton extends StatelessWidget {
   final String label;
   final dynamic icon;
+  final Color color;
   final Function callback;
   const ActionButton(
-      {Key? key, required this.label, this.icon, required this.callback})
+      {Key? key,
+      required this.label,
+      this.icon,
+      required this.callback,
+      required this.color})
       : super(key: key);
 
   @override
@@ -15,19 +20,23 @@ class ActionButton extends StatelessWidget {
       onTap: () => callback,
       child: Container(
           height: 30.0,
-          width: 80.0,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
-              gradient: Palette.linearGradient),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                label,
-                style: TextStyle(color: Palette.light),
-              ),
-              icon
-            ],
+              border: Border.all(color: color, width: 2.0),
+              gradient: Palette.gradientWith(color)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(color: Palette.light),
+                ),
+                const SizedBox(width: 3.0),
+                icon
+              ],
+            ),
           )),
     );
   }

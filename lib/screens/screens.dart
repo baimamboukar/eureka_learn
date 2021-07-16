@@ -5,3 +5,4 @@ export 'library.dart';
 export 'signup.dart';
 export 'settings.dart';
 export 'notifications.dart';
+export 'profile.dart';

@@ -12,16 +12,12 @@ class Notifications extends StatelessWidget {
           itemCount: 20,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Card(
-                color: index % 2 == 0
-                    ? Colors.blue.shade100
-                    : Colors.grey.shade200,
-                child: ListTile(
-                  title: Text("Lorem ipsum notiff"),
-                  leading: Icon(LineIcons.history),
-                  trailing: Text("3 min ago"),
-                ),
+              padding: const EdgeInsets.only(bottom: 6.0),
+              child: ListTile(
+                title: Text("Lorem ipsum notiff"),
+                subtitle: Text("Many minutes ago"),
+                leading: Icon(LineIcons.history),
+                trailing: Text("3 min ago"),
               ),
             );
           },

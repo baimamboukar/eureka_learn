@@ -29,7 +29,7 @@ class AppDrawer extends HookWidget {
           accountEmail: Text("eureka.learn@admin.cm"),
           accountName: Text("Alpha admin"),
         ),
-        for (var item in items..shuffle()) item,
+        for (var item in items) item,
         ListTile(
             onTap: () => _auth.logoutUser(),
             title: Text("Logout"),
@@ -42,25 +42,21 @@ class AppDrawer extends HookWidget {
 
 List<dynamic> items = [
   DrawerItem(
-      icon: Icon(LineIcons.algolia),
+      icon: Icon(LineIcons.algolia, color: Palette.primary),
       label: "Settings",
       destination: Settings()),
   DrawerItem(
-      icon: Icon(LineIcons.save), label: "Saved", destination: FlutterLogo()),
+      icon: Icon(LineIcons.fileDownload, color: Palette.primary),
+      label: "Saved",
+      destination: FlutterLogo()),
   DrawerItem(
-      icon: Icon(LineIcons.identificationBadge),
+      icon: Icon(LineIcons.identificationBadge, color: Palette.primary),
       label: "Authentication",
       destination: Welcome()),
   DrawerItem(
-      icon: Icon(LineIcons.themeco),
+      icon: Icon(LineIcons.themeco, color: Palette.primary),
       label: "Profile",
-      destination: FlutterLogo()),
-  DrawerItem(
-      icon: Icon(LineIcons.medal),
-      label: "Challenges",
-      destination: FlutterLogo()),
-  DrawerItem(
-      icon: Icon(LineIcons.star), label: "Rate us", destination: FlutterLogo()),
+      destination: Profile()),
 ];
 
 class DrawerItem extends StatelessWidget {

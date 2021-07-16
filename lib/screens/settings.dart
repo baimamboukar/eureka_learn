@@ -1,9 +1,9 @@
 import 'package:eureka_learn/providers/providers.dart';
-import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:line_icons/line_icons.dart';
+
+final valueProvider = StateProvider<String?>((ref) => "Francais");
 
 class Settings extends HookWidget {
   const Settings({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class Settings extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = useProvider(darkModeProvider);
+    final value = useProvider(valueProvider);
     return Scaffold(
         appBar: AppBar(title: Text("Settings")),
         body: SingleChildScrollView(
@@ -19,7 +20,6 @@ class Settings extends HookWidget {
           child: Column(
             children: [
               SwitchListTile.adaptive(
-                tileColor: Palette.primary.withOpacity(0.5),
                 subtitle: Text("Change Theme Mode"),
                 title: Text("Dark mode"),
                 value: darkMode.state,
@@ -27,7 +27,29 @@ class Settings extends HookWidget {
                   darkMode.state = value;
                 },
               ),
-              ListTile(title: Text("Language"), trailing: Icon(LineIcons.globe))
+              ListTile(
+                title: Text("Language"),
+                trailing: DropdownButton<String>(
+                  underline: const SizedBox.shrink(),
+                  value: value.state,
+                  items: <String>["Francais", "English", "Deutsch", "IOS"]
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                  hint: Text(
+                    "Change language",
+                  ),
+                  onChanged: (String? currentValue) {
+                    value.state = currentValue;
+                  },
+                ),
+              ),
             ],
           ),
         )));

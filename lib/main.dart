@@ -108,10 +108,7 @@ class Home extends HookWidget {
             withIcon: true,
           ),
           actions: [
-            IconButton(
-              icon: Icon(LineIcons.search),
-              onPressed: () => print("we move"),
-            ),
+            IconButton(icon: Icon(LineIcons.search), onPressed: () => null),
             IconButton(
                 icon: Icon(LineIcons.bell),
                 onPressed: () => Get.to(() => Notifications())),

@@ -16,7 +16,7 @@ class _PosterState extends State<Poster> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: Screen.height(context) * 0.25,
+        height: Screen.height(context) * 0.3,
         decoration: BoxDecoration(
             //gradient: Palette.linearGradient,
             borderRadius: BorderRadius.only(
@@ -66,16 +66,24 @@ class _PosterState extends State<Poster> {
                 children: [
                   ActionButton(
                       label: "add file",
-                      icon: Text("🖇️"),
+                      color: Palette.success,
+                      icon: Icon(LineIcons.file),
                       callback: () => print("exporting...")),
-                  const SizedBox(width: 10.0),
+                  const SizedBox(width: 8.0),
                   ActionButton(
                       label: "add photo",
+                      color: Palette.secondary,
                       icon: Icon(LineIcons.photoVideo),
-                      callback: () => print("exporting..."))
+                      callback: () => print("exporting...")),
+                  const SizedBox(width: 30.0),
+                  ActionButton(
+                      label: "Publish",
+                      color: Palette.primary,
+                      icon: Icon(LineIcons.telegram),
+                      callback: () => print("exporting...")),
                 ],
               ),
-            )
+            ),
           ],
         ));
   }
