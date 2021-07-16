@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:animations/animations.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -69,11 +70,6 @@ class Login extends HookWidget {
                 const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
-                    showFlash(
-                        context: context,
-                        builder: (cotext, controller) {
-                          return SpinKitFadingCube();
-                        });
                     _auth.loginUser(
                         mail: emailController.text,
                         pass: passwordController.text);

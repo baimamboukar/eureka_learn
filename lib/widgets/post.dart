@@ -11,101 +11,104 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(6.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Palette.primary, width: 0.75),
-          borderRadius: BorderRadius.circular(10.0),
-          color: Palette.light,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    Text(model.postOwner,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Icon(LineIcons.angleRight),
-                    Text("Sciences and Energy"),
-                  ]),
-                  Text("${model.timeAgo} ago")
-                ],
-              ),
-              const SizedBox(height: 10.0),
-              Text(
-                  "Lorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hamma",
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis),
-              const SizedBox(height: 10.0),
-              model.withPicture
-                  ? Center(
-                      child: Image(
-                        image: AssetImage(model.picturePath),
-                        height: 100.0,
-                      ),
+      child: Card(
+        elevation: 4.0,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            color: Palette.light,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      Text(model.postOwner,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Icon(LineIcons.angleRight),
+                      Text("Sciences and Energy"),
+                    ]),
+                    Text("${model.timeAgo} ago")
+                  ],
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                    "Lorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hamma",
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 10.0),
+                model.withPicture
+                    ? Center(
+                        child: Image(
+                          image: AssetImage(model.picturePath),
+                          height: 100.0,
+                        ),
+                      )
+                    : SizedBox.shrink(),
+                const SizedBox(height: 15.0),
+                Wrap(
+                  spacing: 3.0,
+                  children: model.tags != null
+                      ? model.tags
+                          .map((tag) => Chip(
+                                backgroundColor:
+                                    Palette.primary.withOpacity(0.5),
+                                label: Text(tag),
+                              ))
+                          .toList()
+                      : [SizedBox.shrink()],
+                ),
+                const SizedBox(height: 15.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    LikeButton(
+                      likeBuilder: (liked) {
+                        return Icon(liked ? LineIcons.starAlt : LineIcons.star,
+                            size: 25.0,
+                            color: liked ? Colors.amberAccent : Colors.grey);
+                      },
+                      likeCount: model.likesCount,
+                      likeCountAnimationType: LikeCountAnimationType.part,
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.chat),
+                        Text(" comment"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(LineIcons.download),
+                        Text(" save"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(LineIcons.share),
+                        Text(" share"),
+                      ],
+                    ),
+                  ],
+                ),
+                Divider(),
+                Row(
+                  children: [
+                    Chip(
+                      backgroundColor: Palette.primary.withOpacity(0.15),
+                      side: BorderSide(
+                          color: Palette.primary.withOpacity(0.5), width: 0.60),
+                      label: Text(model.comments[0]),
                     )
-                  : SizedBox.shrink(),
-              const SizedBox(height: 15.0),
-              Wrap(
-                spacing: 3.0,
-                children: model.tags != null
-                    ? model.tags
-                        .map((tag) => Chip(
-                              backgroundColor: Palette.primary.withOpacity(0.5),
-                              label: Text(tag),
-                            ))
-                        .toList()
-                    : [SizedBox.shrink()],
-              ),
-              const SizedBox(height: 15.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  LikeButton(
-                    likeBuilder: (liked) {
-                      return Icon(liked ? LineIcons.starAlt : LineIcons.star,
-                          size: 25.0,
-                          color: liked ? Colors.amberAccent : Colors.grey);
-                    },
-                    likeCount: model.likesCount,
-                    likeCountAnimationType: LikeCountAnimationType.part,
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.chat),
-                      Text(" comment"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(LineIcons.download),
-                      Text(" save"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(LineIcons.share),
-                      Text(" share"),
-                    ],
-                  ),
-                ],
-              ),
-              Divider(),
-              Row(
-                children: [
-                  Chip(
-                    backgroundColor: Palette.primary.withOpacity(0.15),
-                    side: BorderSide(
-                        color: Palette.primary.withOpacity(0.5), width: 0.60),
-                    label: Text(model.comments[0]),
-                  )
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
