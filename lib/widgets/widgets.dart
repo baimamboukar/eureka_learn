@@ -10,3 +10,4 @@ export 'menu.dart';
 export 'post.dart';
 export 'input.dart';
 export 'book.dart';
+export 'search.dart';
