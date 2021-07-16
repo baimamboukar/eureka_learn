@@ -3,8 +3,10 @@ import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
@@ -15,8 +17,8 @@ class Login extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _auth = useProvider(authProvider);
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -66,8 +68,16 @@ class Login extends HookWidget {
                     style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
                 GestureDetector(
-                  onTap: () => _auth.loginUser(
-                      mail: "baimamboukar@gmail.com", pass: "123456"),
+                  onTap: () {
+                    showFlash(
+                        context: context,
+                        builder: (cotext, controller) {
+                          return SpinKitFadingCube();
+                        });
+                    _auth.loginUser(
+                        mail: emailController.text,
+                        pass: passwordController.text);
+                  },
                   child: Button(
                     label: "Login",
                     color: Palette.primary,

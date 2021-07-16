@@ -13,6 +13,7 @@ class Post extends StatelessWidget {
       padding: const EdgeInsets.all(6.0),
       child: Container(
         decoration: BoxDecoration(
+          border: Border.all(color: Palette.primary, width: 0.75),
           borderRadius: BorderRadius.circular(10.0),
           color: Palette.light,
         ),
