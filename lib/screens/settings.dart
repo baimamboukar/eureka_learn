@@ -2,6 +2,7 @@ import 'package:eureka_learn/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:line_icons/line_icons.dart';
 
 final valueProvider = StateProvider<String?>((ref) => "Francais");
 
@@ -22,6 +23,14 @@ class Settings extends HookWidget {
               SwitchListTile.adaptive(
                 subtitle: Text("Change Theme Mode"),
                 title: Text("Dark mode"),
+                value: darkMode.state,
+                onChanged: (value) {
+                  darkMode.state = value;
+                },
+              ),
+              SwitchListTile.adaptive(
+                subtitle: Text("Want to receive notifications ?"),
+                title: Text("Notifications"),
                 value: darkMode.state,
                 onChanged: (value) {
                   darkMode.state = value;
@@ -50,6 +59,12 @@ class Settings extends HookWidget {
                   },
                 ),
               ),
+              ListTile(
+                leading: CircleAvatar(),
+                title: Text("Share"),
+                subtitle: Text("invite a friend"),
+                trailing: Icon(LineIcons.share),
+              )
             ],
           ),
         )));
