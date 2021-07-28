@@ -1,4 +1,5 @@
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
@@ -16,7 +17,6 @@ class Post extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25.0),
-            color: Palette.light,
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -28,10 +28,30 @@ class Post extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(children: [
-                      Text(model.postOwner,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Icon(LineIcons.angleRight),
-                      Text("Sciences and Energy"),
+                      UserAvatar(),
+                      const SizedBox(width: 6.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(model.postOwner,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.primary)),
+                          Row(
+                            children: [
+                              Transform(
+                                  alignment: Alignment.center,
+                                  transform: Matrix4.identity()
+                                    ..rotateX(
+                                      180.0,
+                                    ),
+                                  child: Icon(LineIcons.share,
+                                      size: 25.0, color: Palette.primary)),
+                              Text("Biology League", style: Styles.subtitle),
+                            ],
+                          )
+                        ],
+                      ),
                     ]),
                     Text("${model.timeAgo} ago")
                   ],
