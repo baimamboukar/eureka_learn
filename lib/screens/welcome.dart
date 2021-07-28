@@ -45,7 +45,8 @@ class Welcome extends StatelessWidget {
                   onTap: () => Get.to(() => Login()),
                   child: Button(
                     color: Palette.light,
-                    label: "Login 🛡",
+                    label: "Login",
+                    icon: LineIcons.sign,
                   ),
                 ),
                 const SizedBox(height: 15.0),
@@ -53,7 +54,8 @@ class Welcome extends StatelessWidget {
                   onTap: () => Get.to(() => Signup()),
                   child: Button(
                     color: Palette.light,
-                    label: "SignUp 🛡",
+                    label: "SignUp ",
+                    icon: LineIcons.sign,
                   ),
                 ),
                 const SizedBox(height: 100.0),
