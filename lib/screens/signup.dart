@@ -77,9 +77,6 @@ class Signup extends ConsumerWidget {
                     hint: "Enter your password",
                     isPassword: true,
                     isPhone: false),
-                const SizedBox(height: 10.0),
-                Text("Forgot your password ?",
-                    style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
