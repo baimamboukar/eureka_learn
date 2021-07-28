@@ -11,3 +11,4 @@ export 'post.dart';
 export 'input.dart';
 export 'book.dart';
 export 'search.dart';
+export 'user_avatar.dart';
