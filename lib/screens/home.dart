@@ -1,3 +1,4 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -18,8 +19,11 @@ class All extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(40.0),
                     bottomRight: Radius.circular(40.0))),
-            child:
-                Padding(padding: const EdgeInsets.all(10.0), child: Poster())),
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TipsBanner(
+                    tips: Tips(DateTime(1, 01, 2021),
+                        "Lorem ipsum dolor ai samet", "Geography")))),
       ),
       SliverToBoxAdapter(
           child: Padding(

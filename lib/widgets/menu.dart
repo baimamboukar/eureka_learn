@@ -12,7 +12,7 @@ class Menu extends HookWidget {
   List<LabelModel> subjects = [
     LabelModel(title: "All", iconPath: "🔥", active: false),
     LabelModel(title: "Chemestry", iconPath: "🌡️", active: false),
-    LabelModel(title: "Geography", iconPath: "🌍", active: false),
+    LabelModel(title: "Geo", iconPath: "🌍", active: false),
     LabelModel(title: "Biology", iconPath: "🔬", active: false),
     LabelModel(title: "Maths", iconPath: "📈", active: false),
     LabelModel(title: "Csc", iconPath: "💻", active: false),

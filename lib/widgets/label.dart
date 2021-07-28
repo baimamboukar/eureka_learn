@@ -31,7 +31,7 @@ class _LabelState extends State<Label> {
                 Text(widget.model.iconPath,
                     overflow: TextOverflow.ellipsis,
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
                 Text(widget.model.title, overflow: TextOverflow.ellipsis)
               ],
             )),
