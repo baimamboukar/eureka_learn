@@ -15,7 +15,7 @@ class Palette {
     Colors.blue.withOpacity(0.4)
   ]);
   static LinearGradient gradientWith(Color color) => LinearGradient(
-      colors: [color, color.withOpacity(0.5), color.withAlpha(100)]);
+      colors: [color, color.withOpacity(0.5), color.withOpacity(0.3)]);
 
   static Color randomColor() =>
       Colors.primaries[Random().nextInt(Colors.primaries.length)];
