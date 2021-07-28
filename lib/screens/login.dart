@@ -1,13 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:animations/animations.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
@@ -76,6 +73,7 @@ class Login extends HookWidget {
                   },
                   child: Button(
                     label: "Login",
+                    icon: LineIcons.sign,
                     color: Palette.primary,
                   ),
                 ),
@@ -88,11 +86,13 @@ class Login extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Button(
-                      label: "With Google 🔗",
+                      label: "With Google",
+                      icon: LineIcons.googleLogo,
                       color: Palette.error.withOpacity(0.7),
                     ),
                     Button(
-                      label: "With Phone 📲",
+                      label: "With Phone",
+                      icon: LineIcons.tablet,
                       color: Palette.success,
                     ),
                   ],
