@@ -19,7 +19,7 @@ class SubjectBox extends StatelessWidget {
             children: [
               Align(
                   alignment: Alignment.bottomRight,
-                  child: Text(subject ?? "subject", style: Styles.subtitle)),
+                  child: Text(subject ?? "subject")),
               Align(
                   alignment: Alignment.topCenter,
                   child: Image(

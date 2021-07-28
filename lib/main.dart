@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:badges/badges.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/login.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,9 +114,13 @@ class Home extends HookWidget {
                         context: context,
                         delegate: Search(),
                       )),
-              IconButton(
-                  icon: Icon(LineIcons.bell),
-                  onPressed: () => Get.to(() => Notifications())),
+              Badge(
+                badgeContent: Text("12"),
+                position: BadgePosition.topEnd(top: 7.5, end: 5),
+                child: IconButton(
+                    icon: Icon(LineIcons.bell),
+                    onPressed: () => Get.to(() => Notifications())),
+              ),
             ]),
         drawer: AppDrawer(),
         body: IndexedStack(
@@ -124,7 +130,14 @@ class Home extends HookWidget {
                 _screens.map((screen) => SlideInLeft(child: screen)).toList()),
         floatingActionButton: FloatingActionButton(
           child: Icon(LineIcons.podcast),
-          onPressed: () => null,
+          onPressed: () {
+            Fluttertoast.showToast(
+                msg: "Interact with millions of students",
+                backgroundColor: Palette.success);
+            Get.dialog(
+              Scaffold(body: FlipInY(child: Center(child: Poster()))),
+            );
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
@@ -192,10 +205,16 @@ class NavItem extends HookWidget {
                       decoration: BoxDecoration(
                           color: Palette.primary, shape: BoxShape.circle))
                   : SizedBox.shrink(),
-              Icon(icon,
-                  color: position == index.state
-                      ? Palette.primary
-                      : Palette.primary.withOpacity(0.5)),
+              Badge(
+                badgeContent: Center(child: Text("8")),
+                stackFit: StackFit.passthrough,
+                padding: const EdgeInsets.all(3.0),
+                position: BadgePosition.topEnd(top: 0, end: -7.50),
+                child: Icon(icon,
+                    color: position == index.state
+                        ? Palette.primary
+                        : Palette.primary.withOpacity(0.5)),
+              ),
               Text(label,
                   style: TextStyle(
                       color: position == index.state

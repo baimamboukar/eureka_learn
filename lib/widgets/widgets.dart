@@ -12,3 +12,4 @@ export 'input.dart';
 export 'book.dart';
 export 'search.dart';
 export 'user_avatar.dart';
+export 'tips_banner.dart';

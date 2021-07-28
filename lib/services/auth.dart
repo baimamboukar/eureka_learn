@@ -1,38 +1,46 @@
+import 'package:eureka_learn/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Authentication {
   final FirebaseAuth _firebaseAuth;
   Authentication(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-  Future<String?> loginUser(
-      {required String mail, required String pass}) async {
+  Future<void> loginUser({required String mail, required String pass}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: mail, password: pass);
-      return "You are signed in";
+      await _firebaseAuth
+          .signInWithEmailAndPassword(email: mail, password: pass)
+          .then((response) => Fluttertoast.showToast(
+              msg: "Successful signd in", backgroundColor: Palette.success));
     } on FirebaseAuthException catch (err) {
-      print(err.message);
-      return err.message;
+      Fluttertoast.showToast(
+          msg: err.message ?? "Something went wrong !",
+          backgroundColor: Palette.error);
     }
   }
 
-  Future<String?> signupUser(
-      {required String mail, required String pass}) async {
+  Future<void> signupUser({required String mail, required String pass}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: mail, password: pass);
-      return "You are signed in";
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(email: mail, password: pass)
+          .then((response) => Fluttertoast.showToast(
+              msg: "Successful signed up", backgroundColor: Palette.success));
     } on FirebaseAuthException catch (err) {
-      return err.message;
+      Fluttertoast.showToast(
+          msg: err.message ?? "Something went wrong !",
+          backgroundColor: Palette.error);
     }
   }
 
-  Future<String?> logoutUser() async {
+  Future<void> logoutUser() async {
     try {
-      await _firebaseAuth.signOut();
+      await _firebaseAuth.signOut().then((response) => Fluttertoast.showToast(
+          msg: "Successful logged out", backgroundColor: Palette.success));
     } on FirebaseAuthException catch (err) {
-      return err.message;
+      Fluttertoast.showToast(
+          msg: err.message ?? "Something went wrong !",
+          backgroundColor: Palette.error);
     }
   }
 }
