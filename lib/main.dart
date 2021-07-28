@@ -1,13 +1,16 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/login.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/palette.dart';
+import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +37,7 @@ class EurekaLearn extends HookWidget {
           primaryColor: Colors.blue,
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-          iconTheme: IconThemeData(size: 16.0, opacity: 0.85),
+          iconTheme: IconThemeData(size: 22.0, opacity: 1),
           appBarTheme: AppBarTheme(
               centerTitle: true,
               color: Palette.light,
@@ -86,12 +89,7 @@ List<LabelModel> subjects = [
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
 
-List<Widget> _screens = [
-  All(),
-  Logo(withIcon: true),
-  Library(),
-  Logo(withIcon: true)
-];
+List<Widget> _screens = [All(), Library(), Quizz(), Logo(withIcon: true)];
 
 class Home extends HookWidget {
   @override
@@ -99,67 +97,54 @@ class Home extends HookWidget {
     final navigationIndex = useProvider(navigationIndexProvider);
 
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(LineIcons.tasks),
-              onPressed: () => Scaffold.of(context).openDrawer),
-          title: Logo(
-            withIcon: true,
-          ),
-          actions: [
-            IconButton(
-                icon: Icon(LineIcons.search),
-                onPressed: () => showSearch(
-                      context: context,
-                      delegate: Search(),
-                    )),
-            IconButton(
-                icon: Icon(LineIcons.bell),
-                onPressed: () => Get.to(() => Notifications())),
-          ]),
-      drawer: AppDrawer(),
-      body: AnimatedSwitcher(
-        duration: Duration(milliseconds: 100),
-        transitionBuilder: (child, animation) => ScaleTransition(
-          scale: animation,
-          child: IndexedStack(
-              key: ValueKey<int>(navigationIndex.state),
-              index: navigationIndex.state,
-              children: _screens),
-        ),
-        child: IndexedStack(
+        key: _scaffoldKey,
+        appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(LineIcons.tasks),
+                onPressed: () => Scaffold.of(context).openDrawer),
+            title: Logo(
+              withIcon: true,
+            ),
+            actions: [
+              IconButton(
+                  icon: Icon(LineIcons.search),
+                  onPressed: () => showSearch(
+                        context: context,
+                        delegate: Search(),
+                      )),
+              IconButton(
+                  icon: Icon(LineIcons.bell),
+                  onPressed: () => Get.to(() => Notifications())),
+            ]),
+        drawer: AppDrawer(),
+        body: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
-            children: _screens),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 10.0,
-        showUnselectedLabels: false,
-        currentIndex: navigationIndex.state,
-        onTap: (index) {
-          navigationIndex.state = index;
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(LineIcons.fire),
-              label: "Trending",
-              tooltip: "news and feed"),
-          BottomNavigationBarItem(
-              icon: Icon(LineIcons.medal),
-              label: "Quizz",
-              tooltip: "Evaluate yourself"),
-          BottomNavigationBarItem(
-              icon: Icon(LineIcons.lightbulb),
-              label: "Library",
-              tooltip: "Thousand of ressources at your disposal"),
-          BottomNavigationBarItem(
-              icon: Icon(LineIcons.userFriends),
-              label: "Groups",
-              tooltip: "learn and grow together"),
-        ],
-      ),
-    );
+            children:
+                _screens.map((screen) => SlideInLeft(child: screen)).toList()),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(LineIcons.podcast),
+          onPressed: () => null,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 3.0,
+          child: Container(
+            height: 52.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                NavItem(icon: LineIcons.globe, position: 0, label: "Home"),
+                NavItem(icon: LineIcons.gift, position: 1, label: "Library"),
+                NavItem(icon: LineIcons.school, position: 2, label: "Quizz"),
+                NavItem(
+                    icon: LineIcons.userFriends, position: 3, label: "Exchnage")
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -171,9 +156,58 @@ class Root extends ConsumerWidget {
     final user = watch(authStateProvider);
 
     return user.when(
-        loading: () => CircularProgressIndicator(),
+        loading: () => Scaffold(body: CircularProgressIndicator()),
         error: (_, __) => Text("Something went wrong"),
         data: (authenticatedUser) =>
             authenticatedUser != null ? Home() : Login());
+  }
+}
+
+class NavItem extends HookWidget {
+  final IconData icon;
+  final int position;
+  final String label;
+  const NavItem({
+    Key? key,
+    required this.icon,
+    required this.position,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final index = useProvider(navigationIndexProvider);
+    return GestureDetector(
+      onTap: () => index.state = position,
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            children: [
+              position == index.state
+                  ? Container(
+                      height: 4.0,
+                      width: 4.0,
+                      decoration: BoxDecoration(
+                          color: Palette.primary, shape: BoxShape.circle))
+                  : SizedBox.shrink(),
+              Icon(icon,
+                  color: position == index.state
+                      ? Palette.primary
+                      : Palette.primary.withOpacity(0.5)),
+              Text(label,
+                  style: TextStyle(
+                      color: position == index.state
+                          ? Palette.primary
+                          : Palette.primary.withOpacity(0.5),
+                      fontWeight: position == index.state
+                          ? FontWeight.bold
+                          : FontWeight.normal))
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
