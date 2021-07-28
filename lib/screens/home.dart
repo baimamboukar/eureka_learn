@@ -63,6 +63,50 @@ List<SubjectBox> subjectsBox = [
       imagePath: "$imagesRosot/maths.png"),
   SubjectBox(
       color: Palette.randomColor(),
+      subject: "Chemestry",
+      imagePath: "$imagesRosot/chemestry.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Chemestry",
+      imagePath: "$imagesRosot/chemestry.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Biology",
+      imagePath: "$imagesRosot/biology.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Geography",
+      imagePath: "$imagesRosot/geography.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Chemestry",
+      imagePath: "$imagesRosot/chemestry.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Chemestry",
+      imagePath: "$imagesRosot/chemestry.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
       subject: "Biology",
       imagePath: "$imagesRosot/biology.png"),
   SubjectBox(
