@@ -6,3 +6,4 @@ export 'signup.dart';
 export 'settings.dart';
 export 'notifications.dart';
 export 'profile.dart';
+export 'quizz.dart';
