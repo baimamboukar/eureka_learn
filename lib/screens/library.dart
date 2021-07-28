@@ -40,8 +40,8 @@ class _LibraryState extends State<Library> {
           child: IndexedStack(
             index: activeIndex.state,
             children: [
-              Ressources(),
               BookView(),
+              Ressources(),
               Logo(
                 withIcon: true,
               ),
@@ -137,39 +137,29 @@ class Ressources extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0),
-        child: Column(
-          children: [
-            ...[
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-            ].map((e) => Align(
-                  heightFactor: 0.75,
-                  child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(
-                                24.0,
-                              ),
-                              topRight: Radius.circular(24.0)),
-                          side: BorderSide(color: Colors.black12, width: 1.50)),
-                      child: ListTile(
-                        title: Text("Further Maths GCE 2021",
-                            overflow: TextOverflow.ellipsis,
-                            style: Styles.subtitle),
-                        subtitle: Text("GCE Board"),
-                      )),
-                ))
-          ],
-        ),
-      )),
-    );
+    return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0),
+      child: Column(
+        children: [
+          Align(
+            heightFactor: 0.75,
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          24.0,
+                        ),
+                        topRight: Radius.circular(24.0)),
+                    side: BorderSide(color: Colors.black12, width: 1.50)),
+                child: ListTile(
+                  title: Text("Further Maths GCE 2021",
+                      overflow: TextOverflow.ellipsis, style: Styles.subtitle),
+                  subtitle: Text("GCE Board"),
+                )),
+          )
+        ],
+      ),
+    ));
   }
 }
