@@ -11,4 +11,10 @@ class Styles {
 
   static TextStyle subtitle = TextStyle(
       color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18.5);
+  static TextStyle designText(
+          {required Color color, required double size, required bool bold}) =>
+      TextStyle(
+          color: color,
+          fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+          fontSize: size);
 }
