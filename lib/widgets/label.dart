@@ -18,7 +18,7 @@ class _LabelState extends State<Label> {
         onTap: () => setState(() => widget.model.active = !widget.model.active),
         child: AnimatedContainer(
             curve: Curves.easeInCubic,
-            width: 85.0,
+            width: 88.0,
             height: 20.0,
             duration: Duration(milliseconds: 250),
             decoration: BoxDecoration(
@@ -29,9 +29,10 @@ class _LabelState extends State<Label> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(widget.model.iconPath,
+                    overflow: TextOverflow.ellipsis,
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-                Text(widget.model.title)
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                Text(widget.model.title, overflow: TextOverflow.ellipsis)
               ],
             )),
       ),

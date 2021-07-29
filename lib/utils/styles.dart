@@ -10,12 +10,5 @@ class Styles {
       ));
 
   static TextStyle subtitle = TextStyle(
-    color: Colors.grey,
-    fontWeight: FontWeight.normal,
-  );
-  static TextStyle button(Color color) => TextStyle(
-        color: color,
-        fontWeight: FontWeight.bold,
-        fontSize: 22.0,
-      );
+      color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18.5);
 }

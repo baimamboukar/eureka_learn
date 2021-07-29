@@ -67,19 +67,19 @@ class _PosterState extends State<Poster> {
                   ActionButton(
                       label: "add file",
                       color: Palette.success,
-                      icon: Icon(LineIcons.file),
+                      icon: Icon(LineIcons.file, size: 14.0),
                       callback: () => print("exporting...")),
                   const SizedBox(width: 8.0),
                   ActionButton(
                       label: "add photo",
                       color: Palette.secondary,
-                      icon: Icon(LineIcons.photoVideo),
+                      icon: Icon(LineIcons.photoVideo, size: 14.0),
                       callback: () => print("exporting...")),
                   const SizedBox(width: 30.0),
                   ActionButton(
                       label: "Publish",
                       color: Palette.primary,
-                      icon: Icon(LineIcons.telegram),
+                      icon: Icon(LineIcons.telegram, size: 14.0),
                       callback: () => print("exporting...")),
                 ],
               ),

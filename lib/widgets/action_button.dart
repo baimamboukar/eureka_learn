@@ -28,6 +28,7 @@ class ActionButton extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   label,

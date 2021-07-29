@@ -14,10 +14,10 @@ class Logo extends StatelessWidget {
           TextSpan(
               text: "eureka",
               style: TextStyle(
-                  fontSize: size ?? 20.0,
+                  fontSize: size ?? 22.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.amber)),
-          TextSpan(text: "learn")
+          TextSpan(text: "learn"),
         ]));
   }
 }

@@ -71,7 +71,7 @@ class DrawerItem extends StatelessWidget {
     return ListTile(
         onTap: () => Get.to(() => destination ?? FlutterLogo()),
         leading: icon,
-        title: Text(label),
+        title: Text(label, style: Styles.subtitle),
         trailing: Icon(LineIcons.angleRight));
   }
 }

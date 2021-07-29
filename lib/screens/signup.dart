@@ -3,7 +3,6 @@ import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -48,24 +47,24 @@ class Signup extends ConsumerWidget {
                     type: TextInputType.text,
                     controller: nameController,
                     label: "name",
-                    hint: "Enter your names",
+                    hint: "enter your names",
                     isPassword: false,
                     isPhone: false),
                 Input(
-                    icon: LineIcons.inbox,
+                    icon: Icons.email,
                     context: context,
                     type: TextInputType.text,
                     controller: emailController,
                     label: "email",
-                    hint: "Enter your email",
+                    hint: "enter your email",
                     isPassword: false,
                     isPhone: false),
                 Input(
-                    icon: LineIcons.phoneSquare,
+                    icon: LineIcons.mobilePhone,
                     context: context,
                     type: TextInputType.text,
                     controller: TextEditingController(),
-                    label: "phone",
+                    label: "phone number",
                     hint: "Enter your phone number",
                     isPassword: false,
                     isPhone: false),
@@ -78,9 +77,6 @@ class Signup extends ConsumerWidget {
                     hint: "Enter your password",
                     isPassword: true,
                     isPhone: false),
-                const SizedBox(height: 10.0),
-                Text("Forgot your password ?",
-                    style: TextStyle(color: Palette.error)),
                 const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
@@ -90,6 +86,7 @@ class Signup extends ConsumerWidget {
                   },
                   child: Button(
                     label: "Signup",
+                    icon: LineIcons.sign,
                     color: Palette.primary,
                   ),
                 ),
@@ -102,11 +99,13 @@ class Signup extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Button(
-                      label: "With Google 🔗",
+                      label: "With Google",
+                      icon: LineIcons.googleLogo,
                       color: Palette.error.withOpacity(0.7),
                     ),
                     Button(
-                      label: "With Phone 📲",
+                      label: "With Phone",
+                      icon: LineIcons.tablet,
                       color: Palette.success,
                     ),
                   ],

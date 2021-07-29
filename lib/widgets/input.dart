@@ -37,6 +37,7 @@ class _InputState extends State<Input> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextField(
+        controller: widget.controller,
         style: TextStyle(
           color: Palette.primary,
           fontWeight: FontWeight.w400,

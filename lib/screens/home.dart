@@ -1,8 +1,9 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
+import 'package:eureka_learn/widgets/tips_banner.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class All extends StatelessWidget {
   const All({Key? key}) : super(key: key);
@@ -19,9 +20,10 @@ class All extends StatelessWidget {
                     bottomLeft: Radius.circular(40.0),
                     bottomRight: Radius.circular(40.0))),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Poster(),
-            )),
+                padding: const EdgeInsets.all(10.0),
+                child: TipsBanner(
+                    tips: Tips(DateTime(1, 01, 2021),
+                        "Lorem ipsum dolor ai samet", "Geography")))),
       ),
       SliverToBoxAdapter(
           child: Padding(
@@ -55,16 +57,20 @@ var imagesRosot = "assets/icons/png";
 List<SubjectBox> subjectsBox = [
   SubjectBox(
       color: Palette.randomColor(),
-      subject: "Chemestry",
-      imagePath: "$imagesRosot/chemestry.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
       subject: "Maths",
       imagePath: "$imagesRosot/maths.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Biology",
       imagePath: "$imagesRosot/biology.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Geography",
+      imagePath: "$imagesRosot/geography.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Maths",
+      imagePath: "$imagesRosot/maths.png"),
   SubjectBox(
       color: Palette.randomColor(),
       subject: "Geography",
