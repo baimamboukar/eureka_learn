@@ -55,7 +55,7 @@ class Book extends StatelessWidget {
           Center(
               child: Button(
                   label: "Download",
-                  icon: LineIcons.gem,
+                  icon: LineIcons.download,
                   color: Palette.success.withOpacity(0.85)))
         ],
       ),

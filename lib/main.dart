@@ -79,7 +79,6 @@ class EurekaLearn extends HookWidget {
   }
 }
 
-GlobalKey _scaffoldKey = GlobalKey();
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 List<LabelModel> subjects = [
   LabelModel(title: "All", iconPath: "🔥", active: false),
@@ -93,6 +92,7 @@ List<LabelModel> subjects = [
 ];
 
 List<Widget> _screens = [All(), Library(), Quizz(), Logo(withIcon: true)];
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
   @override
@@ -100,11 +100,11 @@ class Home extends HookWidget {
     final navigationIndex = useProvider(navigationIndexProvider);
 
     return Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         appBar: AppBar(
             leading: IconButton(
                 icon: Icon(LineIcons.tasks),
-                onPressed: () => Scaffold.of(context).openDrawer),
+                onPressed: () => scaffoldKey.currentState!.openDrawer()),
             title: Logo(
               withIcon: true,
             ),
