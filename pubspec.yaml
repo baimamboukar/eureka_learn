@@ -20,6 +20,7 @@ dependencies:
   google_fonts: ^2.1.0
   line_icons: ^2.0.1
   animate_do: ^2.0.0
+  file_picker: ^3.0.4
   get: ^4.1.4
   card_swiper: ^1.0.2
   flutter_riverpod: ^0.14.0+3
