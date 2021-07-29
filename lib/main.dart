@@ -162,12 +162,12 @@ class Home extends HookWidget {
   }
 }
 
-class Root extends ConsumerWidget {
+class Root extends HookWidget {
   const Root({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(authStateProvider);
+  Widget build(BuildContext context) {
+    final user = useProvider(authStateProvider);
 
     return user.when(
         loading: () => Scaffold(body: CircularProgressIndicator()),
