@@ -39,6 +39,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.2.48
   share_plus: ^2.1.4
   badges: ^2.0.1
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:
