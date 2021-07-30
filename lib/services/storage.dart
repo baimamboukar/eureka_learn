@@ -21,4 +21,3 @@ class Storage {
     return prefs.getBool("themeMode") ?? false;
   }
 }
-

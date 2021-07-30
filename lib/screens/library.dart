@@ -1,3 +1,4 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/paper_model.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -57,13 +58,13 @@ class _LibraryState extends State<Library> {
               labelColor: Palette.primary,
               unselectedLabelColor: Palette.dark,
               labelStyle: Styles.subtitle,
-              tabs: [Text("Lessons"), Text("Quizz"), Text("Books")],
+              tabs: [Text("Papers"), Text("Notes"), Text("Books")],
             ),
           ),
           TabBarView(
             children: [
               Ressources(papers: _papers),
-              BookView(),
+              NotesExcerpt(notes: _notes),
               BookView(),
             ],
           )
@@ -156,6 +157,60 @@ class Ressources extends StatelessWidget {
                   ],
                 ),
               )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+List<Note> _notes = [
+  Note(subject: "Maths", topics: [
+    Topic(
+        title: "Arithmetic in Z",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of, Treason, Bribery, or other Property belonging to the President of the United States, shall be appointed an Elector. In every Case, after the Choice of the whole Number of free Persons, including those bound to Service or Labour in one supreme Court, and in such inferior Courts as the Congress of the United States. When vacancies happen in the Representation from each State, chosen by the Thirteenth Amendment. The Congress shall have been elected, and he shall have one Vote."
+        ])
+  ])
+];
+
+class NotesExcerpt extends StatelessWidget {
+  final List<Note> notes;
+  const NotesExcerpt({Key? key, required this.notes}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            for (int i = 0; i < notes.length; i++)
+              Card(
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                  child: ExpansionTile(
+                    tilePadding: const EdgeInsets.only(top: 15.0),
+                    title: Text(notes[i].subject, style: Styles.subtitle),
+                    leading: Image.asset("assets/icons/png/geography.png"),
+                    childrenPadding: const EdgeInsets.all(14.0),
+                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...notes[i].topics.map((topic) => GestureDetector(
+                            onTap: () =>
+                                Get.to(() => TopicDetails(topic: topic)),
+                            child: Card(
+                                child: ListTile(
+                              title: Text(topic.title),
+                              trailing: Icon(LineIcons.angleRight),
+                            )),
+                          ))
+                    ],
+                  ))
           ],
         ),
       ),

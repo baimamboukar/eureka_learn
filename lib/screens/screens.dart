@@ -8,3 +8,4 @@ export 'notifications.dart';
 export 'profile.dart';
 export 'quizz.dart';
 export 'explore_papers.dart';
+export 'topic_details.dart';
