@@ -25,8 +25,8 @@ class Book extends StatelessWidget {
         children: [
           Center(
             child: Image(
-                height: 300.0,
-                width: 150.0,
+                height: 200.0,
+                width: 160.0,
                 image:
                     AssetImage(imagePath ?? "assets/icons/png/chemestry.png")),
           ),

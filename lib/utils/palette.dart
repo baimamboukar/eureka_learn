@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Palette {
-  static Color primary = Colors.blue;
+  static Color primary = Colors.amber;
   static Color secondary = Colors.orange;
   static Color success = Colors.green;
   static Color error = Colors.redAccent;
   static Color light = Colors.white;
-  static Color dark = Colors.black;
+  static Color dark = Colors.black45;
   static LinearGradient linearGradient = LinearGradient(colors: [
     Colors.blue,
     Colors.blue.withOpacity(0.7),
