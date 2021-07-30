@@ -15,3 +15,4 @@ export 'user_avatar.dart';
 export 'tips_banner.dart';
 export 'books_view.dart';
 export 'paper.dart';
+export 'papers_menu.dart';

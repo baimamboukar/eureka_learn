@@ -1,4 +1,5 @@
 import 'package:eureka_learn/models/paper_model.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,10 @@ class Ressources extends StatelessWidget {
           children: [
             for (int x = 0; x < 10; x++)
               Card(
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
                 child: ExpansionTile(
                   tilePadding: const EdgeInsets.only(top: 15.0),
                   title: Text("Maths", style: Styles.subtitle),
@@ -119,7 +124,10 @@ class Ressources extends StatelessWidget {
                               children: [
                                 Text("120 lessons"),
                                 GestureDetector(
-                                  onTap: () => Get.to(() => ExplorePapers()),
+                                  onTap: () => Get.to(() => ExplorePapers(
+                                        classe: "1ere",
+                                        subject: "Maths",
+                                      )),
                                   child: Chip(
                                       visualDensity:
                                           VisualDensity.adaptivePlatformDensity,
