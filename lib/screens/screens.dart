@@ -1,7 +1,7 @@
 export 'screens.dart';
 export 'home.dart';
 export 'welcome.dart';
-export 'library.dart';
+export 'ressources.dart';
 export 'signup.dart';
 export 'settings.dart';
 export 'notifications.dart';

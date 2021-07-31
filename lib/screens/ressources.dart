@@ -9,11 +9,11 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Library extends StatefulHookWidget {
-  Library({Key? key}) : super(key: key);
+class Ressources extends StatefulHookWidget {
+  Ressources({Key? key}) : super(key: key);
 
   @override
-  _LibraryState createState() => _LibraryState();
+  _RessourcesState createState() => _RessourcesState();
 }
 
 List<PaperModel> _papers = [
@@ -44,7 +44,7 @@ List<PaperModel> _papers = [
       type: "2022 Exam"),
 ];
 
-class _LibraryState extends State<Library> {
+class _RessourcesState extends State<Ressources> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
@@ -62,7 +62,7 @@ class _LibraryState extends State<Library> {
           ),
           TabBarView(
             children: [
-              Ressources(papers: _papers),
+              PapersExcerpt(papers: _papers),
               NotesExcerpt(notes: _notes),
               BookView(),
             ],
@@ -73,9 +73,9 @@ class _LibraryState extends State<Library> {
   }
 }
 
-class Ressources extends StatelessWidget {
+class PapersExcerpt extends StatelessWidget {
   final List<PaperModel> papers;
-  const Ressources({Key? key, required this.papers}) : super(key: key);
+  const PapersExcerpt({Key? key, required this.papers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

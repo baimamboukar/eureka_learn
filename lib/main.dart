@@ -91,7 +91,7 @@ List<LabelModel> subjects = [
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
 
-List<Widget> _screens = [All(), Quizz(), Library(), Logo(withIcon: true)];
+List<Widget> _screens = [All(), Quizz(), Ressources(), Logo(withIcon: true)];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
