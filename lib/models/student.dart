@@ -16,6 +16,7 @@ class Student {
 
   final List<String> achievements;
   final List<String> preferences;
+  List<String> subjects;
 
   final bool prenium;
 
@@ -32,6 +33,7 @@ class Student {
       this.prenium,
       this.brithdate,
       this.achievements,
+      this.subjects,
       this.bio,
       this.preferences);
 }

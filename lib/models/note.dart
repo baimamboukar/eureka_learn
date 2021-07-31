@@ -1,8 +1,13 @@
 class Note {
   final String subject;
   final List<Topic> topics;
-
-  Note({required this.subject, required this.topics});
+  final String? author;
+  final String classe;
+  Note(
+      {required this.subject,
+      required this.topics,
+      required this.classe,
+      this.author});
 }
 
 class Topic {

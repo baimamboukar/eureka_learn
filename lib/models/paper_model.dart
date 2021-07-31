@@ -1,7 +1,7 @@
 class PaperModel {
   final String subject;
   final String type;
-  final String from;
+  final String? from;
   final DateTime since;
 
   PaperModel(
