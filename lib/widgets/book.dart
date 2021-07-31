@@ -25,8 +25,8 @@ class Book extends StatelessWidget {
         children: [
           Center(
             child: Image(
-                height: 300.0,
-                width: 150.0,
+                height: 185.0,
+                width: 160.0,
                 image:
                     AssetImage(imagePath ?? "assets/icons/png/chemestry.png")),
           ),
@@ -38,6 +38,9 @@ class Book extends StatelessWidget {
                 fontSize: 20.0),
           ),
           const SizedBox(height: 10.0),
+          Text(
+              "They shall in all Cases, except Treason, Felony and Breach of the President and Vice President, declaring what Officer shall act accordingly, until the next Meeting of the State from which he shall have been presented to him. ",
+              style: Styles.subtitle),
           Text("✍️ $author",
               style: TextStyle(color: Palette.primary.withOpacity(0.5))),
           Wrap(
@@ -55,7 +58,7 @@ class Book extends StatelessWidget {
           Center(
               child: Button(
                   label: "Download",
-                  icon: LineIcons.gem,
+                  icon: LineIcons.download,
                   color: Palette.success.withOpacity(0.85)))
         ],
       ),

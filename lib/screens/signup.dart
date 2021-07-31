@@ -3,15 +3,16 @@ import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Signup extends ConsumerWidget {
+class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final auth = watch(authProvider);
+  Widget build(BuildContext context) {
+    final auth = useProvider(authProvider);
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();

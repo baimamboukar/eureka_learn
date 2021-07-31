@@ -21,7 +21,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(ProviderScope(child: EurekaLearn()));
 }
 
@@ -78,7 +79,6 @@ class EurekaLearn extends HookWidget {
   }
 }
 
-GlobalKey _scaffoldKey = GlobalKey();
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 List<LabelModel> subjects = [
   LabelModel(title: "All", iconPath: "🔥", active: false),
@@ -91,7 +91,8 @@ List<LabelModel> subjects = [
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
 ];
 
-List<Widget> _screens = [All(), Library(), Quizz(), Logo(withIcon: true)];
+List<Widget> _screens = [All(), Quizz(), Library(), Logo(withIcon: true)];
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
   @override
@@ -99,11 +100,11 @@ class Home extends HookWidget {
     final navigationIndex = useProvider(navigationIndexProvider);
 
     return Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         appBar: AppBar(
             leading: IconButton(
                 icon: Icon(LineIcons.tasks),
-                onPressed: () => Scaffold.of(context).openDrawer),
+                onPressed: () => scaffoldKey.currentState!.openDrawer()),
             title: Logo(
               withIcon: true,
             ),
@@ -126,8 +127,7 @@ class Home extends HookWidget {
         body: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
-            children:
-                _screens.map((screen) => SlideInLeft(child: screen)).toList()),
+            children: _screens.map((screen) => FadeIn(child: screen)).toList()),
         floatingActionButton: FloatingActionButton(
           child: Icon(LineIcons.podcast),
           onPressed: () {
@@ -150,10 +150,13 @@ class Home extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 NavItem(icon: LineIcons.globe, position: 0, label: "Home"),
-                NavItem(icon: LineIcons.gift, position: 1, label: "Library"),
-                NavItem(icon: LineIcons.school, position: 2, label: "Quizz"),
+                NavItem(icon: LineIcons.school, position: 1, label: "Quizz"),
                 NavItem(
-                    icon: LineIcons.userFriends, position: 3, label: "Exchnage")
+                    icon: LineIcons.bookReader,
+                    position: 2,
+                    label: "Ressources"),
+                NavItem(
+                    icon: LineIcons.userFriends, position: 3, label: "Forum")
               ],
             ),
           ),
@@ -161,12 +164,12 @@ class Home extends HookWidget {
   }
 }
 
-class Root extends ConsumerWidget {
+class Root extends HookWidget {
   const Root({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(authStateProvider);
+  Widget build(BuildContext context) {
+    final user = useProvider(authStateProvider);
 
     return user.when(
         loading: () => Scaffold(body: CircularProgressIndicator()),
@@ -205,16 +208,16 @@ class NavItem extends HookWidget {
                       decoration: BoxDecoration(
                           color: Palette.primary, shape: BoxShape.circle))
                   : SizedBox.shrink(),
-              Badge(
-                badgeContent: Center(child: Text("8")),
-                stackFit: StackFit.passthrough,
-                padding: const EdgeInsets.all(3.0),
-                position: BadgePosition.topEnd(top: 0, end: -7.50),
-                child: Icon(icon,
-                    color: position == index.state
-                        ? Palette.primary
-                        : Palette.primary.withOpacity(0.5)),
-              ),
+              // Badge(
+              //   badgeContent: Center(child: Text("8")),
+              //   stackFit: StackFit.passthrough,
+              //   padding: const EdgeInsets.all(3.0),
+              //   position: BadgePosition.topEnd(top: 0, end: -7.50),
+              Icon(icon,
+                  color: position == index.state
+                      ? Palette.primary
+                      : Palette.primary.withOpacity(0.5)),
+              // ),
               Text(label,
                   style: TextStyle(
                       color: position == index.state

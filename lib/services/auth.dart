@@ -1,6 +1,8 @@
+import 'package:eureka_learn/main.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/utils.dart';
 
 class Authentication {
   final FirebaseAuth _firebaseAuth;
@@ -24,8 +26,11 @@ class Authentication {
     try {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: mail, password: pass)
-          .then((response) => Fluttertoast.showToast(
-              msg: "Successful signed up", backgroundColor: Palette.success));
+          .then((response) {
+        Fluttertoast.showToast(
+            msg: "Successful signed up", backgroundColor: Palette.success);
+      });
+      Get.toEnd(() => Home());
     } on FirebaseAuthException catch (err) {
       Fluttertoast.showToast(
           msg: err.message ?? "Something went wrong !",

@@ -1,22 +1,13 @@
-import 'dart:math';
-import 'package:eureka_learn/utils/screen.dart';
+import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/models/paper_model.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
-import 'package:eureka_learn/widgets/book.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-List<LabelModel> subjects = [
-  LabelModel(title: "All", iconPath: "🔥", active: false),
-  LabelModel(title: "Chemestry", iconPath: "🌡️", active: false),
-  LabelModel(title: "Geography", iconPath: "🌍", active: false),
-  LabelModel(title: "Biology", iconPath: "🔬", active: false),
-  LabelModel(title: "Maths", iconPath: "📈", active: false),
-  LabelModel(title: "Csc", iconPath: "💻", active: false),
-  LabelModel(title: "Physics", iconPath: "🚀", active: false),
-  LabelModel(title: "Philosophy", iconPath: "📚", active: false),
-];
+import 'package:line_icons/line_icons.dart';
 
 class Library extends StatefulHookWidget {
   Library({Key? key}) : super(key: key);
@@ -25,141 +16,270 @@ class Library extends StatefulHookWidget {
   _LibraryState createState() => _LibraryState();
 }
 
+List<PaperModel> _papers = [
+  PaperModel(
+      from: "GBHSM",
+      subject: "Physics",
+      since: DateTime.parse("2021-05-28"),
+      type: "2nd Sequence"),
+  PaperModel(
+      from: "Lykama",
+      subject: "Csc",
+      since: DateTime.parse("2028-04-18"),
+      type: "4th Sequence"),
+  PaperModel(
+      from: "Xv Vogt",
+      subject: "Philosophy",
+      since: DateTime.parse("2021-05-28"),
+      type: "Mock Exam"),
+  PaperModel(
+      from: "CMGHSM",
+      subject: "Information Systems",
+      since: DateTime.parse("2021-05-28"),
+      type: "4th Sequence"),
+  PaperModel(
+      from: "OBC",
+      subject: "Economics",
+      since: DateTime.parse("2021-05-28"),
+      type: "2022 Exam"),
+];
+
 class _LibraryState extends State<Library> {
   Widget build(BuildContext context) {
-    final activeIndex = useProvider(activeIndexProvider);
-    return Scaffold(
-        body: Stack(
-      children: [
-        Container(
-          child: Menu(),
-          height: 50.0,
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: IndexedStack(
-            index: activeIndex.state,
-            children: [
-              BookView(),
-              Ressources(),
-              Logo(
-                withIcon: true,
-              ),
-              Logo(
-                withIcon: true,
-              ),
-              Logo(
-                withIcon: true,
-              ),
-              Center(
-                child: Logo(
-                  withIcon: true,
-                ),
-              ),
-              Logo(
-                withIcon: true,
-              ),
-            ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          body: Stack(
+        children: [
+          Container(
+            child: TabBar(
+              labelPadding: const EdgeInsets.all(8.0),
+              labelColor: Palette.primary,
+              unselectedLabelColor: Palette.dark,
+              labelStyle: Styles.subtitle,
+              tabs: [Text("Papers"), Text("Notes"), Text("Books")],
+            ),
           ),
-        )
-      ],
-    ));
+          TabBarView(
+            children: [
+              Ressources(papers: _papers),
+              NotesExcerpt(notes: _notes),
+              BookView(),
+            ],
+          )
+        ],
+      )),
+    );
   }
 }
 
-class BookView extends StatefulWidget {
-  const BookView({Key? key}) : super(key: key);
-
-  @override
-  _BookViewState createState() => _BookViewState();
-}
-
-class _BookViewState extends State<BookView> {
-  final pageController = PageController();
-  final scrollNotifier = ValueNotifier(0.0);
-  final page = StateProvider<double>((ref) => 0.0);
-  ValueChanged<int> index = ((value) => 0);
-
-  void listenScroll() => scrollNotifier.value = pageController.page ?? 0.0;
-
-  @override
-  void initState() {
-    pageController.addListener(listenScroll);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    pageController.removeListener(listenScroll);
-    pageController.dispose();
-    super.dispose();
-  }
+class Ressources extends StatelessWidget {
+  final List<PaperModel> papers;
+  const Ressources({Key? key, required this.papers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0) +
-          const EdgeInsets.symmetric(vertical: 20.0, horizontal: 4.0),
-      child: Container(
-        height: Screen.height(context) * 0.85,
-        child: ValueListenableBuilder<double>(
-          valueListenable: scrollNotifier,
-          builder: (context, value, _) => PageView.builder(
-            controller: pageController,
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              final percentage = index - value;
-              final rotation = percentage.clamp(0.0, 1.0);
-              final rotationSqrt = pow(rotation, 0.5);
-              if (index == 1) print(percentage);
-              return Transform(
-                  alignment: Alignment.centerLeft,
-                  transform: Matrix4.identity()
-                    ..setEntry(2, 3, 0.0015)
-                    ..rotateY(1.8 * rotationSqrt)
-                    ..translate(-rotation * Screen.width(context) * 0.8)
-                    ..scale(1 + rotation),
-                  child: Book(
-                      imagePath: "assets/icons/png/cover5.jpg",
-                      author: "Brave Author Eureka",
-                      name: "Eurekaboom Inside",
-                      tags: ["Science", "History", "Supernatural"]));
-            },
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(14.0) + const EdgeInsets.only(top: 20.0),
+        child: Column(
+          children: [
+            for (int x = 0; x < 10; x++)
+              Card(
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+                child: ExpansionTile(
+                  tilePadding: const EdgeInsets.only(top: 15.0),
+                  title: Text("Maths", style: Styles.subtitle),
+                  leading: Image.asset(x % 3 == 0
+                      ? "assets/icons/png/maths.png"
+                      : "assets/icons/png/geography.png"),
+                  childrenPadding: const EdgeInsets.all(14.0),
+                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Trending papers", style: Styles.subtitle),
+                        Icon(LineIcons.starAlt, color: Palette.primary)
+                      ],
+                    ),
+                    Text("Most downloaded papers"),
+                    const SizedBox(height: 30.0),
+                    for (int i = 0; i < papers.length; i++)
+                      Paper(model: papers[i]),
+                    Divider(),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Column(
+                          children: [
+                            Text(
+                                "Bei den Initiativen im Bereich der Risikovorsorge liegt der Schwerpunkt auf einer Stärkung des Bankensystems gegenüber",
+                                style: Styles.subtitle),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text("120 lessons"),
+                                GestureDetector(
+                                  onTap: () => Get.to(() => ExplorePapers(
+                                        classe: "1ere",
+                                        subject: "Maths",
+                                      )),
+                                  child: Chip(
+                                      visualDensity:
+                                          VisualDensity.adaptivePlatformDensity,
+                                      elevation: 8.0,
+                                      backgroundColor:
+                                          Palette.primary.withOpacity(0.5),
+                                      side: BorderSide(
+                                          color:
+                                              Palette.primary.withOpacity(0.85),
+                                          width: 1.0),
+                                      label: Row(
+                                        children: [
+                                          Text("Explore..",
+                                              style: Styles.subtitle),
+                                          Icon(LineIcons.angleRight,
+                                              color: Palette.dark)
+                                        ],
+                                      )),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+          ],
         ),
       ),
     );
   }
 }
 
-class Ressources extends StatelessWidget {
-  const Ressources({Key? key}) : super(key: key);
+List<Note> _notes = [
+  Note(subject: "Maths", topics: [
+    Topic(
+        title: "Arithmetic in Z",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Biology", topics: [
+    Topic(
+        title: "Genetics and human legacy",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Computer science", topics: [
+    Topic(
+        title: "Basic Data structures",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Physics", topics: [
+    Topic(
+        title: "Harmonic Oscillators",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ]),
+    Topic(
+        title: "Newton Laws",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ]),
+    Topic(
+        title: "Differential Equations",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Geography", topics: [
+    Topic(
+        title: "Volcanism",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "CitizenShip Education", topics: [
+    Topic(
+        title: "Arithmetic in Z",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+];
+
+class NotesExcerpt extends StatelessWidget {
+  final List<Note> notes;
+  const NotesExcerpt({Key? key, required this.notes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0),
-      child: Column(
-        children: [
-          Align(
-            heightFactor: 0.75,
-            child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(
-                          24.0,
-                        ),
-                        topRight: Radius.circular(24.0)),
-                    side: BorderSide(color: Colors.black12, width: 1.50)),
-                child: ListTile(
-                  title: Text("Further Maths GCE 2021",
-                      overflow: TextOverflow.ellipsis, style: Styles.subtitle),
-                  subtitle: Text("GCE Board"),
-                )),
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 40.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            for (int i = 0; i < notes.length; i++)
+              Card(
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                  child: ExpansionTile(
+                    tilePadding: const EdgeInsets.only(top: 15.0),
+                    title: Text(notes[i].subject, style: Styles.subtitle),
+                    leading: Image.asset("assets/icons/png/geography.png"),
+                    childrenPadding: const EdgeInsets.all(14.0),
+                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...notes[i].topics.map((topic) => GestureDetector(
+                            onTap: () =>
+                                Get.to(() => TopicDetails(topic: topic)),
+                            child: Align(
+                              heightFactor: 0.65,
+                              child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  color: Palette.randomColor(),
+                                  child: ListTile(
+                                    title: Text(topic.title),
+                                    trailing: Icon(LineIcons.angleRight),
+                                  )),
+                            ),
+                          ))
+                    ],
+                  ))
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

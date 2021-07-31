@@ -8,7 +8,7 @@ class Palette {
   static Color success = Colors.green;
   static Color error = Colors.redAccent;
   static Color light = Colors.white;
-  static Color dark = Colors.black;
+  static Color dark = Colors.black45;
   static LinearGradient linearGradient = LinearGradient(colors: [
     Colors.blue,
     Colors.blue.withOpacity(0.7),

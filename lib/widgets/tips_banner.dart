@@ -10,9 +10,15 @@ class TipsBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Swiper(
+        itemHeight: 120.0,
+        itemWidth: Screen.width(context),
+        pagination: SwiperPagination(
+            margin: const EdgeInsets.only(top: 6.0),
+            builder: DotSwiperPaginationBuilder(
+                color: Colors.grey, activeColor: Palette.primary, size: 6.0)),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            color: Palette.randomColor(),
+            color: Colors.grey.shade300,
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: Column(
@@ -35,12 +41,9 @@ class TipsBanner extends StatelessWidget {
             ),
           );
         },
-        pagination: SwiperPagination(
-            margin: EdgeInsets.all(5.0), builder: SwiperPagination.fraction),
         itemCount: 10,
         viewportFraction: 0.8,
-        scale: 0.9,
-        outer: true,
+        autoplayDelay: 2,
         autoplay: true);
   }
 }
