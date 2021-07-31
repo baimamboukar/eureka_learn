@@ -30,7 +30,8 @@ class Profile extends StatelessWidget {
                 background: Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/icons/png/atom.png"))),
+                            image:
+                                AssetImage("assets/icons/png/philosophy.png"))),
                     child: Column(
                       children: [],
                     )),
