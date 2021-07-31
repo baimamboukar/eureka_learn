@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Palette {
-  static Color primary = Colors.amber;
+  static Color primary = Colors.blue;
   static Color secondary = Colors.orange;
   static Color success = Colors.green;
   static Color error = Colors.redAccent;

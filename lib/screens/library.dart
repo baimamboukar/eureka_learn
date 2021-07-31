@@ -46,7 +46,6 @@ List<PaperModel> _papers = [
 
 class _LibraryState extends State<Library> {
   Widget build(BuildContext context) {
-    final activeIndex = useProvider(activeIndexProvider);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -171,9 +170,68 @@ List<Note> _notes = [
         intro:
             "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
         content: [
-          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of, Treason, Bribery, or other Property belonging to the President of the United States, shall be appointed an Elector. In every Case, after the Choice of the whole Number of free Persons, including those bound to Service or Labour in one supreme Court, and in such inferior Courts as the Congress of the United States. When vacancies happen in the Representation from each State, chosen by the Thirteenth Amendment. The Congress shall have been elected, and he shall have one Vote."
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
         ])
-  ])
+  ]),
+  Note(subject: "Biology", topics: [
+    Topic(
+        title: "Genetics and human legacy",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Computer science", topics: [
+    Topic(
+        title: "Basic Data structures",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Physics", topics: [
+    Topic(
+        title: "Harmonic Oscillators",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ]),
+    Topic(
+        title: "Newton Laws",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ]),
+    Topic(
+        title: "Differential Equations",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "Geography", topics: [
+    Topic(
+        title: "Volcanism",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
+  Note(subject: "CitizenShip Education", topics: [
+    Topic(
+        title: "Arithmetic in Z",
+        intro:
+            "We think that most co-branded splash pages use far too much XSL, and not enough Java. Without development, you will lack affiliate-based compliance. ",
+        content: [
+          "And until such enumeration shall be held in the State from which he fled, be delivered up, to be removed from Office on Impeachment for, and Conviction of,."
+        ])
+  ]),
 ];
 
 class NotesExcerpt extends StatelessWidget {
@@ -203,11 +261,19 @@ class NotesExcerpt extends StatelessWidget {
                       ...notes[i].topics.map((topic) => GestureDetector(
                             onTap: () =>
                                 Get.to(() => TopicDetails(topic: topic)),
-                            child: Card(
-                                child: ListTile(
-                              title: Text(topic.title),
-                              trailing: Icon(LineIcons.angleRight),
-                            )),
+                            child: Align(
+                              heightFactor: 0.65,
+                              child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  color: Palette.randomColor(),
+                                  child: ListTile(
+                                    title: Text(topic.title),
+                                    trailing: Icon(LineIcons.angleRight),
+                                  )),
+                            ),
                           ))
                     ],
                   ))

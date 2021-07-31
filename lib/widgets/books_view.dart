@@ -37,7 +37,7 @@ class _BookViewState extends State<BookView> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0) +
-          const EdgeInsets.symmetric(vertical: 20.0, horizontal: 4.0),
+          const EdgeInsets.symmetric(vertical: 40.0, horizontal: 4.0),
       child: Container(
         height: Screen.height(context) * 0.85,
         child: ValueListenableBuilder<double>(

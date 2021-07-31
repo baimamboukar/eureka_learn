@@ -10,7 +10,7 @@ class TopicDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(topic.title)),
+      appBar: AppBar(title: Text(topic.title, style: Styles.subtitle)),
       body: SingleChildScrollView(
           child: Column(
         children: [

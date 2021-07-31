@@ -23,7 +23,7 @@ class ExplorePapers extends HookWidget {
     final showSearch = useProvider(showSearchProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explore Papers"),
+        title: Text("Explore $subject Papers", style: Styles.subtitle),
         bottom: PreferredSize(
           preferredSize: Size(Screen.width(context), 30.0),
           child: Padding(
@@ -151,7 +151,7 @@ class Papers extends StatelessWidget {
                                 IconButton(
                                     icon: Icon(LineIcons.download,
                                         color: Palette.primary),
-                                    onPressed: () => print("downloading..."))
+                                    onPressed: () => print("downloading...")),
                               ],
                             )
                           ],
