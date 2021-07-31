@@ -10,5 +10,5 @@ final authProvider = Provider<Authentication>((ref) {
   return Authentication(ref.read(firebaseAuthProvider));
 });
 
-final authStateProvider =
-    StreamProvider<User?>((ref) => ref.watch(authProvider).authStateChanges);
+final authStateProvider = StreamProvider.autoDispose<User?>(
+    (ref) => ref.watch(authProvider).authStateChanges);
