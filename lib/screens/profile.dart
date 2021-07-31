@@ -1,8 +1,10 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+  final Student user;
+  const Profile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class Profile extends StatelessWidget {
                     CircleAvatar(child: Text("B"), radius: 18.0),
                     const SizedBox(width: 4.0),
                     Text(
-                      "Baimam Boukar",
+                      user.names,
                       style: GoogleFonts.josefinSans(fontSize: 15.0),
                     ),
                   ],
