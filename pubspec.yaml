@@ -22,6 +22,7 @@ dependencies:
   line_icons: ^2.0.1
   animate_do: ^2.0.0
   file_picker: ^3.0.4
+  flutter_pdfview: ^1.1.0
   get: ^4.1.4
   card_swiper: ^1.0.2
   flutter_riverpod: ^0.14.0+3
@@ -32,14 +33,12 @@ dependencies:
   firebase_storage: ^9.0.0
   firebase_auth: ^2.0.0
   cloud_firestore: ^2.3.0
-  flutter_svg: ^0.22.0
   like_button: ^2.0.2
   animated_text_kit: ^4.2.1
   fluttertoast: ^8.0.7
   qr_flutter: ^4.0.0
   syncfusion_flutter_charts: ^19.2.48
   share_plus: ^2.1.4
-  badges: ^2.0.1
   shared_preferences: ^2.0.6
 
 dev_dependencies:
