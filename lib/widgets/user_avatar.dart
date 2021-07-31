@@ -1,6 +1,5 @@
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({Key? key}) : super(key: key);

@@ -16,3 +16,7 @@ export 'tips_banner.dart';
 export 'books_view.dart';
 export 'paper.dart';
 export 'papers_menu.dart';
+export 'papers_excerpt.dart';
+export 'notes_excerpt.dart';
+export 'book_store.dart';
+export 'nav_item.dart';
