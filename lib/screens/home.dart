@@ -5,8 +5,8 @@ import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:eureka_learn/widgets/tips_banner.dart';
 import 'package:flutter/material.dart';
 
-class All extends StatelessWidget {
-  const All({Key? key}) : super(key: key);
+class NewsFeed extends StatelessWidget {
+  const NewsFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,106 +52,3 @@ class All extends StatelessWidget {
     ]);
   }
 }
-
-var imagesRosot = "assets/icons/png";
-List<SubjectBox> subjectsBox = [
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Maths",
-      imagePath: "$imagesRosot/maths.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Biology",
-      imagePath: "$imagesRosot/biology.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Geography",
-      imagePath: "$imagesRosot/geography.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Maths",
-      imagePath: "$imagesRosot/maths.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Geography",
-      imagePath: "$imagesRosot/geography.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Philosophy",
-      imagePath: "$imagesRosot/philosophy.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Physics",
-      imagePath: "$imagesRosot/atom.png"),
-  SubjectBox(
-      color: Palette.randomColor(),
-      subject: "Csc",
-      imagePath: "$imagesRosot/atom.png"),
-];
-
-List<PostModel> posts = [
-  PostModel(
-      withPicture: true,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "2 days",
-      postOwner: "Zarathustra nion",
-      comments: ["Waouh", "Meme situation"],
-      likesCount: 41,
-      tags: ["Maths", "Trigonometry", "sciences", "exam"]),
-  PostModel(
-      withPicture: false,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "30 min ago",
-      postOwner: "Bloomeureka",
-      comments: ["comme ci comme ca", "Por favor"],
-      likesCount: 20,
-      tags: ["Java", "Life"]),
-  PostModel(
-      withPicture: true,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "2 days",
-      postOwner: "Zarathustra nion",
-      comments: ["Waouh", "Meme situation"],
-      likesCount: 41,
-      tags: ["Geo", "Maths"]),
-  PostModel(
-      withPicture: false,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "30 min ago",
-      postOwner: "Bloomeureka",
-      comments: ["comme ci comme ca", "Por favor"],
-      likesCount: 20,
-      tags: ["Java", "data structures", "arrays", "sorting"]),
-  PostModel(
-      withPicture: true,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "2 days",
-      postOwner: "Zarathustra nion",
-      comments: ["Waouh", "Meme situation"],
-      likesCount: 41,
-      tags: ["Geo", "Maths"]),
-  PostModel(
-      withPicture: false,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "30 min ago",
-      postOwner: "Bloomeureka",
-      comments: ["comme ci comme ca", "Por favor"],
-      likesCount: 20,
-      tags: ["Java", "Life"]),
-  PostModel(
-      withPicture: true,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "2 days",
-      postOwner: "Zarathustra nion",
-      comments: ["Waouh", "Meme situation"],
-      likesCount: 41,
-      tags: ["Geo", "Maths"]),
-  PostModel(
-      withPicture: false,
-      picturePath: "assets/icons/png/biology.png",
-      timeAgo: "30 min ago",
-      postOwner: "Bloomeureka",
-      comments: ["comme ci comme ca", "Por favor"],
-      likesCount: 20,
-      tags: ["Java", "Life"]),
-];

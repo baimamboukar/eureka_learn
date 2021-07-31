@@ -3,6 +3,7 @@ export 'home.dart';
 export 'welcome.dart';
 export 'ressources.dart';
 export 'signup.dart';
+export 'login.dart';
 export 'settings.dart';
 export 'notifications.dart';
 export 'profile.dart';

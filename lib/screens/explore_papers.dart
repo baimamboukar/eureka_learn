@@ -1,5 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:eureka_learn/models/paper_model.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +53,7 @@ class ExplorePapers extends HookWidget {
       body: SingleChildScrollView(
           child: showSearch.state
               ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                         child: Logo(
@@ -68,10 +68,9 @@ class ExplorePapers extends HookWidget {
                       index: activeTypesMenu.state,
                       children: [
                         Papers(feed: "Sequence"),
-                        Text("lolo"),
-                        Logo(
-                          withIcon: true,
-                        )
+                        Papers(feed: "Exams"),
+                        Papers(feed: "Quizz"),
+                        Papers(feed: "Mock"),
                       ],
                     )
                   ],
@@ -163,37 +162,9 @@ class Papers extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0),
             child: Text("Papers you may like", style: Styles.subtitle),
           ),
-          for (int i = 0; i < _papers.length; i++) Paper(model: _papers[i]),
+          for (int i = 0; i < papers.length; i++) Paper(model: papers[i]),
         ],
       ),
     ));
   }
 }
-
-List<PaperModel> _papers = [
-  PaperModel(
-      from: "GBHSM",
-      subject: "Physics",
-      since: DateTime.parse("2021-05-28"),
-      type: "2nd Sequence"),
-  PaperModel(
-      from: "Lykama",
-      subject: "Csc",
-      since: DateTime.parse("2028-04-18"),
-      type: "4th Sequence"),
-  PaperModel(
-      from: "Xv Vogt",
-      subject: "Philosophy",
-      since: DateTime.parse("2021-05-28"),
-      type: "Mock Exam"),
-  PaperModel(
-      from: "CMGHSM",
-      subject: "Information Systems",
-      since: DateTime.parse("2021-05-28"),
-      type: "4th Sequence"),
-  PaperModel(
-      from: "OBC",
-      subject: "Economics",
-      since: DateTime.parse("2021-05-28"),
-      type: "2022 Exam"),
-];

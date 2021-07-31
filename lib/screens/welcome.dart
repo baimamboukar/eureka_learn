@@ -46,7 +46,7 @@ class Welcome extends StatelessWidget {
                   child: Button(
                     color: Palette.light,
                     label: "Login",
-                    icon: LineIcons.sign,
+                    icon: LineIcons.signature,
                   ),
                 ),
                 const SizedBox(height: 15.0),
@@ -55,7 +55,7 @@ class Welcome extends StatelessWidget {
                   child: Button(
                     color: Palette.light,
                     label: "SignUp ",
-                    icon: LineIcons.sign,
+                    icon: LineIcons.userPlus,
                   ),
                 ),
                 const SizedBox(height: 100.0),
