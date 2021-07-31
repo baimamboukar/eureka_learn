@@ -1,9 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:badges/badges.dart';
-import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
-import 'package:eureka_learn/screens/login.dart';
 import 'package:eureka_learn/screens/screens.dart';
+import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -11,8 +10,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +24,6 @@ void main() async {
 }
 
 class EurekaLearn extends HookWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final theme = useProvider(darkModeProvider);
@@ -68,7 +64,7 @@ class EurekaLearn extends HookWidget {
           primarySwatch: Colors.grey,
           primaryColor: Colors.black,
           brightness: Brightness.dark,
-          backgroundColor: const Color(0xFF1C1C27),
+          backgroundColor: const Color(0xFF0C0C24),
           accentColor: Colors.white,
           dividerColor: Colors.black12,
           textTheme:
@@ -80,18 +76,13 @@ class EurekaLearn extends HookWidget {
 }
 
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
-List<LabelModel> subjects = [
-  LabelModel(title: "All", iconPath: "🔥", active: false),
-  LabelModel(title: "Chemistry", iconPath: "🌡️", active: false),
-  LabelModel(title: "Geo", iconPath: "🌍", active: false),
-  LabelModel(title: "Biology", iconPath: "🔬", active: false),
-  LabelModel(title: "Maths", iconPath: "📈", active: false),
-  LabelModel(title: "Csc", iconPath: "💻", active: false),
-  LabelModel(title: "Physics", iconPath: "🚀", active: false),
-  LabelModel(title: "Philosophy", iconPath: "📚", active: false),
-];
 
-List<Widget> _screens = [All(), Quizz(), Ressources(), Logo(withIcon: true)];
+List<Widget> _screens = [
+  NewsFeed(),
+  Quizz(),
+  Ressources(),
+  Logo(withIcon: true)
+];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
@@ -131,12 +122,13 @@ class Home extends HookWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(LineIcons.podcast),
           onPressed: () {
-            Fluttertoast.showToast(
-                msg: "Interact with millions of students",
-                backgroundColor: Palette.success);
             Get.dialog(
-              Scaffold(body: FlipInY(child: Center(child: Poster()))),
-            );
+                Material(
+                    child: Container(
+                        height: 400.0,
+                        width: double.infinity,
+                        child: FadeOut(child: Center(child: Poster())))),
+                useRootNavigator: false);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -161,75 +153,5 @@ class Home extends HookWidget {
             ),
           ),
         ));
-  }
-}
-
-class Root extends HookWidget {
-  const Root({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final user = useProvider(authStateProvider);
-
-    return user.when(
-        loading: () => Scaffold(body: CircularProgressIndicator()),
-        error: (_, __) => Text("Something went wrong"),
-        data: (authenticatedUser) =>
-            authenticatedUser != null ? Home() : Login());
-  }
-}
-
-class NavItem extends HookWidget {
-  final IconData icon;
-  final int position;
-  final String label;
-  const NavItem({
-    Key? key,
-    required this.icon,
-    required this.position,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final index = useProvider(navigationIndexProvider);
-    return GestureDetector(
-      onTap: () => index.state = position,
-      child: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Column(
-            children: [
-              position == index.state
-                  ? Container(
-                      height: 4.0,
-                      width: 4.0,
-                      decoration: BoxDecoration(
-                          color: Palette.primary, shape: BoxShape.circle))
-                  : SizedBox.shrink(),
-              // Badge(
-              //   badgeContent: Center(child: Text("8")),
-              //   stackFit: StackFit.passthrough,
-              //   padding: const EdgeInsets.all(3.0),
-              //   position: BadgePosition.topEnd(top: 0, end: -7.50),
-              Icon(icon,
-                  color: position == index.state
-                      ? Palette.primary
-                      : Palette.primary.withOpacity(0.5)),
-              // ),
-              Text(label,
-                  style: TextStyle(
-                      color: position == index.state
-                          ? Palette.primary
-                          : Palette.primary.withOpacity(0.5),
-                      fontWeight: position == index.state
-                          ? FontWeight.bold
-                          : FontWeight.normal))
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
