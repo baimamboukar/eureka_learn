@@ -4,3 +4,4 @@ export 'note.dart';
 export 'book_model.dart';
 export 'subject.dart';
 export 'paper_model.dart';
+export 'post_model.dart';

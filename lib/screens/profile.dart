@@ -19,7 +19,10 @@ class Profile extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 title: Row(
                   children: [
-                    CircleAvatar(child: Text("B"), radius: 18.0),
+                    CircleAvatar(
+                        radius: 18.0,
+                        backgroundImage:
+                            AssetImage("assets/icons/png/student.png")),
                     const SizedBox(width: 4.0),
                     Text(
                       user.names,

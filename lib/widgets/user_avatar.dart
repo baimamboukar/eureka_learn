@@ -1,8 +1,10 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({Key? key}) : super(key: key);
+  final Student? user;
+  const UserAvatar({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

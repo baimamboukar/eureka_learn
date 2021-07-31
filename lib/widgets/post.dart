@@ -1,3 +1,4 @@
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -134,23 +135,4 @@ class Post extends StatelessWidget {
       ),
     );
   }
-}
-
-class PostModel {
-  final bool withPicture;
-  final String picturePath;
-  final String timeAgo;
-  final String postOwner;
-  final List<String> comments;
-  final int likesCount;
-  final List<String> tags;
-
-  PostModel(
-      {required this.withPicture,
-      required this.picturePath,
-      required this.timeAgo,
-      required this.postOwner,
-      required this.comments,
-      required this.likesCount,
-      required this.tags});
 }

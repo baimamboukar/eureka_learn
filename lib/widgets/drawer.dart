@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -56,7 +57,7 @@ List<dynamic> items = [
   DrawerItem(
       icon: Icon(LineIcons.themeco, color: Palette.primary),
       label: "Profile",
-      destination: Profile()),
+      destination: FlutterLogo()),
 ];
 
 class DrawerItem extends StatelessWidget {
