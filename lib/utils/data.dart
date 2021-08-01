@@ -148,6 +148,14 @@ List<SubjectBox> subjectsBox = [
       imagePath: "$imagesRosot/atom.png"),
   SubjectBox(
       color: Palette.randomColor(),
+      subject: "Economics",
+      imagePath: "$imagesRosot/philosophy.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "CitizenShip",
+      imagePath: "$imagesRosot/philosophy.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
       subject: "Csc",
       imagePath: "$imagesRosot/atom.png"),
 ];

@@ -11,6 +11,7 @@ class Input extends StatefulWidget {
   final bool isPassword;
   final bool isPhone;
   final TextInputType type;
+  final String? Function(String?)? validator;
 
   const Input(
       {Key? key,
@@ -21,7 +22,8 @@ class Input extends StatefulWidget {
       required this.isPassword,
       required this.type,
       required this.isPhone,
-      required this.icon})
+      required this.icon,
+      this.validator})
       : super(key: key);
 
   @override
@@ -36,8 +38,9 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: TextField(
+      child: TextFormField(
         controller: widget.controller,
+        validator: widget.validator,
         style: TextStyle(
           color: Palette.primary,
           fontWeight: FontWeight.w400,

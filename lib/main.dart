@@ -29,43 +29,25 @@ class EurekaLearn extends HookWidget {
     return GetMaterialApp(
       title: "EurekaLearn",
       theme: ThemeData(
-          primaryColorBrightness: Brightness.light,
-          primaryColorDark: Colors.black,
-          primarySwatch: Colors.blue,
-          primaryColor: Colors.blue,
-          textTheme:
-              GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-          iconTheme: IconThemeData(size: 22.0, opacity: 1),
-          appBarTheme: AppBarTheme(
-              centerTitle: true,
-              color: Palette.light,
-              elevation: 0.0,
-              systemOverlayStyle:
-                  SystemUiOverlayStyle(statusBarColor: Colors.blue),
-              actionsIconTheme: IconThemeData(color: Palette.primary),
-              textTheme: GoogleFonts.josefinSansTextTheme(),
-              iconTheme: IconThemeData(color: Palette.primary, size: 16.0)),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Palette.light,
-            elevation: 3.0,
-            selectedItemColor: Palette.primary,
-            unselectedItemColor: Palette.dark.withOpacity(0.33),
-            showUnselectedLabels: true,
-            selectedIconTheme:
-                IconThemeData(color: Palette.primary, size: 22.0),
-            unselectedIconTheme: IconThemeData(color: Colors.grey, size: 18.0),
-            selectedLabelStyle:
-                TextStyle(color: Palette.primary, fontWeight: FontWeight.bold),
-            unselectedLabelStyle:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
-          )),
-      darkTheme: ThemeData(
-          primarySwatch: Colors.grey,
-          primaryColor: Colors.black,
-          brightness: Brightness.dark,
-          backgroundColor: const Color(0xFF0C0C24),
-          accentColor: Colors.white,
-          dividerColor: Colors.black12,
+        primaryColorBrightness: Brightness.light,
+        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        accentColorBrightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.grey.shade200,
+        textTheme:
+            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+        iconTheme: IconThemeData(size: 22.0, opacity: 1),
+        appBarTheme: AppBarTheme(
+            centerTitle: true,
+            color: Palette.light,
+            elevation: 0.0,
+            systemOverlayStyle:
+                SystemUiOverlayStyle(statusBarColor: Colors.blue),
+            actionsIconTheme: IconThemeData(color: Palette.primary),
+            textTheme: GoogleFonts.josefinSansTextTheme(),
+            iconTheme: IconThemeData(color: Palette.primary, size: 16.0)),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
       themeMode: theme.state ? ThemeMode.dark : ThemeMode.light,
@@ -80,7 +62,9 @@ List<Widget> _screens = [
   NewsFeed(),
   Quizz(),
   Ressources(),
-  Logo(withIcon: true)
+  Logo(
+    withIcon: true,
+  )
 ];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 

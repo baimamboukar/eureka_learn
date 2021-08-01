@@ -20,44 +20,48 @@ class NotesExcerpt extends StatelessWidget {
               final List<Note> _notes = List.from(
                   notes.where((note) => note.subject == subject.subject));
               return Card(
-                  elevation: 10.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24.0),
                   ),
-                  child: ExpansionTile(
-                    tilePadding: const EdgeInsets.only(top: 15.0),
-                    title: Text(subject.subject ?? "Subject",
-                        style: Styles.subtitle),
-                    leading: Image.asset(
-                        subject.imagePath ?? "assets/icons/png/geography.png"),
-                    childrenPadding: const EdgeInsets.all(14.0),
-                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ..._notes.map((note) {
-                        return Column(
-                          children: [
-                            ...note.topics.map((topic) => GestureDetector(
-                                  onTap: () =>
-                                      Get.to(() => TopicDetails(topic: topic)),
-                                  child: Align(
-                                    heightFactor: 0.65,
-                                    child: Card(
-                                        elevation: 5.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                        ),
-                                        color: Palette.randomColor(),
-                                        child: ListTile(
-                                          title: Text(topic.title),
-                                          trailing: Icon(LineIcons.angleRight),
-                                        )),
-                                  ),
-                                )),
-                          ],
-                        );
-                      })
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, right: 12.0, bottom: 6.0),
+                    child: ExpansionTile(
+                      tilePadding: const EdgeInsets.only(top: 15.0),
+                      title: Text(subject.subject ?? "Subject",
+                          style: Styles.subtitle),
+                      leading: Image.asset(subject.imagePath ??
+                          "assets/icons/png/geography.png"),
+                      childrenPadding: const EdgeInsets.all(14.0),
+                      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ..._notes.map((note) {
+                          return Column(
+                            children: [
+                              ...note.topics.map((topic) => GestureDetector(
+                                    onTap: () => Get.to(
+                                        () => TopicDetails(topic: topic)),
+                                    child: Align(
+                                      heightFactor: 0.65,
+                                      child: Card(
+                                          elevation: 5.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                          color: Palette.randomColor(),
+                                          child: ListTile(
+                                            title: Text(topic.title),
+                                            trailing:
+                                                Icon(LineIcons.angleRight),
+                                          )),
+                                    ),
+                                  )),
+                            ],
+                          );
+                        })
+                      ],
+                    ),
                   ));
             })
           ],
