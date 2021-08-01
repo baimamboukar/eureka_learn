@@ -61,7 +61,9 @@ class Signup extends HookWidget {
                     label: "email",
                     hint: "enter your email",
                     isPassword: false,
-                    isPhone: false),
+                    isPhone: false, 
+                    validator: (value) => 
+                    ),
                 Input(
                     icon: LineIcons.mobilePhone,
                     context: context,
