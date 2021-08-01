@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class _QuizzState extends State<Quizz> {
   final scrollController = ScrollController();
   double topContainer = 0;
   void listenScroll() {
-    double firstEelementOffset = scrollController.offset / 119;
+    double firstEelementOffset = scrollController.offset / 60;
     setState(() {
       topContainer = firstEelementOffset;
     });
@@ -82,12 +81,7 @@ class _QuizzState extends State<Quizz> {
               itemCount: subjectsBox.length,
               itemBuilder: (BuildContext context, int index) {
                 var _subject = subjectsBox[index];
-                // final itemPositionOffset = index * 50;
-                // final diff = scrollController.offset - itemPositionOffset;
-                // final percent = 1.0 - (diff / 50);
-                // double opacity = percent;
-                // double scale = percent;
-                // final lastElementOffset = subjectsBox.length * 50;
+
                 double scale = 1.0;
                 if (topContainer > 0.5) {
                   scale = index + 0.5 - topContainer;
@@ -104,7 +98,7 @@ class _QuizzState extends State<Quizz> {
                     opacity: scale,
                     child: Transform(
                       alignment: Alignment.bottomCenter,
-                      transform: Matrix4.identity()..scale(scale, 1.0),
+                      transform: Matrix4.identity()..scale(scale, scale),
                       child: Card(
                           color: _subject.color,
                           elevation: 5.0,
