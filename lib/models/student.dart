@@ -12,10 +12,8 @@ class Student {
   final String school;
   final String town;
   final String level;
-  final String bio;
 
   final List<String> achievements;
-  final List<String> preferences;
   List<String> subjects;
 
   final bool prenium;
@@ -33,7 +31,5 @@ class Student {
       this.prenium,
       this.brithdate,
       this.achievements,
-      this.subjects,
-      this.bio,
-      this.preferences);
+      this.subjects);
 }
