@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:badges/badges.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
@@ -106,13 +105,9 @@ class Home extends HookWidget {
                         context: context,
                         delegate: Search(),
                       )),
-              Badge(
-                badgeContent: Text("12"),
-                position: BadgePosition.topEnd(top: 7.5, end: 5),
-                child: IconButton(
-                    icon: Icon(LineIcons.bell),
-                    onPressed: () => Get.to(() => Notifications())),
-              ),
+              IconButton(
+                  icon: Icon(LineIcons.bell),
+                  onPressed: () => Get.to(() => Notifications())),
             ]),
         drawer: AppDrawer(),
         body: IndexedStack(
