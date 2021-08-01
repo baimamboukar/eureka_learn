@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
+final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
 class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
 
@@ -28,101 +30,117 @@ class Signup extends HookWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0) +
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-            child: Column(
-              children: [
-                Text("🤓", style: TextStyle(fontSize: 64.0)),
-                Logo(
-                  withIcon: false,
-                ),
-                AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText("Hack your success now",
-                        speed: const Duration(milliseconds: 100), cursor: "⚡"),
-                  ],
-                  displayFullTextOnTap: true,
-                  stopPauseOnTap: true,
-                  repeatForever: true,
-                ),
-                const SizedBox(height: 30.0),
-                Input(
-                    icon: LineIcons.userAlt,
-                    context: context,
-                    type: TextInputType.text,
-                    controller: nameController,
-                    label: "name",
-                    hint: "enter your names",
-                    isPassword: false,
-                    isPhone: false),
-                Input(
-                    icon: Icons.email,
-                    context: context,
-                    type: TextInputType.text,
-                    controller: emailController,
-                    label: "email",
-                    hint: "enter your email",
-                    isPassword: false,
-                    isPhone: false, 
-                    validator: (value) => 
-                    ),
-                Input(
-                    icon: LineIcons.mobilePhone,
-                    context: context,
-                    type: TextInputType.text,
-                    controller: TextEditingController(),
-                    label: "phone number",
-                    hint: "Enter your phone number",
-                    isPassword: false,
-                    isPhone: false),
-                Input(
-                    icon: LineIcons.lock,
-                    context: context,
-                    type: TextInputType.text,
-                    controller: passwordController,
-                    label: "password",
-                    hint: "Enter your password",
-                    isPassword: true,
-                    isPhone: false),
-                const SizedBox(height: 20.0),
-                GestureDetector(
-                  onTap: () {
-                    auth.signupUser(
-                        mail: emailController.text,
-                        pass: passwordController.text);
-                  },
-                  child: Button(
-                    label: "Signup",
-                    icon: LineIcons.userPlus,
-                    color: Palette.primary,
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  Text("🤓", style: TextStyle(fontSize: 64.0)),
+                  Logo(
+                    withIcon: false,
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                Divider(
-                  height: 1.0,
-                ),
-                const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Button(
-                      label: "With Google",
-                      icon: LineIcons.googleLogo,
-                      color: Palette.error.withOpacity(0.7),
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText("Hack your success now",
+                          speed: const Duration(milliseconds: 100),
+                          cursor: "⚡"),
+                    ],
+                    displayFullTextOnTap: true,
+                    stopPauseOnTap: true,
+                    repeatForever: true,
+                  ),
+                  const SizedBox(height: 30.0),
+                  Input(
+                      icon: LineIcons.userAlt,
+                      context: context,
+                      type: TextInputType.text,
+                      controller: nameController,
+                      label: "name",
+                      hint: "enter your names",
+                      isPassword: false,
+                      isPhone: false),
+                  Input(
+                      icon: Icons.email,
+                      context: context,
+                      type: TextInputType.text,
+                      controller: emailController,
+                      label: "email",
+                      hint: "enter your email",
+                      isPassword: false,
+                      isPhone: false,
+                      validator: (value) => GetUtils.isEmail(value!)
+                          ? "Enter a valid email please"
+                          : null),
+                  Input(
+                      icon: LineIcons.mobilePhone,
+                      context: context,
+                      type: TextInputType.text,
+                      controller: TextEditingController(),
+                      label: "phone number",
+                      hint: "Enter your phone number",
+                      isPassword: false,
+                      isPhone: false,
+                      validator: (value) => GetUtils.isPhoneNumber(value!)
+                          ? "Enter a valid phone number"
+                          : null),
+                  Input(
+                      icon: LineIcons.lock,
+                      context: context,
+                      type: TextInputType.text,
+                      controller: passwordController,
+                      label: "password",
+                      hint: "Enter your password",
+                      isPassword: true,
+                      isPhone: false,
+                      validator: (value) {
+                        if (value!.length < 6)
+                          return "Your password should have at least 6 characters";
+                        else
+                          return null;
+                      }),
+                  const SizedBox(height: 20.0),
+                  GestureDetector(
+                    onTap: () {
+                      if (_formkey.currentState!.validate())
+                        auth.signupUser(
+                            mail: emailController.text,
+                            pass: passwordController.text);
+                    },
+                    child: Button(
+                      label: "Signup",
+                      icon: LineIcons.userPlus,
+                      color: Palette.primary,
                     ),
-                    Button(
-                      label: "With Phone",
-                      icon: LineIcons.tablet,
-                      color: Palette.success,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                GestureDetector(
-                  onTap: () => Get.to(() => Login()),
-                  child: Text("Already have account? Login here...",
-                      style: TextStyle(
-                          color: Palette.primary, fontWeight: FontWeight.bold)),
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  Divider(
+                    height: 1.0,
+                  ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Button(
+                        label: "With Google",
+                        icon: LineIcons.googleLogo,
+                        color: Palette.error.withOpacity(0.7),
+                      ),
+                      Button(
+                        label: "With Phone",
+                        icon: LineIcons.tablet,
+                        color: Palette.success,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  GestureDetector(
+                    onTap: () => Get.to(() => Login()),
+                    child: Text("Already have account? Login here...",
+                        style: TextStyle(
+                            color: Palette.primary,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
