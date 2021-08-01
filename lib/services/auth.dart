@@ -7,7 +7,6 @@ import 'package:get/utils.dart';
 class Authentication {
   final FirebaseAuth _firebaseAuth;
   Authentication(this._firebaseAuth);
-
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
   Future<void> loginUser({required String mail, required String pass}) async {
     try {
