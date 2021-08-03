@@ -1,6 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/models/question_model.dart';
+import 'package:eureka_learn/models/quizz_model.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
+import 'package:eureka_learn/screens/quizz_page.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -55,6 +58,10 @@ List<dynamic> items = [
       label: "Authentication",
       destination: Welcome()),
   DrawerItem(
+      icon: Icon(LineIcons.questionCircle, color: Palette.primary),
+      label: "Quizz test",
+      destination: QuizzPage(quizz: _quizz)),
+  DrawerItem(
       icon: Icon(LineIcons.themeco, color: Palette.primary),
       label: "Profile",
       destination: FlutterLogo()),
@@ -76,3 +83,42 @@ class DrawerItem extends StatelessWidget {
         trailing: Icon(LineIcons.angleRight));
   }
 }
+
+final QuizzModel _quizz = QuizzModel(
+  questions: [
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor sit amet",
+        options: ["A", "B", "C"],
+        subject: "Geography",
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor sit amet",
+        options: ["A", "B", "C"],
+        subject: "Geography",
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor sit amet",
+        options: ["A", "B", "C"],
+        subject: "Geography",
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor sit amet",
+        options: ["A", "B", "C"],
+        subject: "Geography",
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor sit amet",
+        options: ["A", "B", "C"],
+        subject: "Geography",
+        topic: '')
+  ],
+  subject: "Geograpy",
+  topic: "Volcanism",
+  timed: false,
+  isGeneralQuizz: false,
+);

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
@@ -8,13 +9,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 
 final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 final registrationInfosProvider = StateProvider<bool>((ref) => false);
 final sectionProvider = StateProvider<String>((ref) => "");
 final classeProvider = StateProvider<String>((ref) => "");
+final subjectsProvider = StateProvider<List<String>>((ref) => []);
 
 class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
@@ -116,8 +117,8 @@ class Signup extends HookWidget {
                             //     pass: passwordController.text);
                           },
                           child: Button(
-                            label: "Signup",
-                            icon: LineIcons.userPlus,
+                            label: "Continue...",
+                            icon: LineIcons.signature,
                             color: Palette.primary,
                           ),
                         ),
@@ -159,15 +160,33 @@ class Signup extends HookWidget {
   }
 }
 
-class RegistrationInfos extends HookWidget {
+class RegistrationInfos extends StatefulHookWidget {
   RegistrationInfos({Key? key}) : super(key: key);
 
+  @override
+  _RegistrationInfosState createState() => _RegistrationInfosState();
+}
+
+class _RegistrationInfosState extends State<RegistrationInfos> {
   @override
   Widget build(BuildContext context) {
     final section = useProvider(sectionProvider);
     final classe = useProvider(classeProvider);
+    final chosenSubjects = useProvider(subjectsProvider);
     return Column(
       children: [
+        GestureDetector(
+          onTap: () {
+            section.state = "";
+            classe.state = "";
+            chosenSubjects.state = [];
+          },
+          child: Button(
+            color: Palette.primary,
+            label: "Reset",
+            icon: LineIcons.signature,
+          ),
+        ),
         Text("🤓", style: TextStyle(fontSize: 64.0)),
         Logo(
           withIcon: false,
@@ -218,60 +237,164 @@ class RegistrationInfos extends HookWidget {
             ),
           ],
         ),
-        Text("What is your class?", style: Styles.subtitle),
         if (section.state != "" && classe.state == "")
-          Container(
-            height: 250.0,
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: classes.length,
-              itemBuilder: (BuildContext context, int index) {
-                final _classe = classes[index];
-                return Card(
-                  color: classe.state == _classe
-                      ? Palette.primary
-                      : Colors.grey.shade300,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  child: ListTile(
-                    onTap: () => classe.state = _classe,
-                    title: Text(_classe),
-                    trailing: classe.state == _classe
-                        ? Icon(LineIcons.checkCircleAlt, color: Palette.light)
-                        : SizedBox.shrink(),
-                  ),
-                );
-              },
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              bottom: 8.0,
+            ),
+            child: Text("What is your class?", style: Styles.subtitle),
+          ),
+        if (section.state != "" && classe.state == "")
+          FlipInY(
+            duration: Duration(milliseconds: 1750),
+            child: Container(
+              height: 250.0,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: section.state == "Francophone"
+                    ? francoClasses.length
+                    : angloClasses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final _classe = section.state == "Francophone"
+                      ? francoClasses[index]
+                      : angloClasses[index];
+                  return Card(
+                    color: classe.state == _classe
+                        ? Palette.primary
+                        : Colors.grey.shade300,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    child: ListTile(
+                      onTap: () => classe.state = _classe,
+                      title: Text(_classe),
+                      trailing: classe.state == _classe
+                          ? Icon(LineIcons.checkCircleAlt, color: Palette.light)
+                          : SizedBox.shrink(),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         if (classe.state != "")
-          Card(
-            color: Palette.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
+          FadeIn(
+            duration: Duration(milliseconds: 1200),
+            child: Card(
+              color: Palette.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              child: ListTile(
+                  title: Text(classe.state),
+                  trailing:
+                      Icon(LineIcons.checkCircleAlt, color: Palette.light)),
             ),
-            child: ListTile(
-                title: Text(classe.state),
-                trailing: Icon(LineIcons.checkCircleAlt, color: Palette.light)),
           ),
-        Text("What are your subjects ?", style: Styles.subtitle),
-        Wrap(spacing: 3.50, children: [
-          for (int i = 0; i < 15; i++)
-            Chip(
-              label: Text("Geography"),
-            )
-        ])
+        if (classe.state != "")
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: Text("What are your subjects ?", style: Styles.subtitle),
+          ),
+        if (classe.state != "")
+          FlipInX(
+            duration: Duration(milliseconds: 1500),
+            delay: Duration(milliseconds: 1200),
+            child: Wrap(
+                spacing: 3.50,
+                children: section.state == "Francophone"
+                    ? francoSubjects
+                        .map((subject) => JelloIn(
+                              child: ChoiceChip(
+                                selected:
+                                    chosenSubjects.state.contains(subject),
+                                onSelected: (selected) {
+                                  selected
+                                      ? chosenSubjects.state.add(subject)
+                                      : chosenSubjects.state.remove(subject);
+                                  setState(() {});
+                                },
+                                label: Text(subject),
+                              ),
+                            ))
+                        .toList()
+                    : angloSubjects
+                        .map((subject) => JelloIn(
+                              child: ChoiceChip(
+                                selected:
+                                    chosenSubjects.state.contains(subject),
+                                onSelected: (selected) {
+                                  selected
+                                      ? chosenSubjects.state.add(subject)
+                                      : chosenSubjects.state.remove(subject);
+                                  setState(() {});
+                                },
+                                label: Text(subject),
+                              ),
+                            ))
+                        .toList()),
+          ),
+        if (chosenSubjects.state.length >= 3)
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: FadeIn(
+              duration: Duration(milliseconds: 2000),
+              child: Button(
+                label: "Continue...",
+                icon: LineIcons.signature,
+                color: Palette.primary,
+              ),
+            ),
+          )
       ],
     );
   }
 }
 
-List<String> classes = [
+List<String> francoClasses = [
   "1ere TI",
   "Tle TI",
   "Tle C",
   "Tle D",
   "Tle A4 ESP",
   "Tle A4 All"
+];
+
+List<String> angloClasses = [
+  "From 5S",
+  "From 5C",
+  "From 5A",
+  "From 5SP",
+  "USS",
+  "USA",
+];
+
+List<String> angloSubjects = [
+  "Maths",
+  "Physics",
+  "Econmics",
+  "Geography",
+  "Computer Science",
+  "ICT",
+  "Maths",
+  "Physics",
+  "Econmics",
+  "Geography",
+  "Computer Science",
+  "ICT"
+];
+List<String> francoSubjects = [
+  "Maths",
+  "Physique",
+  "Litterature",
+  "ESF",
+  "Chimie",
+  "Informatique",
+  "Maths",
+  "Physique",
+  "Litterature",
+  "ESF",
+  "Chimie",
+  "Informatique"
 ];
