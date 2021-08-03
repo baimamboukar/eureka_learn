@@ -3,6 +3,7 @@ import 'package:eureka_learn/models/quizz_model.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
 
 class QuizzPage extends StatelessWidget {
   final QuizzModel quizz;
@@ -61,6 +62,26 @@ class Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 40.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24.0),
+            border: Border.all(
+              color: Palette.primary,
+            )),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("lorem ipsum dolor", style: Styles.subtitle),
+              Icon(LineIcons.checkCircleAlt, color: Palette.success)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
