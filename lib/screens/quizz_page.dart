@@ -2,23 +2,53 @@ import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/models/quizz_model.dart';
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class QuizzPage extends StatelessWidget {
+final choiceEventProvider = StateProvider<bool>((ref) => false);
+final selectedOptionProvider = StateProvider<String?>((ref) => "");
+final currentQuestionProvider = StateProvider<int>((ref) => 0);
+
+class QuizzPage extends HookWidget {
   final QuizzModel quizz;
   const QuizzPage({Key? key, required this.quizz}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final currentQuestion = useProvider(currentQuestionProvider);
+    final choiceMade = useProvider(choiceEventProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("Quizz ${quizz.subject}"),
       ),
       body: SingleChildScrollView(
           child: Column(
-        children: [Question(question: quizz.questions[0])],
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Text("Question ${currentQuestion.state + 1}",
+                style: Styles.subtitle),
+          ),
+          Question(question: quizz.questions[0]),
+          if (choiceMade.state)
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: GestureDetector(
+                onTap: () => choiceMade.state = false,
+                child: FlipInY(
+                  duration: Duration(milliseconds: 750),
+                  child: Button(
+                      color: Palette.primary,
+                      icon: LineIcons.signature,
+                      label: "Continue..."),
+                ),
+              ),
+            )
+        ],
       )),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.dashboard),
@@ -36,52 +66,76 @@ class QuizzPage extends StatelessWidget {
 
 class Question extends StatelessWidget {
   final QuestionModel question;
+
   const Question({Key? key, required this.question}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    /**
+       ♦ Adding the correct answer to the list of questions
+       ♦ Shuffling them so that the answer should not be fixed as last item
+     * 
+     */
+    question.options
+        .addIf(!question.options.contains(question.answer), question.answer);
+    question.options.shuffle();
     return Container(
         child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(top: 10, right: 20, bottom: 20),
           child: Text(
               "They were dropping, losing altitude in a canyon of rainbow foliage, a lurid communal mural that completely covered the hull of the spherical chamber. ",
               style: Styles.subtitle),
         ),
         const SizedBox(
-          height: 20.0,
+          height: 8.0,
         ),
-        if (question.image != null) Image.asset("assets/icons/png/biology.png"),
+        if (question.image != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0, bottom: 18.0),
+            child: Image.asset(
+              "assets/icons/png/biology.png",
+              height: 80.0,
+            ),
+          ),
         ...question.options.map((option) => Option(option: option)),
       ],
     ));
   }
 }
 
-class Option extends StatefulWidget {
+class Option extends HookWidget {
   final String option;
-  const Option({Key? key, required this.option}) : super(key: key);
 
-  @override
-  _OptionState createState() => _OptionState();
-}
-
-class _OptionState extends State<Option> {
-  final colored = false;
+  Option({required this.option});
   @override
   Widget build(BuildContext context) {
+    final choiceMade = useProvider(choiceEventProvider);
+    final selectedOption = useProvider(selectedOptionProvider);
     return SlideInLeft(
       delay: Duration(milliseconds: 1000),
       duration: Duration(milliseconds: 1000),
       child: GestureDetector(
-        //  onTap: () => setState(() => colored = true),
+        onTap: () {
+          if (choiceMade.state == false) choiceMade.state = !choiceMade.state;
+          if (selectedOption.state == option)
+            selectedOption.state = "";
+          else
+            selectedOption.state = option;
+        },
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Card(
+            color: choiceMade.state && selectedOption.state == option
+                ? Palette.primary.withOpacity(0.35)
+                : Palette.light,
+            elevation: 4.0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22.0),
-            ),
+                borderRadius: BorderRadius.circular(22.0),
+                side: choiceMade.state && selectedOption.state == option
+                    ? BorderSide(color: Palette.primary, width: 1.50)
+                    : BorderSide.none),
             child: SizedBox(
               height: 50.0,
               child: Padding(
@@ -90,8 +144,13 @@ class _OptionState extends State<Option> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(widget.option, style: Styles.subtitle),
-                    Icon(LineIcons.checkCircleAlt, color: Palette.success)
+                    Text(option, style: Styles.subtitle),
+                    choiceMade.state && selectedOption.state == option
+                        ? FlipInX(
+                            duration: Duration(milliseconds: 1000),
+                            child: Icon(LineIcons.checkCircle,
+                                color: Palette.light))
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),
