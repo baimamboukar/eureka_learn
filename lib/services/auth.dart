@@ -7,7 +7,11 @@ import 'package:get/utils.dart';
 class Authentication {
   final FirebaseAuth _firebaseAuth;
   Authentication(this._firebaseAuth);
+
+  //track the state of authentication by a real-time listener
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  //login user and provide his data to the app once done
   Future<void> loginUser({required String mail, required String pass}) async {
     try {
       await _firebaseAuth
@@ -21,6 +25,7 @@ class Authentication {
     }
   }
 
+  //sign up the user and store his data to firestore
   Future<void> signupUser({required String mail, required String pass}) async {
     try {
       await _firebaseAuth
@@ -37,6 +42,7 @@ class Authentication {
     }
   }
 
+  //simpli logs out the user
   Future<void> logoutUser() async {
     try {
       await _firebaseAuth.signOut().then((response) => Fluttertoast.showToast(
