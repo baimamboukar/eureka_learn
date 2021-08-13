@@ -289,7 +289,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
               ),
             ],
           ),
-        if (section.state != "" && classe.state == "")
+        if (level.state != "" && classe.state == "")
           Padding(
             padding: const EdgeInsets.only(
               top: 8.0,
