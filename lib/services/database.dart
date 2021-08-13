@@ -10,16 +10,24 @@ class Database {
   Future<bool> createUser(Student student) async {
     try {
       await _firestore.collection('students').doc(student.id).set({
-        "name": student.names,
-        "phone": student.phone,
-        "email": student.email,
-        "avatar": student.avatar,
-        "level": student.level,
-        "achievements": student.achievements,
-      });
+        'id': student.id,
+        'names': student.names,
+        'section': student.section,
+        'email': student.email,
+        'phone': student.phone,
+        'school': student.school,
+        'town': student.town,
+        'level': student.level,
+        'avatar': student.avatar,
+        'achievements': student.achievements,
+        'subjects': student.subjects,
+        'prenium': student.prenium,
+        'birthdate': student.birthdate,
+      }).then((response) => true);
       return true;
     } on FirebaseException catch (err) {
-      print(err.message);
+      Fluttertoast.showToast(
+          msg: "Error while creating user: ${err.message}..");
       return false;
     }
   }
@@ -28,7 +36,6 @@ class Database {
     try {
       DocumentSnapshot doc =
           await _firestore.collection('students').doc(uid).get();
-      return Student.fromDocumentSnapshot(doc);
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(
         msg: "Something went wrong ${err.message}",

@@ -53,12 +53,7 @@ class QuizzPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.dashboard),
           onPressed: () => Get.dialog(
-                Material(
-                  child: Container(
-                      height: 200.0,
-                      width: 200.0,
-                      child: Center(child: Text("Echo test 1234"))),
-                ),
+                Material(child: QuestionsGrid()),
               )),
     );
   }
@@ -159,5 +154,27 @@ class Option extends HookWidget {
         ),
       ),
     );
+  }
+}
+
+class QuestionsGrid extends StatelessWidget {
+  const QuestionsGrid({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        child: Container(
+            child: GridView.builder(
+      semanticChildCount: 12,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+            height: 50.0,
+            width: 50.0,
+            color: Palette.primary,
+            child: Center(child: Text(index.toString())));
+      },
+    )));
   }
 }
