@@ -16,6 +16,7 @@ final registrationInfosProvider = StateProvider<bool>((ref) => false);
 final sectionProvider = StateProvider<String>((ref) => "");
 final classeProvider = StateProvider<String>((ref) => "");
 final subjectsProvider = StateProvider<List<String>>((ref) => []);
+final levelProvider = StateProvider<String>((ref) => "");
 
 class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class Signup extends HookWidget {
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -171,8 +173,11 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
   @override
   Widget build(BuildContext context) {
     final section = useProvider(sectionProvider);
+    final level = useProvider(levelProvider);
     final classe = useProvider(classeProvider);
+
     final chosenSubjects = useProvider(subjectsProvider);
+
     return Column(
       children: [
         GestureDetector(
@@ -237,6 +242,53 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
             ),
           ],
         ),
+        if (section.state != "" &&
+            section.state == "Anglophone" &&
+            classe.state == "")
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              bottom: 8.0,
+            ),
+            child: Text("What is your level?", style: Styles.subtitle),
+          ),
+        if (section.state != "" &&
+            section.state == "Anglophone" &&
+            classe.state == "")
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () => level.state = "Ordinary",
+                child: Chip(
+                  backgroundColor: section.state == "Anglophone"
+                      ? Palette.primary.withOpacity(0.8)
+                      : Colors.grey,
+                  avatar: Icon(LineIcons.barChartAlt),
+                  label: Text("Ordinary"),
+                  side: BorderSide(
+                      color: section.state == "Anglophone"
+                          ? Palette.primary.withOpacity(0.8)
+                          : Colors.grey,
+                      width: 2.0),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => level.state = "Advanced",
+                child: Chip(
+                    backgroundColor: section.state == "Francophone"
+                        ? Palette.primary.withOpacity(0.8)
+                        : Colors.grey,
+                    avatar: Icon(LineIcons.barChart),
+                    label: Text("Advanced"),
+                    side: BorderSide(
+                        color: section.state == "Francophone"
+                            ? Palette.primary.withOpacity(0.8)
+                            : Colors.grey,
+                        width: 2.0)),
+              ),
+            ],
+          ),
         if (section.state != "" && classe.state == "")
           Padding(
             padding: const EdgeInsets.only(
