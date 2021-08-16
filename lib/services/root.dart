@@ -12,7 +12,6 @@ class Root extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final user = useProvider(authStateProvider);
-
     return user.when(
         loading: () => Scaffold(body: Loading()),
         error: (_, __) => Text("Something went wrong"),

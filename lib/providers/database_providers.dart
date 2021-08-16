@@ -6,5 +6,4 @@ final fireStoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
 });
 
-final databaseProvider =
-    Provider<Database>((ref) => Database(ref.read(fireStoreProvider)));
+final databaseProvider = Provider<Database>((ref) => Database(ref.read));

@@ -1,6 +1,7 @@
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 
 class Profile extends StatelessWidget {
   final Student user;
@@ -10,37 +11,82 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-              expandedHeight: 200.0,
-              stretch: true,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
               pinned: true,
+              floating: true,
+              expandedHeight: 220.0,
               flexibleSpace: FlexibleSpaceBar(
-                title: Row(
-                  children: [
-                    CircleAvatar(
-                        radius: 18.0,
-                        backgroundImage:
-                            AssetImage("assets/icons/png/student.png")),
-                    const SizedBox(width: 4.0),
-                    Text(
-                      user.names,
-                      style: GoogleFonts.josefinSans(fontSize: 15.0),
-                    ),
+                  background: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 40.0, left: 12.0, right: 12.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("❣ ${user.school}"),
+                                  Text(user.email),
+                                  Text("${user.phone}"),
+                                  Wrap(
+                                    spacing: 3.5,
+                                    children: user.subjects
+                                        .map((subject) => Chip(
+                                              backgroundColor: Palette.primary
+                                                  .withOpacity(0.5),
+                                              label: Text(subject),
+                                            ))
+                                        .toList(),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  children: [
+                                    Icon(LineIcons.medal,
+                                        size: 38.0, color: Palette.secondary),
+                                    Text("Brave Achiever")
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Icon(LineIcons.trophy,
+                                        size: 38.0, color: Palette.dark),
+                                    Text("Best Achievement")
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      decoration: BoxDecoration()),
+                  collapseMode: CollapseMode.pin,
+                  stretchModes: [
+                    StretchMode.blurBackground,
+                    StretchMode.fadeTitle,
+                    StretchMode.zoomBackground
                   ],
-                ),
-                background: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/icons/png/philosophy.png"))),
-                    child: Column(
-                      children: [],
-                    )),
-              )),
-        ],
-      )),
+                  title: Text(user.names, overflow: TextOverflow.ellipsis)),
+            ),
+            SliverToBoxAdapter(
+              child: Column(children: [
+                for (int i = 0; i < 250; i++) Text("I love Davna Marie Claire")
+              ]),
+            )
+          ],
+        ),
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+        floatingActionButton:
+            FloatingActionButton(onPressed: null, child: Icon(LineIcons.edit)),
+      ),
     );
   }
 }

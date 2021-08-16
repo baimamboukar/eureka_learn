@@ -43,8 +43,12 @@ class QuizzPage extends HookWidget {
                   duration: Duration(milliseconds: 750),
                   child: Button(
                       color: Palette.primary,
-                      icon: LineIcons.signature,
-                      label: "Continue..."),
+                      icon: currentQuestion.state == quizz.questions.length
+                          ? LineIcons.signature
+                          : LineIcons.mapPin,
+                      label: currentQuestion.state == quizz.questions.length
+                          ? "View results..."
+                          : "Continue"),
                 ),
               ),
             )
@@ -72,8 +76,9 @@ class Question extends StatelessWidget {
      * 
      */
     question.options
-        .addIf(!question.options.contains(question.answer), question.answer);
-    question.options.shuffle();
+      ..add(question.answer)
+      ..shuffle();
+
     return Container(
         child: Column(
       children: [

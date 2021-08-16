@@ -5,13 +5,12 @@ class Student {
   /**
    ------------DATA ATRIBUTES OF STUDENT------------
    */
-  final String id;
+  final String? id;
   final String names;
   final String section;
   final String email;
   final String phone;
-  final String school;
-  final String town;
+  final String? school;
   final String level;
   final String avatar;
 
@@ -20,22 +19,21 @@ class Student {
 
   final bool prenium;
 
-  final DateTime birthdate;
+  final DateTime? birthdate;
 
   Student({
-    required this.id,
+    this.id,
     required this.names,
     required this.section,
     required this.email,
     required this.phone,
-    required this.school,
-    required this.town,
+    this.school,
     required this.level,
     required this.avatar,
     required this.achievements,
     required this.subjects,
     required this.prenium,
-    required this.birthdate,
+    this.birthdate,
   });
 
   Student copyWith({
@@ -45,7 +43,6 @@ class Student {
     String? email,
     String? phone,
     String? school,
-    String? town,
     String? level,
     String? avatar,
     List<String>? achievements,
@@ -60,7 +57,6 @@ class Student {
         email: email ?? this.email,
         phone: phone ?? this.phone,
         school: school ?? this.school,
-        town: town ?? this.town,
         level: level ?? this.level,
         avatar: avatar ?? this.avatar,
         achievements: achievements ?? this.achievements,
@@ -77,13 +73,12 @@ class Student {
       'email': email,
       'phone': phone,
       'school': school,
-      'town': town,
       'level': level,
       'avatar': avatar,
       'achievements': achievements,
       'subjects': subjects,
       'prenium': prenium,
-      'birthdate': birthdate.millisecondsSinceEpoch,
+      'birthdate': birthdate!.millisecondsSinceEpoch,
     };
   }
 
@@ -95,7 +90,6 @@ class Student {
       email: map['email'],
       phone: map['phone'],
       school: map['school'],
-      town: map['town'],
       level: map['level'],
       avatar: map['avatar'],
       achievements: List<String>.from(map['achievements']),
@@ -105,12 +99,25 @@ class Student {
     );
   }
 
+  factory Student.initial() {
+    return Student(
+        names: "Jeanne Doe",
+        email: "jeannedoe@eureka-learn.cm",
+        phone: "698098787",
+        section: "Franco",
+        level: "top",
+        avatar: "https://zety.com/about/michael-tomaszewski",
+        school: "GBHS Garoua",
+        subjects: ["Maths", "Physics", "Biology", "Csc"],
+        prenium: false,
+        achievements: ["Star", "Bronz", "Alpha"]);
+  }
   String toJson() => json.encode(toMap());
   factory Student.fromJson(String source) =>
       Student.fromDocumentSnapshot(json.decode(source));
 
   @override
   String toString() {
-    return 'Student(id: $id, names: $names, section: $section, email: $email, phone: $phone, school: $school, town: $town, level: $level, avatar: $avatar, achievements: $achievements, subjects: $subjects, prenium: $prenium, birthdate: $birthdate)';
+    return 'Student(id: $id, names: $names, section: $section, email: $email, phone: $phone, school: $school,level: $level, avatar: $avatar, achievements: $achievements, subjects: $subjects, prenium: $prenium, birthdate: $birthdate)';
   }
 }

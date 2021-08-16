@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
+import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -12,22 +14,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
 final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-final registrationInfosProvider = StateProvider<bool>((ref) => false);
-final sectionProvider = StateProvider<String>((ref) => "");
-final classeProvider = StateProvider<String>((ref) => "");
-final subjectsProvider = StateProvider<List<String>>((ref) => []);
-final levelProvider = StateProvider<String>((ref) => "");
 
 class Signup extends HookWidget {
   const Signup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final auth = useProvider(authProvider);
     final registrationInfos = useProvider(registrationInfosProvider);
+    final name = useProvider(nameProvider);
+    final email = useProvider(emailProvider);
+    final password = useProvider(passwordProvider);
+    final phone = useProvider(phoneProvider);
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+    final phoneController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -85,7 +86,7 @@ class Signup extends HookWidget {
                             icon: LineIcons.mobilePhone,
                             context: context,
                             type: TextInputType.text,
-                            controller: TextEditingController(),
+                            controller: phoneController,
                             label: "phone number",
                             hint: "Enter your phone number",
                             isPassword: false,
@@ -114,9 +115,10 @@ class Signup extends HookWidget {
                           onTap: () {
                             if (_formkey.currentState!.validate())
                               registrationInfos.state = true;
-                            // auth.signupUser(
-                            //     mail: emailController.text,
-                            //     pass: passwordController.text);
+                            name.state = nameController.value.text;
+                            email.state = emailController.value.text;
+                            password.state = passwordController.value.text;
+                            phone.state = phoneController.value.text;
                           },
                           child: Button(
                             label: "Continue...",
@@ -172,10 +174,14 @@ class RegistrationInfos extends StatefulHookWidget {
 class _RegistrationInfosState extends State<RegistrationInfos> {
   @override
   Widget build(BuildContext context) {
+    final _auth = useProvider(authProvider);
+    final name = useProvider(nameProvider);
+    final email = useProvider(emailProvider);
+    final password = useProvider(passwordProvider);
+    final phone = useProvider(phoneProvider);
     final section = useProvider(sectionProvider);
     final level = useProvider(levelProvider);
     final classe = useProvider(classeProvider);
-
     final chosenSubjects = useProvider(subjectsProvider);
 
     return Column(
@@ -185,6 +191,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
             section.state = "";
             classe.state = "";
             chosenSubjects.state = [];
+            level.state = "";
           },
           child: Button(
             color: Palette.primary,
@@ -242,32 +249,20 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
             ),
           ],
         ),
-        if (section.state != "" &&
-            section.state == "Anglophone" &&
-            classe.state == "")
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              bottom: 8.0,
-            ),
-            child: Text("What is your level?", style: Styles.subtitle),
-          ),
-        if (section.state != "" &&
-            section.state == "Anglophone" &&
-            classe.state == "")
+        if (section.state != "" && section.state == "Anglophone")
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: () => level.state = "Ordinary",
                 child: Chip(
-                  backgroundColor: section.state == "Anglophone"
+                  backgroundColor: level.state == "Ordinary"
                       ? Palette.primary.withOpacity(0.8)
                       : Colors.grey,
                   avatar: Icon(LineIcons.barChartAlt),
                   label: Text("Ordinary"),
                   side: BorderSide(
-                      color: section.state == "Anglophone"
+                      color: level.state == "Ordinary"
                           ? Palette.primary.withOpacity(0.8)
                           : Colors.grey,
                       width: 2.0),
@@ -276,41 +271,127 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
               GestureDetector(
                 onTap: () => level.state = "Advanced",
                 child: Chip(
-                    backgroundColor: section.state == "Francophone"
+                    backgroundColor: level.state == "Advanced"
                         ? Palette.primary.withOpacity(0.8)
                         : Colors.grey,
                     avatar: Icon(LineIcons.barChart),
                     label: Text("Advanced"),
                     side: BorderSide(
-                        color: section.state == "Francophone"
+                        color: level.state == "Advanced"
                             ? Palette.primary.withOpacity(0.8)
                             : Colors.grey,
                         width: 2.0)),
               ),
             ],
           ),
-        if (level.state != "" && classe.state == "")
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              bottom: 8.0,
-            ),
-            child: Text("What is your class?", style: Styles.subtitle),
+        if (section.state == "Anglophone" &&
+            level.state != "" &&
+            level.state == "Ordinary")
+          FlipInX(
+            duration: Duration(milliseconds: 1500),
+            delay: Duration(milliseconds: 1200),
+            child: Wrap(
+                spacing: 3.50,
+                children: angloSubjects
+                    .map((subject) => JelloIn(
+                          child: ChoiceChip(
+                            selected: chosenSubjects.state.contains(subject),
+                            onSelected: (selected) {
+                              selected
+                                  ? chosenSubjects.state.add(subject)
+                                  : chosenSubjects.state.remove(subject);
+                              setState(() {});
+                            },
+                            label: Text(subject),
+                          ),
+                        ))
+                    .toList()),
           ),
-        if (section.state != "" && classe.state == "")
+        if (section.state == "Anglophone" &&
+            level.state != "" &&
+            level.state == "Advanced" &&
+            classe.state == "")
           FlipInY(
             duration: Duration(milliseconds: 1750),
             child: Container(
               height: 250.0,
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: section.state == "Francophone"
-                    ? francoClasses.length
-                    : angloClasses.length,
+                itemCount: angloSeries.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final _classe = section.state == "Francophone"
-                      ? francoClasses[index]
-                      : angloClasses[index];
+                  final _classe = angloSeries[index];
+                  return Card(
+                    color: classe.state == _classe
+                        ? Palette.primary
+                        : Colors.grey.shade300,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    child: ListTile(
+                      onTap: () {
+                        classe.state = _classe;
+                        chosenSubjects.state
+                            .addAll(getSubjetcsBasedOnSerie(classe.state));
+                      },
+                      title: Text(_classe),
+                      trailing: classe.state == _classe
+                          ? Icon(LineIcons.checkCircleAlt, color: Palette.light)
+                          : SizedBox.shrink(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        if (section.state == "Anglophone" && classe.state != "")
+          FadeIn(
+            duration: Duration(milliseconds: 1200),
+            child: Card(
+              color: Palette.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              child: ListTile(
+                  title: Text(classe.state),
+                  trailing:
+                      Icon(LineIcons.checkCircleAlt, color: Palette.light)),
+            ),
+          ),
+        if (section.state == "Anglophone" &&
+            level.state == "Advanced" &&
+            classe.state != "")
+          FlipInX(
+            duration: Duration(milliseconds: 1500),
+            delay: Duration(milliseconds: 1200),
+            child: Wrap(
+                spacing: 3.50,
+                children: angloSubjects
+                    .map((subject) => JelloIn(
+                          child: ChoiceChip(
+                            selected: chosenSubjects.state.contains(subject),
+                            onSelected: (selected) {
+                              selected
+                                  ? chosenSubjects.state.add(subject)
+                                  : chosenSubjects.state.remove(subject);
+                              setState(() {});
+                            },
+                            label: Text(subject),
+                          ),
+                        ))
+                    .toList()),
+          ),
+        if (section.state != "" &&
+            section.state == "Francophone" &&
+            classe.state == "")
+          FlipInY(
+            duration: Duration(milliseconds: 1750),
+            child: Container(
+              height: 250.0,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: francoClasses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final _classe = francoClasses[index];
                   return Card(
                     color: classe.state == _classe
                         ? Palette.primary
@@ -330,7 +411,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
               ),
             ),
           ),
-        if (classe.state != "")
+        if (section.state == "Francophone" && classe.state != "")
           FadeIn(
             duration: Duration(milliseconds: 1200),
             child: Card(
@@ -344,58 +425,58 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                       Icon(LineIcons.checkCircleAlt, color: Palette.light)),
             ),
           ),
-        if (classe.state != "")
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-            child: Text("What are your subjects ?", style: Styles.subtitle),
-          ),
-        if (classe.state != "")
+        if (section.state == "Francophone" && classe.state != "")
           FlipInX(
             duration: Duration(milliseconds: 1500),
             delay: Duration(milliseconds: 1200),
             child: Wrap(
                 spacing: 3.50,
-                children: section.state == "Francophone"
-                    ? francoSubjects
-                        .map((subject) => JelloIn(
-                              child: ChoiceChip(
-                                selected:
-                                    chosenSubjects.state.contains(subject),
-                                onSelected: (selected) {
-                                  selected
-                                      ? chosenSubjects.state.add(subject)
-                                      : chosenSubjects.state.remove(subject);
-                                  setState(() {});
-                                },
-                                label: Text(subject),
-                              ),
-                            ))
-                        .toList()
-                    : angloSubjects
-                        .map((subject) => JelloIn(
-                              child: ChoiceChip(
-                                selected:
-                                    chosenSubjects.state.contains(subject),
-                                onSelected: (selected) {
-                                  selected
-                                      ? chosenSubjects.state.add(subject)
-                                      : chosenSubjects.state.remove(subject);
-                                  setState(() {});
-                                },
-                                label: Text(subject),
-                              ),
-                            ))
-                        .toList()),
+                children: francoSubjects
+                    .map((subject) => JelloIn(
+                          child: ChoiceChip(
+                            selected: chosenSubjects.state.contains(subject),
+                            onSelected: (selected) {
+                              selected
+                                  ? chosenSubjects.state.add(subject)
+                                  : chosenSubjects.state.remove(subject);
+                              setState(() {});
+                            },
+                            label: Text(subject),
+                          ),
+                        ))
+                    .toList()),
           ),
         if (chosenSubjects.state.length >= 3)
           Padding(
             padding: const EdgeInsets.only(top: 18.0),
             child: FadeIn(
               duration: Duration(milliseconds: 2000),
-              child: Button(
-                label: "Continue...",
-                icon: LineIcons.signature,
-                color: Palette.primary,
+              child: GestureDetector(
+                onTap: () {
+                  Student _student = Student(
+                      names: name.state,
+                      email: email.state,
+                      phone: phone.state,
+                      section: section.state,
+                      level: level.state,
+                      avatar: "https://zety.com/about/michael-tomaszewski",
+                      school: "GBHS Maroua",
+                      subjects: chosenSubjects.state,
+                      prenium: false,
+                      achievements: []);
+                  print(_student);
+                  _auth
+                      .signupUser(
+                          mail: _student.email,
+                          pass: password.state,
+                          student: _student)
+                      .then((response) => "done");
+                },
+                child: Button(
+                  label: "Continue...",
+                  icon: LineIcons.signature,
+                  color: Palette.primary,
+                ),
               ),
             ),
           )
@@ -404,49 +485,35 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
   }
 }
 
-List<String> francoClasses = [
-  "1ere TI",
-  "Tle TI",
-  "Tle C",
-  "Tle D",
-  "Tle A4 ESP",
-  "Tle A4 All"
-];
-
-List<String> angloClasses = [
-  "From 5S",
-  "From 5C",
-  "From 5A",
-  "From 5SP",
-  "USS",
-  "USA",
-];
-
-List<String> angloSubjects = [
-  "Maths",
-  "Physics",
-  "Econmics",
-  "Geography",
-  "Computer Science",
-  "ICT",
-  "Maths",
-  "Physics",
-  "Econmics",
-  "Geography",
-  "Computer Science",
-  "ICT"
-];
-List<String> francoSubjects = [
-  "Maths",
-  "Physique",
-  "Litterature",
-  "ESF",
-  "Chimie",
-  "Informatique",
-  "Maths",
-  "Physique",
-  "Litterature",
-  "ESF",
-  "Chimie",
-  "Informatique"
-];
+List<String> getSubjetcsBasedOnSerie(String serie) {
+  switch (serie) {
+    case "Arts 1":
+      return a1;
+    case "Arts 2":
+      return a2;
+    case "Arts 3":
+      return a3;
+    case "Arts 4":
+      return a4;
+    case "Arts 5":
+      return a5;
+    case "Science 1":
+      return s1;
+    case "Science 2":
+      return s2;
+    case "Science 3":
+      return s3;
+    case "Science 4":
+      return s4;
+    case "Science 5":
+      return s5;
+    case "Science 6":
+      return s6;
+    case "Science 7":
+      return s7;
+    case "Science 8":
+      return s8;
+    default:
+      return [];
+  }
+}

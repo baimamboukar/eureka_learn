@@ -1,5 +1,7 @@
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/paper_model.dart';
+import 'package:eureka_learn/models/question_model.dart';
+import 'package:eureka_learn/models/quizz_model.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 
@@ -227,6 +229,53 @@ List<PostModel> posts = [
       tags: ["Java", "Life"]),
 ];
 
+final QuizzModel quizz = QuizzModel(
+  questions: [
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor",
+        options: ["Alpha option", "Beta Option", "Delta Option"],
+        subject: "Maths",
+        selectedOption: null,
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor",
+        options: ["Alpha option", "Beta Option", "Delta Option"],
+        subject: "Maths",
+        selectedOption: null,
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor",
+        options: ["Alpha option", "Beta Option", "Delta Option"],
+        subject: "Maths",
+        image: "assets/images/",
+        selectedOption: null,
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor",
+        options: ["Alpha option", "Beta Option", "Delta Option"],
+        subject: "Maths",
+        image: "assets/images/",
+        selectedOption: null,
+        topic: ''),
+    QuestionModel(
+        question: "Lorem ipsum dolor sit amet, consectetur",
+        answer: "Lorem ipsum dolor",
+        options: ["Alpha option", "Beta Option", "Delta Option"],
+        subject: "Maths",
+        image: "assets/images/",
+        selectedOption: null,
+        topic: ''),
+  ],
+  subject: "Geograpy",
+  topic: "Volcanism",
+  timed: false,
+  isGeneralQuizz: false,
+);
+
 List<BookModel> books = [
   BookModel(
       name: "True Love waits",
@@ -320,3 +369,89 @@ List<BookModel> books = [
       tags: ["Geography", "Geology", "Metamorphism"],
       url: "http://firebase-storage/bucket-magic/tlw.pdf"),
 ];
+
+List<String> francoClasses = [
+  "1ere TI",
+  "1ere C",
+  "1ere D",
+  "1ere E",
+  "Tle TI",
+  "Tle C",
+  "Tle D",
+  "Tle E",
+  "Tle A4 ESP",
+  "Tle A4 ARB",
+  "Tle A4 ITL",
+  "Tle A4 CHN",
+  "Tle PEBS",
+  "Tle A4 All"
+];
+
+List<String> angloSeries = [
+  "Science 1",
+  "Science 2",
+  "Science 3",
+  "Science 4 ",
+  "Science 5",
+  "Science 6 ",
+  "Science 7",
+  "Science 8 ",
+  "Arts 1",
+  "Arts 2",
+  "Arts 3",
+  "Arts 4",
+  "Arts 5",
+];
+
+List<String> angloSubjects = [
+  "Maths",
+  "Physics",
+  "Economics",
+  "Geography",
+  "History",
+  "Chemistry",
+  "French",
+  "English",
+  "Literature",
+  "Philosophy",
+  "Biology",
+  "Philosophy",
+  "Computer Science",
+  "Pure Maths",
+  "Further Maths",
+  "ICT"
+];
+List<String> francoSubjects = [
+  "Maths",
+  "Physique",
+  "Litterature",
+  "Anglais",
+  "Chimie",
+  "Informatique",
+  "Etude des cas",
+  "SI",
+  "SVT",
+  "Philosophie",
+  "Allemand",
+  "Espagnol",
+  "Chinois",
+  "Langue",
+  "Italien",
+  "Arabe"
+];
+
+List<String> a1 = ["Literature", "History", "French"];
+List<String> a2 = ["History", "Geography", "Economics"];
+List<String> a3 = ["History", "Economics", "Literature"];
+List<String> a4 = ["Economics", "Geography", "Pure Maths"];
+List<String> a5 = ["Literature", "History", "Philosophy"];
+
+List<String> s1 = ["Chemistry", "Physics", "Pure Maths"];
+List<String> s2 = ["Chemistry", "Physics", "Biology"];
+List<String> s3 = ["Biology", "Chemistry", "Pure Maths"];
+
+List<String> s4 = ["Biology", "Biology", "Pure Maths"];
+List<String> s5 = ["Chemistry", "Computer Science", "Maths"];
+List<String> s6 = ["Chemistry", "Physics", "Maths", "Further Maths"];
+List<String> s7 = ["Chemistry", "Biology", "Physics", "Maths"];
+List<String> s8 = ["Chemistry", "Biology", "Physics", "Maths", "Further Maths"];

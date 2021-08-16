@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:eureka_learn/controllers/controllers.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/models/quizz_model.dart';
@@ -19,26 +20,27 @@ class AppDrawer extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _auth = useProvider(authProvider);
+    final _student = useProvider(studentControllerProvider);
     return Drawer(
         child: FlipInY(
             child: Container(
                 child: ListView(
       children: [
         UserAccountsDrawerHeader(
-          otherAccountsPictures: [
-            Logo(withIcon: true),
-          ],
-          decoration: BoxDecoration(gradient: Palette.linearGradient),
-          margin: null,
-          accountEmail: Text("eureka.learn@admin.cm"),
-          accountName: Text("Alpha admin"),
-        ),
+            otherAccountsPictures: [
+              Logo(withIcon: true),
+            ],
+            decoration: BoxDecoration(gradient: Palette.linearGradient),
+            margin: null,
+            accountEmail: Text("eureka.learn@admin.cm"),
+            accountName: Text(_student.state.student.names)),
         for (var item in items) item,
         ListTile(
             onTap: () => _auth.logoutUser(),
             title: Text("Logout"),
             leading: Icon(LineIcons.signature),
             trailing: Icon(LineIcons.angleRight)),
+        Text(_student.state.student.avatar)
       ],
     ))));
   }
@@ -60,11 +62,11 @@ List<dynamic> items = [
   DrawerItem(
       icon: Icon(LineIcons.questionCircle, color: Palette.primary),
       label: "Quizz test",
-      destination: QuizzPage(quizz: _quizz)),
+      destination: QuizzPage(quizz: quizz)),
   DrawerItem(
       icon: Icon(LineIcons.themeco, color: Palette.primary),
       label: "Profile",
-      destination: FlutterLogo()),
+      destination: Profile(user: Student.initial())),
 ];
 
 class DrawerItem extends StatelessWidget {
@@ -83,50 +85,3 @@ class DrawerItem extends StatelessWidget {
         trailing: Icon(LineIcons.angleRight));
   }
 }
-
-final QuizzModel _quizz = QuizzModel(
-  questions: [
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-  ],
-  subject: "Geograpy",
-  topic: "Volcanism",
-  timed: false,
-  isGeneralQuizz: false,
-);
