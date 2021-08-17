@@ -22,8 +22,11 @@ class Authentication {
     try {
       await _firebaseAuth
           .signInWithEmailAndPassword(email: mail, password: pass)
-          .then((response) => Fluttertoast.showToast(
-              msg: "Successful signd in", backgroundColor: Palette.success));
+          .then((response) async {
+        if (await _read(databaseProvider).getUser(response.user!.uid))
+          Fluttertoast.showToast(
+              msg: "Successful signd in", backgroundColor: Palette.success);
+      });
     } on FirebaseAuthException catch (err) {
       Fluttertoast.showToast(
           msg: err.message ?? "Something went wrong !",

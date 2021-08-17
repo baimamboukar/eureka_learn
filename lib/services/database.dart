@@ -12,6 +12,7 @@ class Database {
 
   Future<bool> createUser(
       {required String id, required Student student}) async {
+    var _id = id;
     try {
       await _firestore.collection("students").doc(id).set({
         'id': student.id,
@@ -26,7 +27,7 @@ class Database {
         'subjects': student.subjects,
         'prenium': student.prenium,
         'birthdate': student.birthdate,
-      }).then((response) => true);
+      }).then((response) => getUser(_id));
       return true;
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(
@@ -35,18 +36,19 @@ class Database {
     }
   }
 
-  Future<dynamic> getUser(String uid) async {
+  Future<bool> getUser(String uid) async {
     try {
       await _firestore.collection('students').doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
         _read(studentControllerProvider.notifier).student = _student;
       });
+      return true;
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(
         msg: "Something went wrong ${err.message}",
         backgroundColor: Palette.error,
       );
-      return "Something went wrong";
+      return false;
     }
   }
 }
