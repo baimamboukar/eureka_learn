@@ -77,9 +77,29 @@ class Profile extends StatelessWidget {
                   title: Text(user.names, overflow: TextOverflow.ellipsis)),
             ),
             SliverToBoxAdapter(
-              child: Column(children: [
-                for (int i = 0; i < 250; i++) Text("I love Davna Marie Claire")
-              ]),
+              child: Container(
+                height:100.0,
+                child: TabBar(
+                  tabs: [
+                    Text("Profile"),
+                    Text("Achievement"),
+                    Text("Posts"),
+                    Text("Media")
+                  ]
+                )
+              )
+            ),
+            SliverToBoxAdapter(
+              child: TabBarView(
+                children: [
+                  Text("lorem ipsum dolor"),
+                  Text("Si amet do sect consectur"),
+                  
+                  Text("lorem ipsum dolor"),
+                  Text("Si amet do sect consectur"),
+
+                ]
+              )
             )
           ],
         ),

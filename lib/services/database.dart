@@ -41,6 +41,7 @@ class Database {
       await _firestore.collection('students').doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
         _read(studentControllerProvider.notifier).student = _student;
+        print(_read(studentControllerProvider.notifier).student.email);
       });
       return true;
     } on FirebaseException catch (err) {

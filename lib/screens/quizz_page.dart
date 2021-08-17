@@ -16,7 +16,7 @@ final currentQuestionProvider = StateProvider<int>((ref) => 0);
 class QuizzPage extends HookWidget {
   final QuizzModel quizz;
   const QuizzPage({Key? key, required this.quizz}) : super(key: key);
-
+      
   @override
   Widget build(BuildContext context) {
     final currentQuestion = useProvider(currentQuestionProvider);
@@ -38,7 +38,10 @@ class QuizzPage extends HookWidget {
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: GestureDetector(
-                onTap: () => choiceMade.state = false,
+                onTap: () {
+                  choiceMade.state = false;
+                  currentQuestion.state = currentQuestion.state + 1;
+                },
                 child: FlipInY(
                   duration: Duration(milliseconds: 750),
                   child: Button(

@@ -7,9 +7,8 @@ class StudentController extends StateNotifier<Student> {
   StudentController(this._read, Student student) : super(student);
   Student get student => student;
   set student(Student _student) => student = _student;
-
-  void edit() {
-    _read(databaseProvider).getUser("id");
+  Student getUser() {
+    return student;
   }
 
   String test(int x) {
@@ -18,5 +17,5 @@ class StudentController extends StateNotifier<Student> {
 }
 
 final studentControllerProvider =
-    StateNotifierProvider.autoDispose<StudentController, Student>(
+    StateNotifierProvider<StudentController, Student>(
         (ref) => StudentController(ref.read, Student.initial()));
