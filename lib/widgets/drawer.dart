@@ -20,7 +20,7 @@ class AppDrawer extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _auth = useProvider(authProvider);
-    final _student = useProvider(studentControllerProvider);
+    final _student = useProvider(studentControllerProvider.notifier);
     return Drawer(
         child: FlipInY(
             child: Container(
@@ -32,15 +32,15 @@ class AppDrawer extends HookWidget {
             ],
             decoration: BoxDecoration(gradient: Palette.linearGradient),
             margin: null,
-            accountEmail: Text("eureka.learn@admin.cm"),
-            accountName: Text(_student.state.student.names)),
+            accountEmail: Text(_student.student.email),
+            accountName: Text(_student.student.names)),
         for (var item in items) item,
         ListTile(
             onTap: () => _auth.logoutUser(),
             title: Text("Logout"),
             leading: Icon(LineIcons.signature),
             trailing: Icon(LineIcons.angleRight)),
-        Text(_student.state.student.avatar)
+        Text(_student.student.names)
       ],
     ))));
   }

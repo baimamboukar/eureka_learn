@@ -39,7 +39,7 @@ class Database {
     try {
       await _firestore.collection('students').doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
-        _read(studentControllerProvider).state.student = _student;
+        _read(studentControllerProvider.notifier).student = _student;
       });
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(

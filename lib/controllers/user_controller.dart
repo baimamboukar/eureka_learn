@@ -17,5 +17,6 @@ class StudentController extends StateNotifier<Student> {
   }
 }
 
-final studentControllerProvider = StateProvider.autoDispose(
-    (ref) => StudentController(ref.read, Student.initial()));
+final studentControllerProvider =
+    StateNotifierProvider.autoDispose<StudentController, Student>(
+        (ref) => StudentController(ref.read, Student.initial()));
