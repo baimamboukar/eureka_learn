@@ -230,6 +230,7 @@ List<PostModel> posts = [
 ];
 
 final QuizzModel quizz = QuizzModel(
+  state: QuizzState.initial,
   questions: [
     QuestionModel(
         question: "Lorem ipsum dolor sit amet, consectetur",

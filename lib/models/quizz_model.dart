@@ -1,6 +1,6 @@
 import 'package:eureka_learn/models/question_model.dart';
 
-enum QuizzState{
+enum QuizzState {
   initial,
   ongoing,
   finished,
@@ -15,7 +15,8 @@ class QuizzModel {
   final bool isGeneralQuizz;
 
   QuizzModel(
-      {required this.questions,
+      {required this.state,
+      required this.questions,
       required this.subject,
       required this.topic,
       this.timed,
