@@ -1,5 +1,4 @@
 import 'package:eureka_learn/models/models.dart';
-import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StudentController extends StateNotifier<Student> {

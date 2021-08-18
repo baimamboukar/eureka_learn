@@ -40,6 +40,7 @@ class QuizzPage extends HookWidget {
               child: GestureDetector(
                 onTap: () {
                   choiceMade.state = false;
+                  if(currentQuestion.state < quizz.questions.length)
                   currentQuestion.state = currentQuestion.state + 1;
                 },
                 child: FlipInY(
