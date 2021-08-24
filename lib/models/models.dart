@@ -5,3 +5,5 @@ export 'book_model.dart';
 export 'subject.dart';
 export 'paper_model.dart';
 export 'post_model.dart';
+export 'question_model.dart';
+export 'failure_model.dart';

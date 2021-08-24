@@ -17,6 +17,11 @@ class Palette {
   static LinearGradient gradientWith(Color color) => LinearGradient(
       colors: [color, color.withOpacity(0.5), color.withOpacity(0.3)]);
 
+  static LinearGradient customGradientWith(List<Color> colors) =>
+      LinearGradient(
+          colors: colors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter);
   static Color randomColor() =>
       Colors.primaries[Random().nextInt(Colors.primaries.length)];
 }

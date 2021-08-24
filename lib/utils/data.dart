@@ -1,7 +1,7 @@
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/paper_model.dart';
 import 'package:eureka_learn/models/question_model.dart';
-import 'package:eureka_learn/models/quizz_model.dart';
+
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 
@@ -229,53 +229,53 @@ List<PostModel> posts = [
       tags: ["Java", "Life"]),
 ];
 
-final QuizzModel quizz = QuizzModel(
-  state: QuizzState.initial,
-  questions: [
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-    QuestionModel(
-        question: "Lorem ipsum dolor sit amet, consectetur",
-        answer: "Lorem ipsum dolor",
-        options: ["Alpha option", "Beta Option", "Delta Option"],
-        subject: "Maths",
-        image: "assets/images/",
-        selectedOption: null,
-        topic: ''),
-  ],
-  subject: "Geograpy",
-  topic: "Volcanism",
-  timed: false,
-  isGeneralQuizz: false,
-);
+// final QuizzModel quizz = QuizzModel(
+//   state: QuizzState.initial,
+//   questions: [
+//     QuestionModel(
+//         question: "Lorem ipsum dolor sit amet, consectetur",
+//         answer: "Lorem ipsum dolor",
+//         options: ["Alpha option", "Beta Option", "Delta Option"],
+//         subject: "Maths",
+//         selectedOption: null,
+//         topic: ''),
+//     QuestionModel(
+//         question: "Lorem ipsum dolor sit amet, consectetur",
+//         answer: "Lorem ipsum dolor",
+//         options: ["Alpha option", "Beta Option", "Delta Option"],
+//         subject: "Maths",
+//         selectedOption: null,
+//         topic: ''),
+//     QuestionModel(
+//         question: "Lorem ipsum dolor sit amet, consectetur",
+//         answer: "Lorem ipsum dolor",
+//         options: ["Alpha option", "Beta Option", "Delta Option"],
+//         subject: "Maths",
+//         image: "assets/images/",
+//         selectedOption: null,
+//         topic: ''),
+//     QuestionModel(
+//         question: "Lorem ipsum dolor sit amet, consectetur",
+//         answer: "Lorem ipsum dolor",
+//         options: ["Alpha option", "Beta Option", "Delta Option"],
+//         subject: "Maths",
+//         image: "assets/images/",
+//         selectedOption: null,
+//         topic: ''),
+//     QuestionModel(
+//         question: "Lorem ipsum dolor sit amet, consectetur",
+//         answer: "Lorem ipsum dolor",
+//         options: ["Alpha option", "Beta Option", "Delta Option"],
+//         subject: "Maths",
+//         image: "assets/images/",
+//         selectedOption: null,
+//         topic: ''),
+//   ],
+//   subject: "Geograpy",
+//   topic: "Volcanism",
+//   timed: false,
+//   isGeneralQuizz: false,
+// );
 
 List<BookModel> books = [
   BookModel(

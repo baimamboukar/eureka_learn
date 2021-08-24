@@ -40,6 +40,12 @@ dependencies:
   share_plus: ^2.1.4
   smart_select: ^4.3.2
   shared_preferences: ^2.0.6
+  equatable: #^2.0.3
+  dio: #^4.0.0
+  enum_to_string: #^2.0.1
+  html_character_entities: #^1.0.0+1
+
+
 
 dev_dependencies:
   flutter_test:
