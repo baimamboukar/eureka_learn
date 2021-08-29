@@ -1,8 +1,12 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/providers/quiz_subject_provider.dart';
+import 'package:eureka_learn/screens/quiz_screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Quizz extends StatefulHookWidget {
   const Quizz({Key? key}) : super(key: key);
@@ -37,6 +41,7 @@ class _QuizzState extends State<Quizz> {
 
   @override
   Widget build(BuildContext context) {
+    final quizSubject = useProvider(quizSubjectProvider);
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -99,87 +104,92 @@ class _QuizzState extends State<Quizz> {
                       scale = 1;
                     }
                   }
-                  return Align(
-                    heightFactor: 0.6,
-                    alignment: Alignment.topCenter,
-                    child: AnimatedOpacity(
-                      duration: Duration(milliseconds: 200),
-                      opacity: scale,
-                      child: Transform(
-                        alignment: Alignment.bottomCenter,
-                        transform: Matrix4.identity()..scale(scale, 1.0),
-                        child: Card(
-                            color: _subject.color,
-                            elevation: 5.0,
-                            // margin: const EdgeInsets.all(10.0),
-                            shadowColor: Palette.light,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(
-                                      24.0,
-                                    ),
-                                    topRight: Radius.circular(24.0)),
-                                side: BorderSide(
-                                    color: Colors.black12, width: 2.20)),
-                            child: SizedBox(
-                              height: 100.0,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 12.0, bottom: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(_subject.subject ?? "Subject",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    color: Palette.light,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18.5)),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Row(
-                                          children: [
-                                            Text("120 quizz"),
-                                            const SizedBox(
-                                              width: 15.0,
-                                            ),
-                                            Text("10 Taken")
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  CustomPaint(
-                                    size: Size(100, 100),
-                                    painter: Painter(
-                                        start: _subject.color ?? Colors.white,
-                                        end: _subject.color!.withOpacity(0.8),
-                                        radius: 24.0),
-                                    child: Container(
-                                      height: 100.0,
-                                      width: 75.0,
-                                      child: Image.asset(
-                                        _subject.imagePath ??
-                                            "assets/icons/png/atom.png",
-                                        height: 80.0,
-                                        width: 80.0,
+                  return GestureDetector(
+                    onTap: () { 
+                      quizSubject.state = _subject.subject ?? '';
+                       Get.to(() =>  QuizScreen());},
+                    child: Align(
+                      heightFactor: 0.6,
+                      alignment: Alignment.topCenter,
+                      child: AnimatedOpacity(
+                        duration: Duration(milliseconds: 200),
+                        opacity: scale,
+                        child: Transform(
+                          alignment: Alignment.bottomCenter,
+                          transform: Matrix4.identity()..scale(scale, 1.0),
+                          child: Card(
+                              color: _subject.color,
+                              elevation: 5.0,
+                              // margin: const EdgeInsets.all(10.0),
+                              shadowColor: Palette.light,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(
+                                        24.0,
+                                      ),
+                                      topRight: Radius.circular(24.0)),
+                                  side: BorderSide(
+                                      color: Colors.black12, width: 2.20)),
+                              child: SizedBox(
+                                height: 100.0,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 12.0, bottom: 8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(_subject.subject ?? "Subject",
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      color: Palette.light,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.5)),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10.0),
+                                          Row(
+                                            children: [
+                                              Text("120 quizz"),
+                                              const SizedBox(
+                                                width: 15.0,
+                                              ),
+                                              Text("10 Taken")
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            )),
+                                    CustomPaint(
+                                      size: Size(100, 100),
+                                      painter: Painter(
+                                          start: _subject.color ?? Colors.white,
+                                          end: _subject.color!.withOpacity(0.8),
+                                          radius: 24.0),
+                                      child: Container(
+                                        height: 100.0,
+                                        width: 75.0,
+                                        child: Image.asset(
+                                          _subject.imagePath ??
+                                              "assets/icons/png/atom.png",
+                                          height: 80.0,
+                                          width: 80.0,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                        ),
                       ),
                     ),
                   );
