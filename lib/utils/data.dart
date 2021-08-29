@@ -2,8 +2,12 @@ import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/paper_model.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/models/quizz_model.dart';
+import 'package:eureka_learn/screens/quizz_page.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 
 List<Note> notes = [
   Note(subject: "Maths", classe: "From 5", topics: [
@@ -116,6 +120,29 @@ List<LabelModel> subjects = [
   LabelModel(title: "Csc", iconPath: "💻", active: false),
   LabelModel(title: "Physics", iconPath: "🚀", active: false),
   LabelModel(title: "Philosophy", iconPath: "📚", active: false),
+];
+
+List<dynamic> items = [
+  DrawerItem(
+      icon: Icon(LineIcons.algolia, color: Palette.primary),
+      label: "Settings",
+      destination: Settings()),
+  DrawerItem(
+      icon: Icon(LineIcons.fileDownload, color: Palette.primary),
+      label: "Saved",
+      destination: FlutterLogo()),
+  DrawerItem(
+      icon: Icon(LineIcons.identificationBadge, color: Palette.primary),
+      label: "Authentication",
+      destination: Welcome()),
+  DrawerItem(
+      icon: Icon(LineIcons.questionCircle, color: Palette.primary),
+      label: "Quizz test",
+      destination: QuizzPage(quizz: quizz)),
+  DrawerItem(
+      icon: Icon(LineIcons.themeco, color: Palette.primary),
+      label: "Profile",
+      destination: Profile(user: Student.initial())),
 ];
 
 var imagesRosot = "assets/icons/png";
