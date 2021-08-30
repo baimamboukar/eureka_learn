@@ -45,8 +45,6 @@ dependencies:
   enum_to_string: #^2.0.1
   html_character_entities: #^1.0.0+1
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
