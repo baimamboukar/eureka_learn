@@ -12,10 +12,9 @@ class Database {
 
   Future<bool> createUser(
       {required String id, required Student student}) async {
-    var _id = id;
     try {
       await _firestore.collection("students").doc(id).set({
-        'id': student.id,
+        'id': id,
         'names': student.names,
         'section': student.section,
         'email': student.email,
@@ -26,8 +25,8 @@ class Database {
         'achievements': student.achievements,
         'subjects': student.subjects,
         'prenium': student.prenium,
-        'birthdate': student.birthdate,
-      }).then((response) => getUser(_id));
+      });
+      getUser(id);
       return true;
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(
@@ -38,7 +37,7 @@ class Database {
 
   Future<bool> getUser(String uid) async {
     try {
-      await _firestore.collection('students').doc(uid).get().then((doc) {
+      await _firestore.collection("students").doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
         _read(studentControllerProvider.notifier).student = _student;
         print(_read(studentControllerProvider.notifier).student.email);

@@ -1,10 +1,10 @@
 import 'package:eureka_learn/models/models.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class StudentController extends StateNotifier<Student?> {
+class StudentController extends StateNotifier<Student> {
   final Reader _read;
   StudentController(this._read, Student student) : super(student);
-  Student get student => student ?? Student.initial();
+  Student get student => student;
   set student(Student _student) => student = _student;
   Student getUser() {
     return student;
@@ -16,5 +16,5 @@ class StudentController extends StateNotifier<Student?> {
 }
 
 final studentControllerProvider =
-    StateNotifierProvider<StudentController, Student?>(
+    StateNotifierProvider<StudentController, Student>(
         (ref) => StudentController(ref.read, Student.initial()));

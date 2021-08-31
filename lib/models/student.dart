@@ -19,8 +19,6 @@ class Student {
 
   final bool prenium;
 
-  final DateTime? birthdate;
-
   Student({
     this.id,
     required this.names,
@@ -33,7 +31,6 @@ class Student {
     required this.achievements,
     required this.subjects,
     required this.prenium,
-    this.birthdate,
   });
 
   Student copyWith({
@@ -48,7 +45,6 @@ class Student {
     List<String>? achievements,
     List<String>? subjects,
     bool? prenium,
-    DateTime? birthdate,
   }) =>
       Student(
         id: id ?? this.id,
@@ -62,7 +58,6 @@ class Student {
         achievements: achievements ?? this.achievements,
         subjects: subjects ?? this.subjects,
         prenium: prenium ?? this.prenium,
-        birthdate: birthdate ?? this.birthdate,
       );
 
   Map<String, dynamic> toMap() {
@@ -78,7 +73,6 @@ class Student {
       'achievements': achievements,
       'subjects': subjects,
       'prenium': prenium,
-      'birthdate': birthdate!.millisecondsSinceEpoch,
     };
   }
 
@@ -95,7 +89,6 @@ class Student {
       achievements: List<String>.from(map['achievements']),
       subjects: List<String>.from(map['subjects']),
       prenium: map['prenium'],
-      birthdate: DateTime.fromMillisecondsSinceEpoch(map['birthdate']),
     );
   }
 
@@ -118,6 +111,6 @@ class Student {
 
   @override
   String toString() {
-    return 'Student(id: $id, names: $names, section: $section, email: $email, phone: $phone, school: $school,level: $level, avatar: $avatar, achievements: $achievements, subjects: $subjects, prenium: $prenium, birthdate: $birthdate)';
+    return 'Student(id: $id, names: $names, section: $section, email: $email, phone: $phone, school: $school,level: $level, avatar: $avatar, achievements: $achievements, subjects: $subjects, prenium: $prenium)';
   }
 }
