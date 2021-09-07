@@ -103,7 +103,7 @@ class Home extends HookWidget {
             index: navigationIndex.state,
             children: _screens.map((screen) => FadeIn(child: screen)).toList()),
         floatingActionButton: FloatingActionButton(
-          child: Icon(LineIcons.podcast),
+          child: Icon(Icons.bubble_chart),
           onPressed: () {
             Get.dialog(
                 Material(

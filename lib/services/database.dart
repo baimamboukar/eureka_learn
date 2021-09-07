@@ -39,8 +39,17 @@ class Database {
     try {
       await _firestore.collection("students").doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
-        _read(studentControllerProvider.notifier).student = _student;
-        print(_read(studentControllerProvider.notifier).student.email);
+        _read(studentControllerProvider.notifier).student = Student(
+            names: "From database user",
+            email: "from databaseuser@eureka-learn.cm",
+            phone: "698098787",
+            section: "Franco",
+            level: "top",
+            avatar: "https://zety.com/about/michael-tomaszewski",
+            school: "GBHS Garoua",
+            subjects: ["Maths", "Physics", "Biology", "Csc"],
+            prenium: false,
+            achievements: ["Star", "Bronz", "Alpha"]);
       });
       return true;
     } on FirebaseException catch (err) {
