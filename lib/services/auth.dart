@@ -25,7 +25,7 @@ class Authentication {
           .then((response) async {
         if (await _read(databaseProvider).getUser(response.user!.uid))
           Fluttertoast.showToast(
-              msg: "Successful signd in", backgroundColor: Palette.success);
+              msg: "Successful signed in", backgroundColor: Palette.success);
       });
     } on FirebaseAuthException catch (err) {
       Fluttertoast.showToast(
@@ -47,6 +47,9 @@ class Authentication {
             .createUser(id: response.user!.uid, student: student))
           Fluttertoast.showToast(
               msg: "Successful signed up", backgroundColor: Palette.success);
+        else
+          Fluttertoast.showToast(
+              msg: "error while signing up", backgroundColor: Palette.error);
       });
     } on FirebaseAuthException catch (err) {
       Fluttertoast.showToast(

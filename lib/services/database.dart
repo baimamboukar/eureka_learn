@@ -13,7 +13,7 @@ class Database {
   Future<bool> createUser(
       {required String id, required Student student}) async {
     try {
-      await _firestore.collection("students").doc(id).set({
+      await _firestore.collection('students').doc(id).set({
         'id': id,
         'names': student.names,
         'section': student.section,
@@ -25,8 +25,10 @@ class Database {
         'achievements': student.achievements,
         'subjects': student.subjects,
         'prenium': student.prenium,
+      }).then((_) async {
+        await getUser(id);
       });
-      getUser(id);
+
       return true;
     } on FirebaseException catch (err) {
       Fluttertoast.showToast(
@@ -37,19 +39,13 @@ class Database {
 
   Future<bool> getUser(String uid) async {
     try {
-      await _firestore.collection("students").doc(uid).get().then((doc) {
+      await _firestore.collection('students').doc(uid).get().then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
-        _read(studentControllerProvider.notifier).data = (Student(
-            names: "From database user",
-            email: "fromdatabaseuser@eureka-learn.cm",
-            phone: "698098787",
-            section: "Franco",
-            level: "top",
-            avatar: "https://zety.com/about/michael-tomaszewski",
-            school: "GBHS Garoua",
-            subjects: ["Maths", "Physics", "Biology", "Csc"],
-            prenium: false,
-            achievements: ["Star", "Bronz", "Alpha"]));
+        if (doc.exists)
+          print("Incoming student form the database :=> $_student");
+        else
+          print("doc doesnt exist");
+        _read(studentControllerProvider.notifier).data = _student;
       });
       return true;
     } on FirebaseException catch (err) {
