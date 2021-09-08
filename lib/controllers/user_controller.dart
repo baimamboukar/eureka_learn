@@ -15,9 +15,11 @@ class StudentController extends StateNotifier<Student> {
       subjects: ["Maths", "Physics", "Biology", "Csc"],
       prenium: false,
       achievements: ["Star", "Bronz", "Alpha"]);
-  set student(Student _student) => student = _student;
-  Student getUser() {
-    return student;
+  //set student(Student _student) => student = _student;
+  set data(Student _student) => state = _student;
+
+  void printUser() {
+    print(state);
   }
 
   String getName() {
