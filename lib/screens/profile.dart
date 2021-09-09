@@ -1,9 +1,10 @@
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:line_icons/line_icons.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends HookWidget {
   final Student user;
   const Profile({Key? key, required this.user}) : super(key: key);
 
@@ -11,97 +12,156 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              floating: true,
-              expandedHeight: 220.0,
-              flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 40.0, left: 12.0, right: 12.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(title: Text(user.names)),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 12.0, left: 12.0, right: 12.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Text("❣ ${user.school}"),
-                                  Text(user.email),
-                                  Text("${user.phone}"),
-                                  Wrap(
-                                    spacing: 3.5,
-                                    children: user.subjects
-                                        .map((subject) => Chip(
-                                              backgroundColor: Palette.primary
-                                                  .withOpacity(0.5),
-                                              label: Text(subject),
-                                            ))
-                                        .toList(),
+                                  CircleAvatar(
+                                    radius: 38.0,
+                                    backgroundImage: AssetImage(
+                                        "assets/icons/png/student.png"),
+                                  ),
+                                  const SizedBox(width: 20.0),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(user.names,
+                                          style: Styles.designText(
+                                              bold: true,
+                                              color: Palette.primary,
+                                              size: 24.0)),
+                                      const SizedBox(height: 8.0),
+                                      Text("student at ${user.school}"),
+                                      const SizedBox(height: 5.0),
+                                      Text(user.email),
+                                    ],
                                   )
                                 ],
                               ),
+                              Wrap(
+                                spacing: 1.5,
+                                children: user.subjects
+                                    .map((subject) => Chip(
+                                          backgroundColor:
+                                              Palette.primary.withOpacity(0.5),
+                                          label: Text(subject,
+                                              style: Styles.designText(
+                                                  bold: false,
+                                                  size: 12.0,
+                                                  color: Palette.dark)),
+                                        ))
+                                    .toList(),
+                              )
+                            ],
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Column(
+                              children: [
+                                Icon(LineIcons.medal,
+                                    size: 38.0, color: Palette.secondary),
+                                Text("Brave Achiever")
+                              ],
                             ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Column(
-                                  children: [
-                                    Icon(LineIcons.medal,
-                                        size: 38.0, color: Palette.secondary),
-                                    Text("Brave Achiever")
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Icon(LineIcons.trophy,
-                                        size: 38.0, color: Palette.dark),
-                                    Text("Best Achievement")
-                                  ],
-                                ),
+                                Icon(LineIcons.trophy,
+                                    size: 38.0, color: Palette.dark),
+                                Text("Best Achievement")
                               ],
-                            )
+                            ),
+                            Column(
+                              children: [
+                                Icon(LineIcons.certificate,
+                                    size: 38.0, color: Colors.brown),
+                                Text("Exams winner")
+                              ],
+                            ),
                           ],
-                        ),
-                      ),
-                      decoration: BoxDecoration()),
-                  collapseMode: CollapseMode.pin,
-                  stretchModes: [
-                    StretchMode.blurBackground,
-                    StretchMode.fadeTitle,
-                    StretchMode.zoomBackground
-                  ],
-                  title: Text(user.names, overflow: TextOverflow.ellipsis)),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height:100.0,
-                child: TabBar(
-                  tabs: [
-                    Text("Profile"),
-                    Text("Achievement"),
-                    Text("Posts"),
-                    Text("Media")
-                  ]
-                )
-              )
-            ),
-            SliverToBoxAdapter(
-              child: TabBarView(
-                children: [
-                  Text("lorem ipsum dolor"),
-                  Text("Si amet do sect consectur"),
-                  
-                  Text("lorem ipsum dolor"),
-                  Text("Si amet do sect consectur"),
+                        )
+                      ],
+                    ),
+                  ),
+                  decoration:
+                      BoxDecoration(color: Palette.primary.withOpacity(0.25))),
+              const SizedBox(height: 25.0),
+              Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  SizedBox.expand(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 50),
+                      height: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                  // Container(height: 50, color: Colors.black),
 
-                ]
-              )
-            )
-          ],
+                  /// Banner image
+                  Container(
+                    height: 180,
+                    padding: EdgeInsets.only(top: 28),
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage("assets/icons/png/student.png"),
+                    ),
+                  ),
+
+                  /// UserModel avatar, message icon, profile edit and follow/following button
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 500),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 5),
+                              shape: BoxShape.circle),
+                          child: GestureDetector(
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/icons/png/student.png"),
+                              radius: 30,
+                            ),
+                            onTap: () {},
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 90, right: 30),
+                          child: Row(
+                            children: <Widget>[
+                              Container(height: 40),
+                              SizedBox(width: 10)
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton:

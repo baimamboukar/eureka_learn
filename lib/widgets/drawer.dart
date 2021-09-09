@@ -30,8 +30,12 @@ class AppDrawer extends HookWidget {
             ],
             decoration: BoxDecoration(gradient: Palette.linearGradient),
             margin: null,
-            accountEmail: Text(student.student.school ?? ""),
-            accountName: Text(student.getName())),
+            accountEmail: Text(student.student.email),
+            accountName: Text(student.student.names)),
+        DrawerItem(
+            icon: Icon(LineIcons.themeco, color: Palette.primary),
+            label: "Profile",
+            destination: Profile(user: student.student)),
         for (var item in items) item,
         ListTile(
             onTap: () => _auth.logoutUser(),
@@ -56,15 +60,6 @@ List<dynamic> items = [
       icon: Icon(LineIcons.identificationBadge, color: Palette.primary),
       label: "Authentication",
       destination: Welcome()),
-  DrawerItem(
-    icon: Icon(LineIcons.questionCircle, color: Palette.primary),
-    label: "Quizz test",
-    destination: FlutterLogo(),
-  ), //QuizzPage(quizz: quizz)),
-  DrawerItem(
-      icon: Icon(LineIcons.themeco, color: Palette.primary),
-      label: "Profile",
-      destination: Profile(user: Student.initial())),
 ];
 
 class DrawerItem extends StatelessWidget {

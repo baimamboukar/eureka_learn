@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:eureka_learn/controllers/user_controller.dart';
 import 'package:eureka_learn/providers/quiz_subject_provider.dart';
 import 'package:eureka_learn/screens/quiz_screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -42,6 +43,7 @@ class _QuizzState extends State<Quizz> {
   @override
   Widget build(BuildContext context) {
     final quizSubject = useProvider(quizSubjectProvider);
+    final user = useProvider(studentControllerProvider);
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -52,9 +54,9 @@ class _QuizzState extends State<Quizz> {
           child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               alignment: Alignment.topCenter,
-              height: 100.0,
               child: Column(
                 children: [
+                  const SizedBox(height: 25.0),
                   AnimatedTextKit(
                     animatedTexts: [
                       TypewriterAnimatedText("Hack your success now",
@@ -75,7 +77,7 @@ class _QuizzState extends State<Quizz> {
                       Padding(
                         padding: const EdgeInsets.all(8.0) +
                             const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Text("Welcome back, Zarathustra",
+                        child: Text("Welcome back, ${user.names}",
                             overflow: TextOverflow.ellipsis,
                             style: Styles.subtitle),
                       )
@@ -83,7 +85,10 @@ class _QuizzState extends State<Quizz> {
                   ),
                   const SizedBox(height: 15.0, child: Divider()),
                   Text("In which subject do you want to take the quizz ?",
-                      style: Styles.subtitle, overflow: TextOverflow.ellipsis)
+                      style: Styles.subtitle, overflow: TextOverflow.ellipsis),
+                  const SizedBox(
+                    height: 15.0,
+                  )
                 ],
               )),
         ),
@@ -105,9 +110,10 @@ class _QuizzState extends State<Quizz> {
                     }
                   }
                   return GestureDetector(
-                    onTap: () { 
+                    onTap: () {
                       quizSubject.state = _subject.subject ?? '';
-                       Get.to(() =>  QuizScreen());},
+                      Get.to(() => QuizScreen());
+                    },
                     child: Align(
                       heightFactor: 0.6,
                       alignment: Alignment.topCenter,
@@ -148,11 +154,14 @@ class _QuizzState extends State<Quizz> {
                                         children: [
                                           Row(
                                             children: [
-                                              Text(_subject.subject ?? "Subject",
-                                                  overflow: TextOverflow.ellipsis,
+                                              Text(
+                                                  _subject.subject ?? "Subject",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       color: Palette.light,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 18.5)),
                                             ],
                                           ),

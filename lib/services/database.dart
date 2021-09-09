@@ -1,19 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eureka_learn/controllers/user_controller.dart';
+import 'package:eureka_learn/main.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class Database {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final Reader _read;
   Database(this._read);
 
   Future<bool> createUser(
       {required String id, required Student student}) async {
     try {
-      await _firestore.collection('students').doc(id).set({
+      _firestore.collection('students').doc(id).set({
         'id': id,
         'names': student.names,
         'section': student.section,
@@ -26,7 +29,7 @@ class Database {
         'subjects': student.subjects,
         'prenium': student.prenium,
       }).then((_) async {
-        await getUser(id);
+        getUser(id);
       });
 
       return true;
@@ -37,14 +40,14 @@ class Database {
     }
   }
 
-  Future<bool> getUser(String uid) async {
+  bool getUser(String uid) {
     try {
-      await _firestore.collection('students').doc(uid).get().then((doc) {
+      _firestore
+          .collection('students')
+          .doc(uid)
+          .get(GetOptions(source: Source.serverAndCache))
+          .then((doc) {
         Student _student = Student.fromDocumentSnapshot(doc.data());
-        if (doc.exists)
-          print("Incoming student form the database :=> $_student");
-        else
-          print("doc doesnt exist");
         _read(studentControllerProvider.notifier).data = _student;
       });
       return true;

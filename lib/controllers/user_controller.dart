@@ -18,12 +18,12 @@ class StudentController extends StateNotifier<Student> {
 }
 
 final studentControllerProvider =
-    StateNotifierProvider<StudentController, Student>((ref) =>
+    StateNotifierProvider.autoDispose<StudentController, Student>((ref) =>
         StudentController(
             ref.read,
             Student(
-                names: "Jean18113ne Doe",
-                email: "jeannedoe@eureka-learn.cm",
+                names: "Ex Nihilo",
+                email: "nihilo@gmail.com",
                 phone: "698098787",
                 section: "Franco",
                 level: "top",

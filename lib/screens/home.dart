@@ -1,15 +1,19 @@
+import 'package:eureka_learn/controllers/user_controller.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:eureka_learn/widgets/tips_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NewsFeed extends StatelessWidget {
+class NewsFeed extends ConsumerWidget {
   const NewsFeed({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final user = watch(studentControllerProvider.notifier);
+    print("Already inside the widget == ${user.student.email}");
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
         child: Container(
@@ -28,7 +32,7 @@ class NewsFeed extends StatelessWidget {
       SliverToBoxAdapter(
           child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text("Browsing by categories..."),
+        child: Text(user.student.names.toString(), style: Styles.subtitle),
       )),
       SliverToBoxAdapter(
           child: Padding(

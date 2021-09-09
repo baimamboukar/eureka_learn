@@ -38,7 +38,6 @@ dependencies:
   qr_flutter: ^4.0.0
   syncfusion_flutter_charts: ^19.2.48
   share_plus: ^2.1.4
-  smart_select: ^4.3.2
   shared_preferences: ^2.0.6
   equatable: #^2.0.3
   dio: #^4.0.0
@@ -64,6 +63,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
+    - assets/icons/jpeg/
     - assets/icons/png/
 
   # An image asset can refer to one or more resolution-specific "variants", see
