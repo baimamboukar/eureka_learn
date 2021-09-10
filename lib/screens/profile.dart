@@ -105,23 +105,14 @@ class Profile extends HookWidget {
               Stack(
                 alignment: Alignment.topCenter,
                 children: <Widget>[
-                  SizedBox.expand(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 50),
-                      height: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                  // Container(height: 50, color: Colors.black),
-
                   /// Banner image
                   Container(
-                    height: 180,
+                    height: 13  0,
                     padding: EdgeInsets.only(top: 28),
-                    child: CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/icons/png/student.png"),
-                    ),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage("assets/icons/png/eureka.png"),
+                    )),
                   ),
 
                   /// UserModel avatar, message icon, profile edit and follow/following button
