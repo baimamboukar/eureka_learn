@@ -107,7 +107,7 @@ class Profile extends HookWidget {
                 children: <Widget>[
                   /// Banner image
                   Container(
-                    height: 13  0,
+                    height: 130.0,
                     padding: EdgeInsets.only(top: 28),
                     decoration: BoxDecoration(
                         image: DecorationImage(

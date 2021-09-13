@@ -4,6 +4,7 @@ import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Post extends StatelessWidget {
   final PostModel model;
@@ -34,7 +35,7 @@ class Post extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model.postOwner,
+                          Text(model.ownerLevel,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Palette.primary)),
@@ -66,7 +67,7 @@ class Post extends StatelessWidget {
                 model.withPicture
                     ? Center(
                         child: Image(
-                          image: AssetImage(model.picturePath),
+                          image: AssetImage(model.picturePath ?? ""),
                           height: 100.0,
                         ),
                       )
@@ -111,7 +112,8 @@ class Post extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(LineIcons.share),
+                        GestureDetector(
+                            onTap: () {}, child: Icon(LineIcons.share)),
                         Text(" share"),
                       ],
                     ),
