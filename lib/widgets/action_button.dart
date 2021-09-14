@@ -16,29 +16,26 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => callback,
-      child: Container(
-          height: 30.0,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(color: color, width: 2.0),
-              gradient: Palette.gradientWith(color)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(color: Palette.light),
-                ),
-                const SizedBox(width: 3.0),
-                icon
-              ],
-            ),
-          )),
-    );
+    return Container(
+        height: 30.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(color: color, width: 2.0),
+            gradient: Palette.gradientWith(color)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: TextStyle(color: Palette.light),
+              ),
+              const SizedBox(width: 3.0),
+              icon
+            ],
+          ),
+        ));
   }
 }

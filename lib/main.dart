@@ -6,9 +6,11 @@ import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -105,13 +107,18 @@ class Home extends HookWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.bubble_chart),
           onPressed: () {
-            Get.dialog(
-                Material(
-                    child: Container(
-                        height: 400.0,
-                        width: double.infinity,
-                        child: FadeOut(child: Center(child: Poster())))),
-                useRootNavigator: false);
+            showPlatformDialog(
+                context: context,
+                builder: (context) {
+                  return Scaffold(body: Poster());
+                });
+            // Get.dialog(
+            //     Material(
+            //         child: Container(
+            //             height: 400.0,
+            //             width: double.infinity,
+            //             child: FadeOut(child: Center(child: Poster())))),
+            //     useRootNavigator: false);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

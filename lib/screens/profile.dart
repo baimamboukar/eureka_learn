@@ -102,55 +102,6 @@ class Profile extends HookWidget {
                   decoration:
                       BoxDecoration(color: Palette.primary.withOpacity(0.25))),
               const SizedBox(height: 25.0),
-              Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  /// Banner image
-                  Container(
-                    height: 130.0,
-                    padding: EdgeInsets.only(top: 28),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage("assets/icons/png/eureka.png"),
-                    )),
-                  ),
-
-                  /// UserModel avatar, message icon, profile edit and follow/following button
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 5),
-                              shape: BoxShape.circle),
-                          child: GestureDetector(
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/icons/png/student.png"),
-                              radius: 30,
-                            ),
-                            onTap: () {},
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 90, right: 30),
-                          child: Row(
-                            children: <Widget>[
-                              Container(height: 40),
-                              SizedBox(width: 10)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
             ],
           ),
         ),

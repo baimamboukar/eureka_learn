@@ -1,5 +1,6 @@
 import 'package:eureka_learn/controllers/user_controller.dart';
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/services/notifications.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
+final feedProvider = StateProvider<List<Stream>>((ref) => []);
+
 class NewsFeed extends ConsumerWidget {
   const NewsFeed({Key? key}) : super(key: key);
 
@@ -16,7 +19,13 @@ class NewsFeed extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final user = watch(studentControllerProvider.notifier);
     final notiff = watch(notificationsProvider);
-    print("Already inside the widget == ${user.student.email}");
+    final database = watch(databaseProvider);
+    final feed = watch(feedProvider);
+    // if (feed.state.isEmpty) {
+    //   feed.state = database.getFeed(
+    //     user.student.id,
+    //   );
+    // }
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
         child: Container(
@@ -40,10 +49,14 @@ class NewsFeed extends ConsumerWidget {
       SliverToBoxAdapter(
           child: GestureDetector(
               onTap: () {
+                print("sending......");
+                notiff.hacktitude(
+                    "LOREMZON IPSUM DOLOR SI AMET", const Duration(seconds: 4));
                 notiff.send(
                     callbackWidget: FlutterLogo(),
                     title: "Brave notification",
-                    message: "Man must survive",
+                    message:
+                        "Man must survive There was a steady pulse of pain midway down his ribs, when you could just carry the thing for what it was a handgun and nine rounds of ammunition",
                     payload: "Payload vibes",
                     id: 0);
               },

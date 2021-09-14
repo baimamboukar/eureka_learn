@@ -35,23 +35,26 @@ class Post extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model.ownerLevel,
+                          Text(model.ownerName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Palette.primary)),
-                          Row(
-                            children: [
-                              Transform(
-                                  alignment: Alignment.center,
-                                  transform: Matrix4.identity()
-                                    ..rotateX(
-                                      180.0,
-                                    ),
-                                  child: Icon(LineIcons.share,
-                                      size: 25.0, color: Palette.primary)),
-                              Text("Biology League", style: Styles.subtitle),
-                            ],
-                          )
+                          if (model.inGroup)
+                            Row(
+                              children: [
+                                Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.identity()
+                                      ..rotateX(
+                                        180.0,
+                                      ),
+                                    child: Icon(LineIcons.share,
+                                        size: 25.0, color: Palette.primary)),
+                                if (model.inGroup)
+                                  Text(model.group ?? "Group",
+                                      style: Styles.subtitle),
+                              ],
+                            )
                         ],
                       ),
                     ]),
@@ -59,15 +62,12 @@ class Post extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                Text(
-                    "Lorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hammaLorem ipsum dolor si amet do set consectur de la hamma",
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis),
+                Text(model.label, maxLines: 4, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 10.0),
                 model.withPicture
                     ? Center(
                         child: Image(
-                          image: AssetImage(model.picturePath ?? ""),
+                          image: AssetImage(model.photoURL ?? ""),
                           height: 100.0,
                         ),
                       )
@@ -75,7 +75,7 @@ class Post extends StatelessWidget {
                 const SizedBox(height: 15.0),
                 Wrap(
                   spacing: 3.0,
-                  children: model.tags != null
+                  children: model.tags.isNotEmpty
                       ? model.tags
                           .map((tag) => Chip(
                                 backgroundColor:
@@ -110,12 +110,16 @@ class Post extends StatelessWidget {
                         Text(" save"),
                       ],
                     ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                            onTap: () {}, child: Icon(LineIcons.share)),
-                        Text(" share"),
-                      ],
+                    GestureDetector(
+                      onTap: () async {
+                        await Share.share(model.label.padLeft(30));
+                      },
+                      child: Row(
+                        children: [
+                          Icon(LineIcons.share),
+                          Text(" share"),
+                        ],
+                      ),
                     ),
                   ],
                 ),
