@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/controllers/controllers.dart';
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -31,6 +32,7 @@ class _PosterState extends State<Poster> {
   @override
   Widget build(BuildContext context) {
     final user = useProvider(studentControllerProvider.notifier);
+    final database = useProvider(databaseProvider);
     TextEditingController messageController = useTextEditingController();
     final tags = useProvider(tagsProvider);
     final file = useProvider(fileProvider);
@@ -226,7 +228,7 @@ class _PosterState extends State<Poster> {
                       PostModel model = PostModel(
                           inGroup: false,
                           tags: tags.state,
-                          withPicture: photos.state != null,
+                          withPicture: false,
                           likesCount: 0,
                           timeAgo: DateTime.now().toString(),
                           label: messageController.value.text,
@@ -236,8 +238,7 @@ class _PosterState extends State<Poster> {
                           ownerName: user.student.names,
                           comments: []);
                       print("Ready to post: $model");
-                      print(
-                          "Map translate example: ${PostModel.toDocumentSnapshot(model)}");
+                      database.post(model);
                     },
                     child: ActionButton(
                         label: "Publish",
