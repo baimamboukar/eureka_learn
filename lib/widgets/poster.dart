@@ -8,6 +8,7 @@ import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -49,6 +50,13 @@ class _PosterState extends State<Poster> {
       } else {
         // User canceled the picker
       }
+    }
+
+    Future uploadImageToFirebase(BuildContext context, File file) async {
+      final taskSnapshot = await uploadTask.onComplete;
+      taskSnapshot.ref.getDownloadURL().then(
+            (value) => print("Done: $value"),
+          );
     }
 
     return SingleChildScrollView(
@@ -225,6 +233,8 @@ class _PosterState extends State<Poster> {
                   GestureDetector(
                     onTap: () {
                       print("publishing...");
+                      uploadImageToFirebase(
+                          context, file.state ?? File(file.state!.path));
                       PostModel model = PostModel(
                           inGroup: false,
                           tags: tags.state,
