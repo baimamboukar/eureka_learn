@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/providers/providers.dart';
+import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/utils/palette.dart';
@@ -63,14 +64,7 @@ class EurekaLearn extends HookWidget {
 
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 
-List<Widget> _screens = [
-  NewsFeed(),
-  Quizz(),
-  Ressources(),
-  Logo(
-    withIcon: true,
-  )
-];
+List<Widget> _screens = [NewsFeed(), Quizz(), Ressources(), HomePage()];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
