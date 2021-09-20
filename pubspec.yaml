@@ -48,6 +48,7 @@ dependencies:
   dio: #^4.0.0
   enum_to_string: #^2.0.1
   html_character_entities: #^1.0.0+1
+  font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:
