@@ -53,7 +53,7 @@ class _PosterState extends State<Poster> {
     }
 
     Future uploadImageToFirebase(BuildContext context, File file) async {
-      final taskSnapshot = await uploadTask.onComplete;
+      final taskSnapshot = await UploadTask.onComplete;
       taskSnapshot.ref.getDownloadURL().then(
             (value) => print("Done: $value"),
           );
