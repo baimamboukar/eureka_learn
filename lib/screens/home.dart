@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eureka_learn/controllers/user_controller.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
@@ -10,7 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-final feedProvider = StateProvider<List<Stream>>((ref) => []);
+final feedProvider = StreamProvider.autoDispose((ref) {
+  return ref
+      .read(databaseProvider)
+      .getUserFeed(ref.read(studentControllerProvider.notifier).student);
+});
 
 class NewsFeed extends ConsumerWidget {
   const NewsFeed({Key? key}) : super(key: key);
@@ -79,9 +84,31 @@ class NewsFeed extends ConsumerWidget {
               },
             )),
       )),
-      SliverList(
-        delegate: SliverChildListDelegate.fixed(
-            posts.map((post) => Post(model: post)).toList()),
+      SliverToBoxAdapter(
+        child: StreamBuilder(
+            key: GlobalKey(debugLabel: "StreamKey"),
+            stream: FirebaseFirestore.instance
+                .collection("posts")
+                .where("ownerLevel", isEqualTo: user.student.level)
+                .where("tags", arrayContainsAny: user.student.subjects)
+                .snapshots(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.hasError) {
+                return const Text("Error while fecthing the data");
+              }
+              if (snapshot.data == null) {
+                return const Text("Noting to show here....");
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              }
+              return Column(
+                  children: snapshot.data!.docs
+                      .map((post) => Post(
+                          model: PostModel.fromDocumentSnapshot(post.data())))
+                      .toList());
+            }),
       )
     ]);
   }

@@ -4,7 +4,9 @@ import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class Post extends StatelessWidget {
   final PostModel model;
@@ -58,7 +60,9 @@ class Post extends StatelessWidget {
                         ],
                       ),
                     ]),
-                    Text("${model.timeAgo} ago")
+                    Text(timeago
+                        .format(DateTime.parse("2019-09-17 12:50:40.000"))
+                        .toString()),
                   ],
                 ),
                 const SizedBox(height: 10.0),
@@ -67,11 +71,28 @@ class Post extends StatelessWidget {
                 model.withPicture
                     ? Center(
                         child: Image(
-                          image: AssetImage(model.photoURL ?? ""),
+                          errorBuilder: (_, __, ___) {
+                            return Center(
+                                child:
+                                    const Icon(LineIcons.faceWithRollingEyes));
+                          },
+                          loadingBuilder: (context, widget, loadingProgress) {
+                            return CircularProgressIndicator(
+                              strokeWidth: 1.50,
+                              value: loadingProgress?.expectedTotalBytes != null
+                                  ? (loadingProgress!.cumulativeBytesLoaded) /
+                                      (loadingProgress.expectedTotalBytes!)
+                                  : null,
+                            );
+                          },
+                          image: OptimizedCacheImageProvider(
+                              model.photoURL ?? "",
+                              imageRenderMethodForWeb:
+                                  ImageRenderMethodForWeb.HtmlImage),
                           height: 100.0,
                         ),
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
                 const SizedBox(height: 15.0),
                 Wrap(
                   spacing: 3.0,
@@ -99,13 +120,13 @@ class Post extends StatelessWidget {
                       likeCountAnimationType: LikeCountAnimationType.part,
                     ),
                     Row(
-                      children: [
-                        Icon(Icons.chat),
-                        Text(" comment"),
+                      children: const [
+                        const Icon(Icons.chat),
+                        const Text(" comment"),
                       ],
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Icon(LineIcons.download),
                         Text(" save"),
                       ],

@@ -118,14 +118,12 @@ class Database {
 
   Stream getUserFeed(Student user) {
     try {
-      Stream papers = _firestore
+      return _firestore
           .collection("posts")
           .where("ownerLevel", isEqualTo: user.level)
           .where("tags", arrayContainsAny: user.subjects)
-          .where("tags", arrayContainsAny: user.achievements)
           .orderBy("timeAgo")
           .snapshots();
-      return papers;
     } on FirebaseException catch (_) {
       Fluttertoast.showToast(
           toastLength: Toast.LENGTH_LONG,

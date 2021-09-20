@@ -491,4 +491,7 @@ List<String> s6 = ["Chemistry", "Physics", "Maths", "Further Maths"];
 List<String> s7 = ["Chemistry", "Biology", "Physics", "Maths"];
 List<String> s8 = ["Chemistry", "Biology", "Physics", "Maths", "Further Maths"];
 
-List<String> tagsCloud = ["#maths", "#chemestry", "#success", "#exam"];
+List<String> tagsCloud =
+    (a1 + a2 + a3 + a4 + a5 + s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8)
+        .toSet()
+        .toList();
