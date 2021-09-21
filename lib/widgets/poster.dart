@@ -63,7 +63,6 @@ class _PosterState extends State<Poster> {
       }
     }
 
-<<<<<<< HEAD
     uploadImageToFirebase(File file) async {
       // Create a Reference to the file
       Reference ref = FirebaseStorage.instance
@@ -85,13 +84,6 @@ class _PosterState extends State<Poster> {
           });
         });
       }
-=======
-    Future uploadImageToFirebase(BuildContext context, File file) async {
-      final taskSnapshot = await UploadTask.onComplete;
-      taskSnapshot.ref.getDownloadURL().then(
-            (value) => print("Done: $value"),
-          );
->>>>>>> f814f1a4198c3c3e64bcc7ee5b59bcd35ade90fb
     }
 
     return SingleChildScrollView(
