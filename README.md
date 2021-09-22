@@ -1,16 +1,6 @@
-# eureka_learn
+# Eureka Learn
+### Hack your success now !
+(All inclusive learning platform for all cameroonians)
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![eureka logo](https://user-images.githubusercontent.com/49169158/134405745-2c712fcc-0c37-4358-89a1-1b489006a3af.png)
