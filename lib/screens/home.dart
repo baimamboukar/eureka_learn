@@ -94,6 +94,7 @@ class NewsFeed extends ConsumerWidget {
                 .snapshots(),
             builder: (context,
                 AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              snapshot.data!.docs.map((post) => print(post.data()));
               if (snapshot.hasError) {
                 return const Text("Error while fecthing the data");
               }

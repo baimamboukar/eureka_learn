@@ -35,6 +35,7 @@ class EurekaLearn extends HookWidget {
     return GetMaterialApp(
       title: "EurekaLearn",
       theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColorBrightness: Brightness.light,
         primarySwatch: Colors.blue,
         primaryColor: Colors.blue,
