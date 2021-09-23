@@ -1,9 +1,11 @@
 import 'package:eureka_learn/models/post_model%20copy.dart';
+import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:eureka_learn/models/post_model.dart';
 import 'package:eureka_learn/screens/post_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class Posts extends StatefulWidget {
   @override
@@ -16,16 +18,10 @@ class _PostsState extends State<Posts> {
     return Column(
         children: questions
             .map((question) => GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => PostScreen(
-                                  question: question,
-                                )));
-                  },
+                  onTap: () => Get.to(() => PostScreen(
+                        question: question,
+                      )),
                   child: Container(
-                    height: 180,
                     margin: EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -50,8 +46,8 @@ class _PostsState extends State<Posts> {
                                 Row(
                                   children: <Widget>[
                                     CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage(question.author.imageUrl),
+                                      backgroundImage: AssetImage(
+                                          "assets/icons/png/student.png"),
                                       radius: 22,
                                     ),
                                     Padding(
@@ -63,17 +59,11 @@ class _PostsState extends State<Posts> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.65,
-                                            child: Text(
-                                              question.question,
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  letterSpacing: .4),
-                                            ),
+                                            child: Text(question.question,
+                                                style: Styles.designText(
+                                                    bold: false,
+                                                    color: Palette.dark,
+                                                    size: 18.0)),
                                           ),
                                           SizedBox(height: 2.0),
                                           Row(
@@ -108,14 +98,9 @@ class _PostsState extends State<Posts> {
                             ),
                           ),
                           Container(
-                            height: 50,
                             child: Center(
                               child: Text(
                                 "${question.content.substring(0, 80)}..",
-                                style: TextStyle(
-                                    color: Colors.grey.withOpacity(0.8),
-                                    fontSize: 16,
-                                    letterSpacing: .3),
                               ),
                             ),
                           ),
