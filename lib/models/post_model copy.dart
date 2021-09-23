@@ -27,7 +27,7 @@ class Question {
 List<Question> questions = [
   Question(
       author: mike,
-      question: 'C ## In A Nutshell',
+      question: "lorem ipsum dolor",
       content:
           "Lorem  i've been using c## for a whole decade now, if you guys know how to break the boring feeling of letting to tell everyne of what happed in the day",
       created_at: "1h ago",
@@ -37,7 +37,7 @@ List<Question> questions = [
       replies: replies),
   Question(
       author: john,
-      question: 'List<Dynamic> is not a subtype of Lits<Container>',
+      question: "lorem ipsum dolor si amet",
       content:
           "Lorem  i've been using c## for a whole decade now, if you guys know how to break the boring feeling of letting to tell everyne of what happed in the day",
       created_at: "2h ago",
@@ -47,7 +47,7 @@ List<Question> questions = [
       replies: replies),
   Question(
       author: sam,
-      question: 'React a basic error 404 is not typed',
+      question: "Lorem ipsum dolor",
       content:
           "Lorem  i've been using c## for a whole decade now, if you guys know how to break the boring feeling of letting to tell everyne of what happed in the day",
       created_at: "4h ago",
@@ -57,7 +57,7 @@ List<Question> questions = [
       replies: replies),
   Question(
       author: mark,
-      question: 'Basic understanding of what is not good',
+      question: "loremson ipsumson",
       content:
           "Lorem  i've been using c## for a whole decade now, if you guys know how to break the boring feeling of letting to tell everyne of what happed in the day",
       created_at: "10h ago",
@@ -67,7 +67,7 @@ List<Question> questions = [
       replies: replies),
   Question(
       author: justin,
-      question: 'Luther is not author in here',
+      question: "lorem ipsum question",
       content:
           "Lorem  i've been using c## for a whole decade now, if you guys know how to break the boring feeling of letting to tell everyne of what happed in the day",
       created_at: "24h ago",
