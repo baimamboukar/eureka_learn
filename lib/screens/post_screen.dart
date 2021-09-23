@@ -18,11 +18,11 @@ class _PostScreenState extends State<PostScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          children: <Widget>[
+          children: [
             Container(
               padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
               child: Row(
-                children: <Widget>[
+                children: [
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: FaIcon(FontAwesomeIcons.arrowLeft),
