@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eureka_learn/main.dart';
+
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
-import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/utils.dart';
 
 class Authentication {
   final FirebaseAuth _firebaseAuth;
