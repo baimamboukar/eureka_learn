@@ -116,14 +116,20 @@ class Database {
     }
   }
 
-  Stream getUserFeed(Student user) {
+  List<PostModel> getUserFeed(Student user) {
+    List<PostModel> posts = [];
     try {
-      return _firestore
+      _firestore
           .collection("posts")
-          .where("ownerLevel", isEqualTo: user.level)
           .where("tags", arrayContainsAny: user.subjects)
-          .orderBy("timeAgo")
-          .snapshots();
+          .get()
+          .then((querySnapshot) => {
+                querySnapshot.docs.forEach((doc) {
+                  var _post = PostModel.fromDocumentSnapshot(doc.data());
+                  posts.add(_post);
+                })
+              });
+      return posts;
     } on FirebaseException catch (_) {
       Fluttertoast.showToast(
           toastLength: Toast.LENGTH_LONG,

@@ -2,15 +2,14 @@ import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Post extends HookWidget {
-  final Map<String, dynamic> model;
+class Post extends StatelessWidget {
+  final PostModel model;
   const Post({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -38,11 +37,11 @@ class Post extends HookWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model['ownerName'],
+                          Text(model.ownerName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Palette.primary)),
-                          if (model['inGroup'])
+                          if (model.inGroup)
                             Row(
                               children: [
                                 Transform(
@@ -53,8 +52,8 @@ class Post extends HookWidget {
                                       ),
                                     child: Icon(LineIcons.share,
                                         size: 25.0, color: Palette.primary)),
-                                if (model['inGroup'])
-                                  Text(model['group'] ?? "Group",
+                                if (model.inGroup)
+                                  Text(model.group ?? "Group",
                                       style: Styles.subtitle),
                               ],
                             )
@@ -67,10 +66,9 @@ class Post extends HookWidget {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                Text(model['label'],
-                    maxLines: 4, overflow: TextOverflow.ellipsis),
+                Text(model.label, maxLines: 4, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 10.0),
-                model['withPicture']
+                model.withPicture
                     ? Center(
                         child: Image(
                           errorBuilder: (_, __, ___) {
@@ -88,7 +86,7 @@ class Post extends HookWidget {
                             );
                           },
                           image: OptimizedCacheImageProvider(
-                              model['photoURL'] ?? "",
+                              model.photoURL ?? "",
                               imageRenderMethodForWeb:
                                   ImageRenderMethodForWeb.HtmlImage),
                           height: 100.0,
@@ -98,8 +96,8 @@ class Post extends HookWidget {
                 const SizedBox(height: 15.0),
                 Wrap(
                   spacing: 3.0,
-                  children: model['tags'].isNotEmpty
-                      ? model['tags']
+                  children: model.tags.isNotEmpty
+                      ? model.tags
                           .map((tag) => Chip(
                                 backgroundColor:
                                     Palette.primary.withOpacity(0.5),
@@ -118,7 +116,7 @@ class Post extends HookWidget {
                             size: 25.0,
                             color: liked ? Colors.amberAccent : Colors.grey);
                       },
-                      likeCount: model['likesCount'],
+                      likeCount: model.likesCount,
                       likeCountAnimationType: LikeCountAnimationType.part,
                     ),
                     Row(
@@ -135,7 +133,7 @@ class Post extends HookWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        await Share.share(model['label'].padLeft(30));
+                        await Share.share(model.label.padLeft(30));
                       },
                       child: Row(
                         children: [
@@ -153,7 +151,7 @@ class Post extends HookWidget {
                       backgroundColor: Palette.primary.withOpacity(0.15),
                       side: BorderSide(
                           color: Palette.primary.withOpacity(0.5), width: 0.60),
-                      label: Text(model['comments'][0]),
+                      label: Text(model.comments[0]),
                     )
                   ],
                 )

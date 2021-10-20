@@ -1,64 +1,55 @@
-import 'package:flutter/material.dart' show Widget;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
+import 'package:eureka_learn/utils/utils.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NotificationService {
   final Reader _read;
-
-  static final FlutterLocalNotificationsPlugin notif =
-      FlutterLocalNotificationsPlugin();
   NotificationService(this._read);
+  final _notiff = AwesomeNotifications();
 
-  static const details = NotificationDetails(
-      android: AndroidNotificationDetails(
-          "8113", "test", "sending random notifications for test",
-          importance: Importance.max, priority: Priority.max));
-
-  static init() async {
-    const android = AndroidInitializationSettings("@mipmap/ic_launcher");
-    const ios = IOSInitializationSettings();
-    await notif.initialize(InitializationSettings(android: android, iOS: ios),
-        onSelectNotification: (payload) {
-      print("lorem ipsum dolor si amet");
-      return Future.value(5);
-    });
+  void init() {
+    _notiff.initialize(null, [
+      NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          defaultColor: Palette.primary,
+          ledColor: Colors.white)
+    ]);
   }
 
-  Future send(
-          {required int id,
-          required String title,
-          required String message,
-          required String payload,
-          required Widget callbackWidget}) async =>
-      await notif.show(id, title, message, details);
-
-  hacktitude(String message, Duration after) {
-    tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('America/Detroit'));
-    notif.periodicallyShow(
-        10,
-        "Hacktitude of the day",
-        "A winner is a dreamer who never gives up",
-        RepeatInterval.everyMinute,
-        details);
-    notif.zonedSchedule(
-        0,
-        'scheduled title',
-        message,
-        tz.TZDateTime.now(tz.local).add(after),
-        const NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name', 'your channel description')),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+  void send(
+      {required String title,
+      required String body,
+      required String summary,
+      required String channel,
+      String? callback,
+      String? icon}) {
+    _notiff.isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+      init();
+      _notiff.createNotification(
+          content: NotificationContent(
+            id: int.parse(DateTime.now().toString()),
+            channelKey: channel,
+            title: title,
+            body: body,
+            bigPicture:
+                'https://tecnoblog.net/wp-content/uploads/2019/09/emoji.jpg',
+            notificationLayout: NotificationLayout.BigPicture,
+          ),
+          actionButtons: [
+            NotificationActionButton(
+                buttonType: ActionButtonType.Default,
+                label: "Comment",
+                key: "alpha")
+          ]);
+    });
   }
 }
 
-final notificationsProvider = Provider<NotificationService>((ref) {
-  NotificationService.init();
-  return NotificationService(ref.read);
-});
+final notificationsProvider =
+    Provider<NotificationService>((ref) => NotificationService(ref.read));

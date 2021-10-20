@@ -311,11 +311,11 @@ class _PosterState extends State<Poster> {
                               comments: []);
                           if (database.post(model)) {
                             notifications.send(
-                                id: 0,
+                                channel: 'basic_channel',
                                 title: "Successful Post",
-                                message: "View your new post in the timeline",
-                                payload: "home",
-                                callbackWidget: Home());
+                                summary: "new post",
+                                body: "View your new post in the timeline",
+                                callback: '/home');
                             Future.delayed(Duration(seconds: 1), () {
                               Get.to(() => Home());
                             });
