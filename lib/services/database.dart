@@ -119,16 +119,12 @@ class Database {
   List<PostModel> getUserFeed(Student user) {
     List<PostModel> posts = [];
     try {
-      _firestore
-          .collection("posts")
-          .where("tags", arrayContainsAny: user.subjects)
-          .get()
-          .then((querySnapshot) => {
-                querySnapshot.docs.forEach((doc) {
-                  var _post = PostModel.fromDocumentSnapshot(doc.data());
-                  posts.add(_post);
-                })
-              });
+      _firestore.collection("posts").get().then((querySnapshot) => {
+            querySnapshot.docs.forEach((doc) {
+              var _post = PostModel.fromDocumentSnapshot(doc.data());
+              posts.add(_post);
+            })
+          });
       return posts;
     } on FirebaseException catch (_) {
       Fluttertoast.showToast(

@@ -74,8 +74,11 @@ class NewsFeed extends ConsumerWidget {
       SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           List<PostModel> posts = database.getUserFeed(user.student);
-          return Post(model: posts[index]);
-        }, childCount: database.getUserFeed(user.student).length),
+          if (index == 1) return Text("Hello World");
+          return posts.isNotEmpty
+              ? Post(model: posts[index])
+              : Text("Nothing to show here");
+        }, childCount: database.getUserFeed(user.student).length + 1),
       )
     ]);
   }

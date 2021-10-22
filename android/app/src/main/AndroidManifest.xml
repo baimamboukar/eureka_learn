@@ -46,15 +46,12 @@
         <!-- If you want your foreground service to be stopped if
              your app is stopped, set android:stopWithTask to true.
              See https://developer.android.com/reference/android/R.attr#stopWithTask -->
-        <service
-            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"        
-            android:exported="false"
-            android:stopWithTask="false"/>
-    </application>
-    <service   android:name="me.carda.awesome_notifications.services.ForegroundService"
+     <service  android:name="me.carda.awesome_notifications.services.ForegroundService"
             android:enabled="true"            
             android:exported="false"
             android:stopWithTask="true"
             android:foregroundServiceType="location|camera|microphone" 
 ></service>
+    </application>
+   
 </manifest>
