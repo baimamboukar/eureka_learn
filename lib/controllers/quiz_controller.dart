@@ -1,4 +1,5 @@
 import 'package:eureka_learn/controllers/quiz_state.dart';
+import 'package:eureka_learn/enum/enums.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
