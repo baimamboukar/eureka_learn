@@ -1,20 +1,31 @@
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
+import 'package:eureka_learn/services/notifications.dart';
 import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:eureka_learn/widgets/tips_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
-class NewsFeed extends ConsumerWidget {
+class NewsFeed extends HookWidget {
   const NewsFeed({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(studentControllerProvider.notifier);
-    final postsController = watch(postsControllerProvider.notifier);
+  Widget build(BuildContext context) {
+    final database = useProvider(databaseProvider);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      await database.getUserFeeds();
+    });
+    final user = useProvider(studentControllerProvider.notifier);
+    final notiff = useProvider(notificationsProvider);
+
+    List<PostModel> feeds = useProvider(postsControllerProvider.notifier).feeds;
+
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
         child: Container(
@@ -37,19 +48,29 @@ class NewsFeed extends ConsumerWidget {
       )),
       SliverToBoxAdapter(
           child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                notiff.send(
+                    title: "INtelli'learn vibes",
+                    body: "Get annual subscription for free",
+                    summary: "Promotion",
+                    channel: 'basic_channel');
+              },
               child: Button(
                   color: Palette.primary,
                   label: "Notification",
                   icon: LineIcons.bell))),
       SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          final List<PostModel> feeds = postsController.feeds;
-          if (index == 1) return Text("Hello World");
-          return feeds.isNotEmpty
-              ? Post(model: posts[index])
-              : Text("Nothing to show here");
-        }, childCount: postsController.feeds.length + 1),
+          if (feeds.length < 1) {
+            return Container(
+              child: Center(
+                child: Text("No posts yet"),
+              ),
+            );
+          }
+          if (index == 1) return Text(user.student.names.toString());
+          return Post(model: feeds[index]);
+        }, childCount: feeds.length + 1),
       )
     ]);
   }
