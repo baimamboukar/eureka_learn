@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:eureka_learn/enum/enums.dart';
 import 'package:eureka_learn/models/question_model.dart';
-import 'package:meta/meta.dart';
-
-enum QuizStatus { initial, correct, incorrect, complete }
 
 class QuizState extends Equatable {
   final String selectedAnswer;
