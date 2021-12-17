@@ -7,5 +7,5 @@ class PostsController extends StateNotifier<List<PostModel>> {
   PostsController(this._read, List<PostModel> posts) : super([]);
   List<PostModel> get feeds => state;
 
-  set data(List<PostModel> blogs) => state = blogs;
+  set data(List<PostModel> feeds) => state = feeds;
 }
