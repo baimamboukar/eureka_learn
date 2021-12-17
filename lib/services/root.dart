@@ -20,6 +20,7 @@ class Root extends HookWidget {
         data: (authenticatedUser) {
           if (authenticatedUser != null) {
             database.getUser(authenticatedUser.uid);
+            database.getUserFeeds();
             return Home();
           } else {
             return Welcome();

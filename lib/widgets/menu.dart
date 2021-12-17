@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final activeIndexProvider = StateProvider<int>((ref) => 0);
 
+// ignore: must_be_immutable
 class Menu extends HookWidget {
   Menu({Key? key}) : super(key: key);
 

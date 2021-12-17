@@ -1,8 +1,7 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:eureka_learn/controllers/controllers.dart';
-import 'package:eureka_learn/models/models.dart';
 
 import 'package:eureka_learn/providers/auth_providers.dart';
+import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';

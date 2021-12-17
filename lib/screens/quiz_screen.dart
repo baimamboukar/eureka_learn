@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:eureka_learn/enum/enums.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:flutter/foundation.dart';

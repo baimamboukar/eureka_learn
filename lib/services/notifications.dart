@@ -4,6 +4,7 @@ import 'package:eureka_learn/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NotificationService {
+  // ignore: unused_field
   final Reader _read;
   NotificationService(this._read);
   final _notiff = AwesomeNotifications();

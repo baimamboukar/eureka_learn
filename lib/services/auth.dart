@@ -1,4 +1,3 @@
-
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -20,7 +19,7 @@ class Authentication {
       await _firebaseAuth
           .signInWithEmailAndPassword(email: mail, password: pass)
           .then((response) async {
-        if (await _read(databaseProvider).getUser(response.user!.uid))
+        if (_read(databaseProvider).getUser(response.user!.uid))
           Fluttertoast.showToast(
               msg: "Successful signed in", backgroundColor: Palette.success);
       });

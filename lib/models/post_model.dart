@@ -11,6 +11,7 @@ class PostModel {
   final String ownerAvatar;
   final List<String> comments;
   final int likesCount;
+  final String? background;
   final List<String> tags;
 
   PostModel(
@@ -19,6 +20,7 @@ class PostModel {
       required this.label,
       this.photoURL,
       this.group,
+      this.background,
       required this.timeAgo,
       required this.ownerId,
       required this.ownerLevel,
@@ -26,7 +28,9 @@ class PostModel {
       required this.ownerAvatar,
       required this.comments,
       required this.likesCount,
-      required this.tags});
+      required this.tags})
+      : assert(withPicture ? background == null : background != null,
+            "You must have a background");
 
   static Map<String, dynamic> toDocumentSnapshot(PostModel post) {
     return {
@@ -42,6 +46,7 @@ class PostModel {
       'ownerAvatar': post.ownerAvatar,
       'comments': post.comments,
       'likesCount': post.likesCount,
+      'background': post.background,
       'tags': post.tags,
     };
   }
@@ -59,6 +64,7 @@ class PostModel {
       ownerAvatar: post['ownerAvatar'],
       comments: List<String>.from(post['comments']),
       likesCount: post['likesCount'],
+      background: post['background'],
       tags: List<String>.from(post['tags']),
     );
   }

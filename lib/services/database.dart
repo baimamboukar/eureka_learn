@@ -1,14 +1,11 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eureka_learn/controllers/user_controller.dart';
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:line_icons/line_icons.dart';
 
 class Database {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -21,26 +18,21 @@ class Database {
   Future<bool> createUser(
       {required String id, required Student student}) async {
     try {
-      _firestore.collection('students').doc(id).set({
-        'id': id,
-        'names': student.names,
-        'section': student.section,
-        'email': student.email,
-        'phone': student.phone,
-        'school': student.school,
-        'level': student.level,
-        'avatar': student.avatar,
-        'achievements': student.achievements,
-        'subjects': student.subjects,
-        'prenium': student.prenium,
-      }).then((_) async {
+      _firestore
+          .collection('students')
+          .doc(id)
+          .set(Student.toDocumentSnapshot(student))
+          .then((_) async {
         getUser(id);
       });
 
       return true;
     } on FirebaseException catch (err) {
-      Fluttertoast.showToast(
-          msg: "Error while creating user: ${err.message}..");
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
       return false;
     }
   }
@@ -57,10 +49,11 @@ class Database {
       });
       return true;
     } on FirebaseException catch (err) {
-      Fluttertoast.showToast(
-        msg: "Something went wrong ${err.message}",
-        backgroundColor: Palette.error,
-      );
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
       return false;
     }
   }
@@ -76,18 +69,20 @@ class Database {
           .doc()
           .set(PostModel.toDocumentSnapshot(post))
           .then((posted) {
-        Fluttertoast.showToast(
-          msg: "Successful posted",
-          backgroundColor: Palette.success,
-        );
+        Toast.toast(
+            color: Palette.success,
+            title: "No error",
+            message: "No error",
+            icon: LineIcons.checkCircle);
       });
 
       return true;
     } on FirebaseException catch (err) {
-      Fluttertoast.showToast(
-        msg: "Something went wrong ${err.message}",
-        backgroundColor: Palette.error,
-      );
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
       return false;
     }
   }
@@ -107,31 +102,36 @@ class Database {
           .where("level", isEqualTo: user.level)
           .snapshots();
       return papers;
-    } on FirebaseException catch (_) {
-      Fluttertoast.showToast(
-          toastLength: Toast.LENGTH_LONG,
-          msg: "Error while getting papers",
-          backgroundColor: Palette.error);
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
       rethrow;
     }
   }
 
-  List<PostModel> getUserFeed(Student user) {
-    List<PostModel> posts = [];
+  Future<void> getUserFeeds() async {
     try {
-      _firestore.collection("posts").get().then((querySnapshot) => {
-            querySnapshot.docs.forEach((doc) {
-              var _post = PostModel.fromDocumentSnapshot(doc.data());
-              posts.add(_post);
-            })
-          });
-      return posts;
-    } on FirebaseException catch (_) {
-      Fluttertoast.showToast(
-          toastLength: Toast.LENGTH_LONG,
-          msg: "Error while getting papers",
-          backgroundColor: Palette.error);
-      rethrow;
+      List<PostModel> timeline = [];
+      _firestore
+          .collection("posts")
+          .orderBy("timeAgo", descending: true)
+          .get()
+          .then((snapshot) {
+        //print(snapshot.docs.first.data());
+        snapshot.docs.forEach((doc) {
+          timeline.add(PostModel.fromDocumentSnapshot(doc.data()));
+        });
+      });
+      _read(postsControllerProvider.notifier).data = timeline;
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
     }
   }
 
@@ -144,11 +144,12 @@ class Database {
           .where("tags", arrayContainsAny: user.achievements)
           .snapshots();
       return papers;
-    } on FirebaseException catch (_) {
-      Fluttertoast.showToast(
-          toastLength: Toast.LENGTH_LONG,
-          msg: "Error while getting papers",
-          backgroundColor: Palette.error);
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
       rethrow;
     }
   }

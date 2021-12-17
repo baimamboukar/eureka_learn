@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:eureka_learn/controllers/controllers.dart';
 import 'package:eureka_learn/main.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
+import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/services/notifications.dart';
-import 'package:eureka_learn/utils/screen.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:file_picker/file_picker.dart';
@@ -44,6 +43,7 @@ class _PosterState extends State<Poster> {
     TextEditingController messageController = useTextEditingController();
     final tags = useProvider(tagsProvider);
     final file = useProvider(fileProvider);
+    // ignore: unused_local_variable
     final photos = useProvider(photoProvider);
     final background = useProvider(backgroundColorProvider);
     final displayTags = useProvider(displayTagsProvider);

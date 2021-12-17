@@ -60,19 +60,19 @@ class Student {
         prenium: prenium ?? this.prenium,
       );
 
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toDocumentSnapshot(Student student) {
     return {
-      'id': id,
-      'names': names,
-      'section': section,
-      'email': email,
-      'phone': phone,
-      'school': school,
-      'level': level,
-      'avatar': avatar,
-      'achievements': achievements,
-      'subjects': subjects,
-      'prenium': prenium,
+      'id': student.id,
+      'names': student.names,
+      'section': student.section,
+      'email': student.email,
+      'phone': student.phone,
+      'school': student.school,
+      'level': student.level,
+      'avatar': student.avatar,
+      'achievements': student.achievements,
+      'subjects': student.subjects,
+      'prenium': student.prenium,
     };
   }
 
@@ -105,7 +105,7 @@ class Student {
         prenium: false,
         achievements: ["Star", "Bronz", "Alpha"]);
   }
-  String toJson() => json.encode(toMap());
+  String toJson(Student student) => json.encode(toDocumentSnapshot(student));
   factory Student.fromJson(String source) =>
       Student.fromDocumentSnapshot(json.decode(source));
 

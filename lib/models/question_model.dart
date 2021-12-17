@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 class Question extends Equatable {
   final String category;
@@ -26,7 +25,6 @@ class Question extends Equatable {
       ];
 
   factory Question.fromMap(Map<String, dynamic> map) {
-   
     return Question(
       category: map['category'] ?? '',
       difficulty: map['difficulty'] ?? '',
