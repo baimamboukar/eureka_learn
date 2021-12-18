@@ -113,15 +113,21 @@ class Database {
   }
 
   Future<void> getUserFeeds() async {
+    List<PostModel> timeline = <PostModel>[];
     try {
-      List<PostModel> timeline = [];
-      _firestore.collection('posts').get().then((snapshot) {
+      await _firestore.collection('posts').get().then((snapshot) {
         print(PostModel.fromDocumentSnapshot(snapshot.docs.first.data()));
         snapshot.docs.forEach((doc) {
-          timeline.add(PostModel.fromDocumentSnapshot(doc.data()));
+          print("Data.......");
+          print(doc.data());
+          PostModel post = PostModel.fromDocumentSnapshot(doc.data());
+          timeline.add(post);
         });
       });
+
       _read(postsControllerProvider.notifier).data = timeline;
+      print("Feeeeeeeeeeeeeeds");
+      print(_read(postsControllerProvider.notifier).feeds);
     } on FirebaseException catch (err) {
       Toast.toast(
           color: Palette.error,
