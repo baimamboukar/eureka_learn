@@ -8,4 +8,4 @@ class PostsController extends StateNotifier<List<PostModel>> {
   List<PostModel> get feeds => state;
 
   set data(List<PostModel> feeds) => state = feeds;
-}
+} 

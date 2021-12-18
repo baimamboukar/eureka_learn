@@ -115,12 +115,8 @@ class Database {
   Future<void> getUserFeeds() async {
     try {
       List<PostModel> timeline = [];
-      _firestore
-          .collection("posts")
-          .orderBy("timeAgo", descending: true)
-          .get()
-          .then((snapshot) {
-        //print(snapshot.docs.first.data());
+      _firestore.collection('posts').get().then((snapshot) {
+        print(PostModel.fromDocumentSnapshot(snapshot.docs.first.data()));
         snapshot.docs.forEach((doc) {
           timeline.add(PostModel.fromDocumentSnapshot(doc.data()));
         });

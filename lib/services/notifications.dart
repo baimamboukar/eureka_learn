@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -34,7 +36,7 @@ class NotificationService {
       init();
       _notiff.createNotification(
           content: NotificationContent(
-            id: int.parse(DateTime.now().toString()),
+            id: Random().nextInt(100000),
             channelKey: channel,
             title: title,
             body: body,
@@ -44,7 +46,7 @@ class NotificationService {
           ),
           actionButtons: [
             NotificationActionButton(
-                buttonType: ActionButtonType.Default,
+                buttonType: ActionButtonType.InputField,
                 label: "Comment",
                 key: "alpha")
           ]);
