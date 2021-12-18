@@ -8,10 +8,15 @@ import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Post extends StatelessWidget {
+class Post extends StatefulWidget {
   final PostModel model;
   const Post({Key? key, required this.model}) : super(key: key);
 
+  @override
+  State<Post> createState() => _PostState();
+}
+
+class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,11 +42,11 @@ class Post extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model.ownerName,
+                          Text(widget.model.ownerName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Palette.primary)),
-                          if (model.inGroup)
+                          if (widget.model.inGroup)
                             Row(
                               children: [
                                 Transform(
@@ -52,8 +57,8 @@ class Post extends StatelessWidget {
                                       ),
                                     child: Icon(LineIcons.share,
                                         size: 25.0, color: Palette.primary)),
-                                if (model.inGroup)
-                                  Text(model.group ?? "Group",
+                                if (widget.model.inGroup)
+                                  Text(widget.model.group ?? "Group",
                                       style: Styles.subtitle),
                               ],
                             )
@@ -66,9 +71,10 @@ class Post extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                Text(model.label, maxLines: 4, overflow: TextOverflow.ellipsis),
+                Text(widget.model.label,
+                    maxLines: 4, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 10.0),
-                model.withPicture
+                widget.model.withPicture
                     ? Center(
                         child: Image(
                           errorBuilder: (_, __, ___) {
@@ -86,7 +92,7 @@ class Post extends StatelessWidget {
                             );
                           },
                           image: OptimizedCacheImageProvider(
-                              model.photoURL ?? "",
+                              widget.model.photoURL ?? "",
                               imageRenderMethodForWeb:
                                   ImageRenderMethodForWeb.HtmlImage),
                           height: 100.0,
@@ -96,8 +102,8 @@ class Post extends StatelessWidget {
                 const SizedBox(height: 15.0),
                 Wrap(
                   spacing: 3.0,
-                  children: model.tags.isNotEmpty
-                      ? model.tags
+                  children: widget.model.tags.isNotEmpty
+                      ? widget.model.tags
                           .map((tag) => Chip(
                                 backgroundColor:
                                     Palette.primary.withOpacity(0.5),
@@ -116,7 +122,7 @@ class Post extends StatelessWidget {
                             size: 25.0,
                             color: liked ? Colors.amberAccent : Colors.grey);
                       },
-                      likeCount: model.likesCount,
+                      likeCount: widget.model.likesCount,
                       likeCountAnimationType: LikeCountAnimationType.part,
                     ),
                     Row(
@@ -133,7 +139,7 @@ class Post extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        await Share.share(model.label.padLeft(30));
+                        await Share.share(widget.model.label.padLeft(30));
                       },
                       child: Row(
                         children: [
@@ -151,7 +157,7 @@ class Post extends StatelessWidget {
                       backgroundColor: Palette.primary.withOpacity(0.15),
                       side: BorderSide(
                           color: Palette.primary.withOpacity(0.5), width: 0.60),
-                      label: Text(model.comments[0]),
+                      label: Text(widget.model.comments[0]),
                     )
                   ],
                 )
