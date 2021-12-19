@@ -25,24 +25,22 @@ void main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft
   ]);
-  runApp(ProviderScope(child: EurekaLearn()));
+  runApp(ProviderScope(child: Intellilearn()));
 }
 
-class EurekaLearn extends HookWidget {
+class Intellilearn extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final theme = useProvider(darkModeProvider);
     return GetMaterialApp(
-      title: "EurekaLearn",
+      title: "intelli'learn",
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColorBrightness: Brightness.light,
         primarySwatch: Colors.blue,
         primaryColor: Colors.blue,
-        accentColorBrightness: Brightness.light,
         scaffoldBackgroundColor: Colors.grey.shade200,
-        textTheme:
-            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.cuprumTextTheme(Theme.of(context).textTheme),
         iconTheme: IconThemeData(size: 22.0, opacity: 1),
         appBarTheme: AppBarTheme(
             centerTitle: true,
@@ -51,7 +49,6 @@ class EurekaLearn extends HookWidget {
             systemOverlayStyle:
                 SystemUiOverlayStyle(statusBarColor: Colors.blue),
             actionsIconTheme: IconThemeData(color: Palette.primary),
-            textTheme: GoogleFonts.josefinSansTextTheme(),
             iconTheme: IconThemeData(color: Palette.primary, size: 16.0)),
       ),
       darkTheme: ThemeData.dark().copyWith(
@@ -107,13 +104,6 @@ class Home extends HookWidget {
                 builder: (context) {
                   return Scaffold(body: Poster());
                 });
-            // Get.dialog(
-            //     Material(
-            //         child: Container(
-            //             height: 400.0,
-            //             width: double.infinity,
-            //             child: FadeOut(child: Center(child: Poster())))),
-            //     useRootNavigator: false);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
