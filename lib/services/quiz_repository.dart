@@ -21,21 +21,19 @@ class QuizRepository extends BaseQuizRepository {
   @override
   Future<List<Question>> getQuestions({
     int? numQuestions,
-    int? categoryId,
-    Difficulty? difficulty,
+    String? section,
+    String? level,
+    String? subject ,
   }) async {
     try {
       final queryParameters = {
-        'type': 'multiple',
-        'amount': numQuestions,
-        'category': categoryId,
+        'section': section,
+        'number': numQuestions,
+        'level': level,
+        'subject': subject,
       };
 
-      if (difficulty != Difficulty.any) {
-        queryParameters.addAll(
-          {'difficulty': EnumToString.convertToString(difficulty)},
-        );
-      }
+   
 
       final response = await _read(dioProvider).get(
         'https://opentdb.com/api.php',
