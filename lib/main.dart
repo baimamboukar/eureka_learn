@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
+import 'package:eureka_learn/screens/quizz.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/utils/palette.dart';
