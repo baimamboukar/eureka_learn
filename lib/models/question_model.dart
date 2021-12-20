@@ -1,38 +1,45 @@
 import 'package:equatable/equatable.dart';
 
-class Question extends Equatable {
-  final String category;
-  final String difficulty;
-  final String question;
+class Question  {
+  final String label;
+  final String subject;
+  final String section;
+  final String level;
   final String correctAnswer;
-  final List<String> answers;
+  final List<String> incorrectAnswers;
+  final String topic;
 
   const Question({
-    required this.category,
-    required this.difficulty,
-    required this.question,
+    required this.label,
+    required this.subject,
+    required this.section,
+    required this.level,
     required this.correctAnswer,
-    required this.answers,
+    required this.incorrectAnswers,
+    required this.topic,
   });
 
-  @override
-  List<Object> get props => [
-        category,
-        difficulty,
-        question,
-        correctAnswer,
-        answers,
-      ];
-
-  factory Question.fromMap(Map<String, dynamic> map) {
+  factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
-      category: map['category'] ?? '',
-      difficulty: map['difficulty'] ?? '',
-      question: map['question'] ?? '',
-      correctAnswer: map['correct_answer'] ?? '',
-      answers: List<String>.from(map['incorrect_answers'] ?? [])
-        ..add(map['correct_answer'] ?? '')
-        ..shuffle(),
+      label: json['label'],
+      subject: json['subject'],
+      section: json['section'],
+      level: json['level'],
+      correctAnswer: json['correct_answer'],
+      incorrectAnswers: json['incorrect_answers'],
+      topic: json['topic'],
+    );
+  }
+
+  factory Question.initial() {
+    return Question(
+      label: '',
+      subject: '',
+      section: '',
+      level: '',
+      correctAnswer: '',
+      incorrectAnswers: [],
+      topic: '',
     );
   }
 }
