@@ -20,8 +20,7 @@ final AutoDisposeFutureProvider<List<Question>>? quizQuestionsProvider =
     FutureProvider.autoDispose<List<Question>>(
   (ref) => ref.watch(quizRepositoryProvider).getQuestions(
         numQuestions: 5,
-        categoryId: Random().nextInt(24) + 9,
-        difficulty: Difficulty.any,
+        
       ),
 );
 
@@ -271,7 +270,7 @@ class QuizQuestions extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 12.0),
               child: Text(
-                HtmlCharacterEntities.decode(question.question),
+                HtmlCharacterEntities.decode(''),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 28.0,
