@@ -28,9 +28,7 @@ class PostModel {
       required this.ownerAvatar,
       required this.comments,
       required this.likesCount,
-      required this.tags})
-      : assert(withPicture ? background == null : background != null,
-            "You must have a background");
+      required this.tags});
 
   static Map<String, dynamic> toDocumentSnapshot(PostModel post) {
     return {

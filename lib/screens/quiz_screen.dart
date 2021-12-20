@@ -31,13 +31,10 @@ class QuizScreen extends HookWidget {
     final quizQuestions = useProvider(quizQuestionsProvider!);
     final quizSubject = useProvider(quizSubjectProvider);
     final pageController = usePageController();
-    print(quizSubject.state);
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          gradient: Palette.customGradientWith(
-              [Palette.primary, Palette.light, Palette.primary])),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: quizQuestions.when(
@@ -79,12 +76,13 @@ class QuizScreen extends HookWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showDialog(
+            showModalBottomSheet(
                 context: context,
-                builder: (context) => Material(
-                      child: Container(
-                        child: Center(
-                          child: Text("He is an Engineer a SOFTWARE ENGINEER"),
+                builder: (context) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
                         ),
                       ),
                     ));

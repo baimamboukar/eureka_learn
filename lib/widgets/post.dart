@@ -1,7 +1,11 @@
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
@@ -60,6 +64,8 @@ class _PostState extends State<Post> {
                                 if (widget.model.inGroup)
                                   Text(widget.model.group ?? "Group",
                                       style: Styles.subtitle),
+                                Icon(Iconsax.verify,
+                                    color: Palette.primary, size: 14)
                               ],
                             )
                         ],
@@ -75,28 +81,12 @@ class _PostState extends State<Post> {
                     maxLines: 4, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 10.0),
                 widget.model.withPicture
-                    ? Center(
-                        child: Image(
-                          errorBuilder: (_, __, ___) {
-                            return Center(
-                                child:
-                                    const Icon(LineIcons.faceWithRollingEyes));
-                          },
-                          loadingBuilder: (context, widget, loadingProgress) {
-                            return CircularProgressIndicator(
-                              strokeWidth: 1.50,
-                              value: loadingProgress?.expectedTotalBytes != null
-                                  ? (loadingProgress!.cumulativeBytesLoaded) /
-                                      (loadingProgress.expectedTotalBytes!)
-                                  : null,
-                            );
-                          },
-                          image: OptimizedCacheImageProvider(
-                              widget.model.photoURL ?? "",
-                              imageRenderMethodForWeb:
-                                  ImageRenderMethodForWeb.HtmlImage),
-                          height: 100.0,
-                        ),
+                    ? GestureDetector(
+                        onTap: () => Get.to(() =>
+                            ImageView(imageURL: widget.model.photoURL ?? "")),
+                        child: Center(
+                            child: OptimizedCacheImage(
+                                imageUrl: widget.model.photoURL ?? "")),
                       )
                     : const SizedBox.shrink(),
                 const SizedBox(height: 15.0),
@@ -105,9 +95,17 @@ class _PostState extends State<Post> {
                   children: widget.model.tags.isNotEmpty
                       ? widget.model.tags
                           .map((tag) => Chip(
+                                visualDensity:
+                                    VisualDensity.adaptivePlatformDensity,
                                 backgroundColor:
                                     Palette.primary.withOpacity(0.5),
-                                label: Text(tag),
+                                label: Text(
+                                  tag,
+                                  style: Styles.designText(
+                                      color: Palette.dark,
+                                      size: 8.0,
+                                      bold: false),
+                                ),
                               ))
                           .toList()
                       : [SizedBox.shrink()],
@@ -123,17 +121,21 @@ class _PostState extends State<Post> {
                             color: liked ? Colors.amberAccent : Colors.grey);
                       },
                       likeCount: widget.model.likesCount,
-                      likeCountAnimationType: LikeCountAnimationType.part,
+                      likeCountAnimationType: LikeCountAnimationType.all,
                     ),
                     Row(
-                      children: const [
-                        const Icon(Icons.chat),
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.envelopeOpenText,
+                          color: Palette.dark,
+                          size: 18,
+                        ),
                         const Text(" comment"),
                       ],
                     ),
                     Row(
-                      children: const [
-                        Icon(LineIcons.download),
+                      children: [
+                        Icon(Iconsax.save_add, color: Palette.dark),
                         Text(" save"),
                       ],
                     ),
@@ -143,7 +145,7 @@ class _PostState extends State<Post> {
                       },
                       child: Row(
                         children: [
-                          Icon(LineIcons.share),
+                          Icon(LineIcons.share, color: Palette.dark),
                           Text(" share"),
                         ],
                       ),
@@ -157,7 +159,7 @@ class _PostState extends State<Post> {
                       backgroundColor: Palette.primary.withOpacity(0.15),
                       side: BorderSide(
                           color: Palette.primary.withOpacity(0.5), width: 0.60),
-                      label: Text(widget.model.comments[0]),
+                      label: Text('comment'),
                     )
                   ],
                 )

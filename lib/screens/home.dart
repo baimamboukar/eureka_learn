@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 
 class NewsFeed extends HookWidget {
@@ -30,6 +31,7 @@ class NewsFeed extends HookWidget {
     return RefreshIndicator(
       onRefresh: () async {
         await database.getUserFeeds();
+        context.refresh(postsControllerProvider);
       },
       child: CustomScrollView(slivers: [
         SliverToBoxAdapter(
@@ -46,37 +48,21 @@ class NewsFeed extends HookWidget {
                       tips: Tips(DateTime(1, 01, 2021),
                           "Lorem ipsum dolor ai samet", "Geography")))),
         ),
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(user.student.names.toString(), style: Styles.subtitle),
-        )),
-        SliverToBoxAdapter(
-            child: GestureDetector(
-                onTap: () {
-                  notiff.send(
-                      title: "INtelli'learn vibes",
-                      body: "Get annual subscription for free",
-                      summary: "Promotion",
-                      channel: 'basic_channel');
-                },
-                child: Button(
-                    color: Palette.primary,
-                    label: "Notification",
-                    icon: LineIcons.bell))),
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
-            if (feeds.length < 1) {
-              return Container(
-                child: Center(
-                  child: Text("No posts yet"),
-                ),
+            if (feeds.isEmpty)
+              return Column(
+                children: [
+                  Center(
+                    child: Icon(Iconsax.folder_open, size: 50),
+                  ),
+                  const SizedBox(height: 20),
+                  Text("No Feeds for the moment...", style: Styles.subtitle),
+                ],
               );
-            }
-            if (index == 1) return Text(user.student.names.toString());
             return Post(model: feeds[index]);
-          }, childCount: feeds.length + 1),
+          }, childCount: feeds.length),
         )
       ]),
     );

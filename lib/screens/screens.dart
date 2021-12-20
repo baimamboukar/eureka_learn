@@ -10,3 +10,4 @@ export 'profile.dart';
 export 'quizz.dart';
 export 'explore_papers.dart';
 export 'topic_details.dart';
+export 'image_view.dart';

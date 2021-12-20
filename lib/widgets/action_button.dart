@@ -17,7 +17,7 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 30.0,
+        height: 35.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             border: Border.all(color: color, width: 2.0),

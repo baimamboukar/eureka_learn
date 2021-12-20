@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/providers.dart';
@@ -116,18 +118,13 @@ class Database {
     List<PostModel> timeline = <PostModel>[];
     try {
       await _firestore.collection('posts').get().then((snapshot) {
-        print(PostModel.fromDocumentSnapshot(snapshot.docs.first.data()));
         snapshot.docs.forEach((doc) {
-          print("Data.......");
-          print(doc.data());
           PostModel post = PostModel.fromDocumentSnapshot(doc.data());
           timeline.add(post);
         });
       });
 
       _read(postsControllerProvider.notifier).data = timeline;
-      print("Feeeeeeeeeeeeeeds");
-      print(_read(postsControllerProvider.notifier).feeds);
     } on FirebaseException catch (err) {
       Toast.toast(
           color: Palette.error,
@@ -152,6 +149,24 @@ class Database {
           title: "Fetching error",
           message: err.message ?? "",
           icon: LineIcons.times);
+      rethrow;
+    }
+  }
+
+  Future<String> uploadImage(File image) async {
+    try {
+      String fileName = image.uri.pathSegments.last;
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('posts_images/$fileName');
+      await storageRef.putFile(image);
+      return await storageRef.getDownloadURL();
+      // ignore: unused_catch_clause
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          icon: LineIcons.times,
+          color: Palette.error,
+          title: "Image upload",
+          message: "Something went wrong while uploading file... ");
       rethrow;
     }
   }
