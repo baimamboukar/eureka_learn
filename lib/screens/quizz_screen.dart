@@ -284,7 +284,7 @@ class QuizQuestions extends StatelessWidget {
               endIndent: 20.0,
             ),
             Column(
-              children: question.wrong_answ
+              children: question.incorrectAnswers
                   .map(
                     (e) => AnswerCard(
                       answer: e,
