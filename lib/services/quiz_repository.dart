@@ -21,21 +21,17 @@ class QuizRepository extends BaseQuizRepository {
   @override
   Future<List<Question>> getQuestions({
     int? numQuestions,
-    int? categoryId,
-    Difficulty? difficulty,
+    String? section,
+    String? level,
+    String? subject,
   }) async {
     try {
-      final queryParameters = {
-        'type': 'multiple',
-        'amount': numQuestions,
-        'category': categoryId,
-      };
-
-      if (difficulty != Difficulty.any) {
-        queryParameters.addAll(
-          {'difficulty': EnumToString.convertToString(difficulty)},
-        );
-      }
+      // final queryParameters = {
+      //   'section': section,
+      //   'number': numQuestions,
+      //   'level': level,
+      //   'subject': subject,
+      // };
 
       final response = await _read(dioProvider).get(
           "https://intelliquizz.herokuapp.com/anglo_ordinary/mobile-dev/3");
@@ -44,7 +40,7 @@ class QuizRepository extends BaseQuizRepository {
         final data = Map<String, dynamic>.from(response.data);
         final results = List<Map<String, dynamic>>.from(data['results'] ?? []);
         if (results.isNotEmpty) {
-          return results.map((e) => Question.fromMap(e)).toList();
+          return results.map((e) => Question.fromJson(e)).toList();
         }
       }
       return [];
