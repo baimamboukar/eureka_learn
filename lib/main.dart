@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
@@ -41,7 +40,8 @@ class Intellilearn extends HookWidget {
         primarySwatch: Colors.blue,
         primaryColor: Colors.blue,
         scaffoldBackgroundColor: Colors.grey.shade200,
-        textTheme: GoogleFonts.cuprumTextTheme(Theme.of(context).textTheme),
+        textTheme:
+            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
         iconTheme: IconThemeData(size: 22.0, opacity: 1),
         appBarTheme: AppBarTheme(
             centerTitle: true,

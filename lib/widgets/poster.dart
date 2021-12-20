@@ -52,6 +52,7 @@ class _PosterState extends State<Poster> {
     final downloadedURL = useProvider(downloadedURLProvider);
     final notifications = useProvider(notificationsProvider);
     void pickFile() async {
+      
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {

@@ -38,9 +38,7 @@ class QuizRepository extends BaseQuizRepository {
       }
 
       final response = await _read(dioProvider).get(
-        'https://opentdb.com/api.php',
-        queryParameters: queryParameters,
-      );
+          "https://intelliquizz.herokuapp.com/anglo_ordinary/mobile-dev/3");
 
       if (response.statusCode == 200) {
         final data = Map<String, dynamic>.from(response.data);
