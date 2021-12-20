@@ -33,14 +33,18 @@ class QuizRepository extends BaseQuizRepository {
       //   'subject': subject,
       // };
 
-      final response = await _read(dioProvider).get(
-          "https://intelliquizz.herokuapp.com/anglo_ordinary/mobile-dev/3");
+      final response = await _read(dioProvider)
+          .get('https://intelliquizz.herokuapp.com/anglo_ordinary/mobile-dev/4',
+              onReceiveProgress: (x, y) {
+        print(x);
+        print(y);
+      });
 
       if (response.statusCode == 200) {
         final data = Map<String, dynamic>.from(response.data);
-        final results = List<Map<String, dynamic>>.from(data['results'] ?? []);
+        final results = List<Map<String, dynamic>>.from(data["results"] ?? []);
         if (results.isNotEmpty) {
-          return results.map((e) => Question.fromJson(e)).toList();
+          return results.map((e) => Question.fromMap(e)).toList();
         }
       }
       return [];
