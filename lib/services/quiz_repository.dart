@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:eureka_learn/models/failure_model.dart';
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/enum/difficulty.dart';
+import 'package:eureka_learn/providers/user_provider.dart';
 import 'package:eureka_learn/services/base_quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,25 +22,14 @@ class QuizRepository extends BaseQuizRepository {
 
   @override
   Future<List<Question>> getQuestions({
-    int? numQuestions,
-    String? section,
-    String? level,
-    String? subject,
+    required Student student,
+    int? numQuestions = 4,
+    required String subject,
   }) async {
     try {
-      // final queryParameters = {
-      //   'section': section,
-      //   'number': numQuestions,
-      //   'level': level,
-      //   'subject': subject,
-      // };
-
-      final response = await _read(dioProvider)
-          .get('https://intelliquizz.herokuapp.com/anglo_ordinary/mobile-dev/4',
-              onReceiveProgress: (x, y) {
-        print(x);
-        print(y);
-      });
+      final response = await _read(dioProvider).get(
+          'https://intelliquizz.herokuapp.com/${student.section}/${student.level}/$subject/$numQuestions',
+          onReceiveProgress: (x, y) {});
 
       if (response.statusCode == 200) {
         final data = Map<String, dynamic>.from(response.data);
