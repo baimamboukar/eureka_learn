@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class Question extends Equatable {
@@ -19,27 +21,18 @@ class Question extends Equatable {
     required this.topic,
   });
 
-  factory Question.fromJson(Map<String, dynamic> json) {
-    return Question(
-      label: json['label'],
-      subject: json['subject'],
-      section: json['section'],
-      level: json['level'],
-      correctAnswer: json['correct_answer'],
-      incorrectAnswers: json['incorrect_answers'],
-      topic: json['topic'],
-    );
-  }
+  factory Question.fromJson(String source) =>
+      Question.fromMap(json.decode(source));
 
   factory Question.fromMap(Map<String, dynamic> map) {
     return Question(
-      label: '',
-      subject: '',
-      section: '',
-      level: '',
-      correctAnswer: '',
-      incorrectAnswers: [],
-      topic: '',
+      label: map['label'],
+      subject: map['subject'],
+      section: map['section'],
+      level: map['level'],
+      correctAnswer: map['correct_answer'],
+      incorrectAnswers: [map['wrong_answers'], 'Alpha'],
+      topic: map['topic'],
     );
   }
 
