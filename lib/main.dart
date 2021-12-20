@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,7 +75,7 @@ class Home extends HookWidget {
         key: scaffoldKey,
         appBar: AppBar(
             leading: IconButton(
-                icon: Icon(LineIcons.tasks),
+                icon: Icon(Iconsax.menu),
                 onPressed: () => scaffoldKey.currentState!.openDrawer()),
             title: Logo(
               withIcon: true,
@@ -88,22 +89,18 @@ class Home extends HookWidget {
                 ),
               ),
               IconButton(
-                  icon: Icon(LineIcons.bell),
+                  icon: Icon(Iconsax.notification),
                   onPressed: () => Get.to(() => Notifications())),
             ]),
         drawer: AppDrawer(),
         body: IndexedStack(
             key: ValueKey<int>(navigationIndex.state),
             index: navigationIndex.state,
-            children: _screens.map((screen) => FadeIn(child: screen)).toList()),
+            children: _screens.map((screen) => screen).toList()),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.bubble_chart),
           onPressed: () {
-            showPlatformDialog(
-                context: context,
-                builder: (context) {
-                  return Scaffold(body: Poster());
-                });
+            Get.to(() => Poster());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -114,16 +111,12 @@ class Home extends HookWidget {
             height: 52.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                NavItem(icon: LineIcons.globe, position: 0, label: "Home"),
+                NavItem(icon: Iconsax.activity, position: 0, label: "Feeds"),
                 NavItem(icon: LineIcons.school, position: 1, label: "Quizz"),
                 NavItem(
-                    icon: LineIcons.bookReader,
-                    position: 2,
-                    label: "Ressources"),
-                NavItem(
-                    icon: LineIcons.userFriends, position: 3, label: "Forum")
+                    icon: Iconsax.reserve, position: 2, label: "Ressources"),
+                NavItem(icon: LineIcons.infinity, position: 3, label: "i-Space")
               ],
             ),
           ),
