@@ -1,90 +1,94 @@
 import 'dart:math';
 
+import 'package:eureka_learn/controllers/quiz_state.dart';
 import 'package:eureka_learn/enum/enums.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/utils/palette.dart';
+import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:eureka_learn/controllers/quiz_controller.dart';
-import 'package:eureka_learn/controllers/quiz_state.dart';
-import 'package:eureka_learn/enum/difficulty.dart';
 import 'package:eureka_learn/models/failure_model.dart';
 import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/services/quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:html_character_entities/html_character_entities.dart';
-
-final AutoDisposeFutureProvider<List<Question>>? quizQuestionsProvider =
-    FutureProvider.autoDispose<List<Question>>(
-  (ref) => ref.watch(quizRepositoryProvider).getQuestions(
-      numQuestions: 4, section: "anglophone", subject: "mobile-dev"),
-);
+import 'package:iconsax/iconsax.dart';
 
 class QuizScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final quizQuestions = useProvider(quizQuestionsProvider!);
-    final quizSubject = useProvider(quizSubjectProvider);
     final pageController = usePageController();
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: quizQuestions.when(
-          data: (questions) => _buildBody(context, pageController, questions),
-          loading: () => const Center(
-              child: CircularProgressIndicator(
-            color: Colors.white,
-          )),
-          error: (error, _) => QuizError(
-            message: error is Failure ? error.message : 'Something went wrong!',
-          ),
+    return Scaffold(
+      body: quizQuestions.when(
+        data: (questions) => _buildBody(context, pageController, questions),
+        loading: () => Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              color: Colors.white,
+            ),
+            const SizedBox(height: 20),
+            const Text("Loading quiz...")
+          ],
+        )),
+        error: (error, _) => QuizError(
+          message: error is Failure ? error.message : 'Something went wrong!',
         ),
-        bottomSheet: quizQuestions.maybeWhen(
-          data: (questions) {
-            final quizState = useProvider(quizControllerProvider);
-            if (!quizState.answered) return const SizedBox.shrink();
-            return Container(
-              height: 100,
-              color: Palette.primary.withOpacity(0.65),
-              child: CustomButton(
-                title: pageController.page!.toInt() + 1 < questions.length
+      ),
+      bottomSheet: quizQuestions.maybeWhen(
+        data: (questions) {
+          final quizState = useProvider(quizControllerProvider);
+          if (!quizState.answered) return const SizedBox.shrink();
+          return Container(
+            height: 100,
+            color: Palette.primary.withOpacity(0.65),
+            child: GestureDetector(
+              onTap: () {
+                context
+                    .read(quizControllerProvider.notifier)
+                    .nextQuestion(questions, pageController.page!.toInt());
+                if (pageController.page!.toInt() + 1 < questions.length) {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.bounceOut,
+                  );
+                }
+              },
+              child: Button(
+                color: Palette.primary,
+                icon: Iconsax.next,
+                label: pageController.page!.toInt() + 1 < questions.length
                     ? 'Next Question'
                     : 'See Results',
-                onTap: () {
-                  context
-                      .read(quizControllerProvider.notifier)
-                      .nextQuestion(questions, pageController.page!.toInt());
-                  if (pageController.page!.toInt() + 1 < questions.length) {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.linear,
-                    );
-                  }
-                },
               ),
-            );
-          },
-          orElse: () => const SizedBox.shrink(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
+            ),
+          );
+        },
+        orElse: () => const SizedBox.shrink(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
                       ),
-                    ));
-          },
-        ),
+                    ),
+                    child: Center(
+                      child: Text("Questions flow appear here"),
+                    ),
+                  ));
+        },
       ),
     );
   }
@@ -222,7 +226,7 @@ class QuizResults extends StatelessWidget {
         ),
         const SizedBox(height: 40.0),
         CustomButton(
-          title: 'New Quiz',
+          title: "Take another one",
           onTap: () {
             context.refresh(quizRepositoryProvider);
 
@@ -257,31 +261,29 @@ class QuizQuestions extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Question ${index + 1} of ${questions.length}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Text("Question ${index + 1} of ${questions.length}",
+                    style: Styles.subtitle),
+                Container(
+                  height: 50.0,
+                  width: 50.0,
+                  child: Center(
+                    child: Text(
+                      state.correct.length.toString(),
+                      style: Styles.designText(
+                          color: Palette.light, size: 22, bold: true),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Palette.success, shape: BoxShape.circle),
+                )
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 12.0),
-              child: Text(
-                HtmlCharacterEntities.decode(question.label),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Divider(
-              color: Colors.grey[200],
-              height: 32.0,
-              thickness: 2.0,
-              indent: 20.0,
-              endIndent: 20.0,
+              child: Text(HtmlCharacterEntities.decode(question.label),
+                  style: Styles.subtitle),
             ),
             Column(
               children: question.incorrectAnswers
@@ -337,13 +339,12 @@ class AnswerCard extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: boxShadow,
           border: Border.all(
             color: isDisplayingAnswer
                 ? isCorrect
-                    ? Colors.green
+                    ? Palette.success
                     : isSelected
-                        ? Colors.red
+                        ? Palette.error
                         : Colors.white
                 : Colors.white,
             width: 4.0,
