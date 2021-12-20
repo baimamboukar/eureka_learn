@@ -1,12 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:eureka_learn/models/failure_model.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/models/question_model.dart';
-import 'package:eureka_learn/enum/difficulty.dart';
-import 'package:eureka_learn/providers/user_provider.dart';
 import 'package:eureka_learn/services/base_quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -28,7 +25,7 @@ class QuizRepository extends BaseQuizRepository {
   }) async {
     try {
       final response = await _read(dioProvider).get(
-          'https://intelliquizz.herokuapp.com/${student.section}/${student.level}/$subject/$numQuestions',
+          'https://intelliquizz.herokuapp.com/$subject/${student.level}/$numQuestions',
           onReceiveProgress: (x, y) {});
 
       if (response.statusCode == 200) {
