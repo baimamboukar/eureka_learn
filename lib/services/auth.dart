@@ -39,6 +39,7 @@ class Authentication {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: mail, password: pass)
           .then((response) async {
+        student.id = response.user!.uid;
         if (await _read(databaseProvider)
             .createUser(id: response.user!.uid, student: student))
           Fluttertoast.showToast(
