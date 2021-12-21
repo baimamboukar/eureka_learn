@@ -72,7 +72,7 @@ class _PostState extends State<Post> {
                       ),
                     ]),
                     Text(timeago
-                        .format(DateTime.parse("2019-09-17 12:50:40.000"))
+                        .format(DateTime.parse(widget.model.timeAgo))
                         .toString()),
                   ],
                 ),
