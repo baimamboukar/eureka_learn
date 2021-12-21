@@ -31,7 +31,7 @@ class Question extends Equatable {
       section: map['section'],
       level: map['level'],
       correctAnswer: map['correct_answer'],
-      incorrectAnswers: [map['wrong_answers'], 'Alpha'],
+      incorrectAnswers: map['wrong_answers'].split(" - "),
       topic: map['topic'],
     );
   }
