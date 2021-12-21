@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
@@ -52,7 +53,6 @@ class _PosterState extends State<Poster> {
     final downloadedURL = useProvider(downloadedURLProvider);
     final notifications = useProvider(notificationsProvider);
     void pickFile() async {
-      
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {
@@ -269,38 +269,41 @@ class _PosterState extends State<Poster> {
                       if (isBusy.state)
                         showModalBottomSheet(
                             context: context,
+                            backgroundColor: Colors.transparent,
                             builder: (context) {
                               return Container(
-                                  height: 120.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(24.0),
-                                          topRight: Radius.circular(24.0))),
-                                  child: Center(
-                                      child: Column(
-                                    children: [
-                                      const SizedBox(height: 10.0),
-                                      Text("Posting....",
-                                          style: Styles.subtitle),
-                                      const SizedBox(height: 10.0),
-                                      const LinearProgressIndicator()
-                                    ],
-                                  )));
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                    color: Palette.primary,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(18.0),
+                                        topRight: Radius.circular(18.0))),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Posting feed...",
+                                      style: Styles.subtitle,
+                                    ),
+                                    const SizedBox(height: 15.0),
+                                    LinearProgressIndicator(
+                                      minHeight: 6.0,
+                                    )
+                                  ],
+                                ),
+                              );
                             });
 
                       if (file.state != null)
                         await database
-                            .uploadImage(file.state ?? File(""))
-                            .then((value) {
+                            .uploadImage(file.state ?? File("file"))
+                            .then((url) async {
                           PostModel model = PostModel(
                               inGroup: false,
                               tags: tags.state,
                               withPicture: file.state != null ? true : false,
-                              photoURL: file.state != null
-                                  ? downloadedURL.state
-                                  : null,
+                              photoURL: url,
                               likesCount: 0,
-                              timeAgo: DateTime.now().toString(),
+                              timeAgo: DateTime.now().toLocal().toString(),
                               label: messageController.value.text,
                               ownerId: user.student.id ?? "",
                               ownerLevel: user.student.level,
@@ -324,11 +327,44 @@ class _PosterState extends State<Poster> {
                             });
                           }
                         });
+                      else {
+                        PostModel model = PostModel(
+                            inGroup: false,
+                            tags: tags.state,
+                            withPicture: file.state != null ? true : false,
+                            photoURL: null,
+                            likesCount: 0,
+                            timeAgo: DateTime.now().toLocal().toString(),
+                            label: messageController.value.text,
+                            ownerId: user.student.id ?? "",
+                            ownerLevel: user.student.level,
+                            ownerAvatar: user.student.avatar,
+                            ownerName: user.student.names,
+                            comments: []);
+                        if (database.post(model)) {
+                          notifications.send(
+                              channel: 'posts',
+                              title: "New post from ${model.ownerName}...",
+                              summary: model.label,
+                              body: model.label,
+                              callback: '/home');
+                          Toast.toast(
+                              color: Palette.success,
+                              message: "Successful posted",
+                              title: "Publishing",
+                              icon: LineIcons.circleAlt);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          tags.state = [];
+                          file.state = null;
+                          messageController.clear();
+                        }
+                      }
                     },
                     child: Button(
                         label: "Publish",
                         color: Palette.primary,
-                        icon: Iconsax.send),
+                        icon: FontAwesomeIcons.telegramPlane),
                   ),
                 ),
             ],
