@@ -25,21 +25,24 @@ class QuizScreen extends HookWidget {
     final pageController = usePageController();
 
     return Scaffold(
-      body: quizQuestions.when(
-        data: (questions) => _buildBody(context, pageController, questions),
-        loading: () => Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              color: Colors.white,
-            ),
-            const SizedBox(height: 20),
-            const Text("Loading quiz...")
-          ],
-        )),
-        error: (error, _) => QuizError(
-          message: error is Failure ? error.message : 'Something went wrong!',
+      body: Padding(
+        padding: const EdgeInsets.all(12.0) + const EdgeInsets.only(top: 25),
+        child: quizQuestions.when(
+          data: (questions) => _buildBody(context, pageController, questions),
+          loading: () => Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: Colors.white,
+              ),
+              const SizedBox(height: 20),
+              const Text("Loading quiz...")
+            ],
+          )),
+          error: (error, _) => QuizError(
+            message: error is Failure ? error.message : 'Something went wrong!',
+          ),
         ),
       ),
       bottomSheet: quizQuestions.maybeWhen(
@@ -47,8 +50,9 @@ class QuizScreen extends HookWidget {
           final quizState = useProvider(quizControllerProvider);
           if (!quizState.answered) return const SizedBox.shrink();
           return Container(
-            height: 100,
-            color: Palette.primary.withOpacity(0.65),
+            height: 55,
+            width: Screen.width(context),
+            color: Colors.transparent,
             child: GestureDetector(
               onTap: () {
                 context
@@ -61,12 +65,14 @@ class QuizScreen extends HookWidget {
                   );
                 }
               },
-              child: Button(
-                color: Palette.primary,
-                icon: Iconsax.next,
-                label: pageController.page!.toInt() + 1 < questions.length
-                    ? 'Next Question'
-                    : 'See Results',
+              child: Center(
+                child: Button(
+                  color: Palette.primary,
+                  icon: Iconsax.next,
+                  label: pageController.page!.toInt() + 1 < questions.length
+                      ? 'Next Question'
+                      : 'See Results',
+                ),
               ),
             ),
           );
@@ -262,6 +268,7 @@ class QuizQuestions extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Question ${index + 1} of ${questions.length}",
                     style: Styles.subtitle),
