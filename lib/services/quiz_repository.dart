@@ -25,7 +25,7 @@ class QuizRepository extends BaseQuizRepository {
   }) async {
     try {
       final response = await _read(dioProvider).get(
-          'https://intelliquizz.herokuapp.com/$subject/${student.level}/$numQuestions',
+          'http://intelliquizz.herokuapp.com/Biology/Advanced/3/',
           onReceiveProgress: (x, y) {});
 
       if (response.statusCode == 200) {
