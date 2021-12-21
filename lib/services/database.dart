@@ -170,4 +170,21 @@ class Database {
       rethrow;
     }
   }
+
+/**=============GET USER FEEDS BY STREAM=============== */
+  Stream getUserFeedsStream() {
+    try {
+      return _firestore
+          .collection('posts')
+          .orderBy('timeAgo', descending: true)
+          .snapshots();
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
+      rethrow;
+    }
+  }
 }
