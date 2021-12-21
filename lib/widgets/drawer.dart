@@ -62,6 +62,10 @@ List<dynamic> items = [
       label: "Saved",
       destination: FlutterLogo()),
   DrawerItem(
+      icon: Icon(Iconsax.message_question, color: Palette.primary),
+      label: "FAQs",
+      destination: FlutterLogo()),
+  DrawerItem(
       icon: Icon(LineIcons.identificationBadge, color: Palette.primary),
       label: "Authentication",
       destination: Welcome()),
