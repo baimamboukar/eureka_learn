@@ -24,11 +24,12 @@ class NewsFeed extends HookWidget {
     });
     final user = useProvider(studentControllerProvider.notifier);
     final notiff = useProvider(notificationsProvider);
-
+    final feedz = useProvider(feedsProvider);
     List<PostModel> feeds = useProvider(postsControllerProvider.notifier).feeds;
 
     return RefreshIndicator(
       onRefresh: () async {
+        context.refresh(postsControllerProvider);
         await database.getUserFeeds();
         context.refresh(postsControllerProvider);
       },
@@ -47,22 +48,36 @@ class NewsFeed extends HookWidget {
                       tips: Tips(DateTime(1, 01, 2021),
                           "Lorem ipsum dolor ai samet", "Geography")))),
         ),
-        SliverList(
-          delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            if (feeds.isEmpty)
+        feedz.when(
+            data: (feeds_data) {
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  if (feeds_data.isEmpty)
+                    return Column(
+                      children: [
+                        Center(
+                          child: Icon(Iconsax.folder_open, size: 50),
+                        ),
+                        const SizedBox(height: 20),
+                        Text("No Feeds for the moment...",
+                            style: Styles.subtitle),
+                      ],
+                    );
+                  return Post(model: feeds_data[index]);
+                }, childCount: feeds_data.length),
+              );
+            },
+            loading: () {
               return Column(
                 children: [
-                  Center(
-                    child: Icon(Iconsax.folder_open, size: 50),
-                  ),
-                  const SizedBox(height: 20),
-                  Text("No Feeds for the moment...", style: Styles.subtitle),
+                  CircularProgressIndicator(),
+                  const SizedBox(height: 20.0),
+                  Text("Loading feeds...")
                 ],
               );
-            return Post(model: feeds[index]);
-          }, childCount: feeds.length),
-        )
+            },
+            error: (err, stack) => Center(child: Text(err.toString())))
       ]),
     );
   }
