@@ -30,9 +30,8 @@ class Welcome extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.all(8.0) +
                 const EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Flex(
+              direction: Axis.vertical,
               children: [
                 Text("🤓", style: TextStyle(fontSize: 64.0)),
                 Logo(withIcon: false, size: 42.0),
