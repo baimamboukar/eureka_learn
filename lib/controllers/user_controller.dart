@@ -6,14 +6,5 @@ class StudentController extends StateNotifier<Student> {
   final Reader _read;
   StudentController(this._read, Student student) : super(student);
   Student get student => state;
-  //set student(Student _student) => student = _student;
   set data(Student _student) => state = _student;
-
-  void printUser() {
-    print(state);
-  }
-
-  String getName() {
-    return state.names;
-  }
 }
