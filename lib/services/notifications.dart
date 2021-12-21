@@ -14,7 +14,7 @@ class NotificationService {
   void init() {
     _notiff.initialize(null, [
       NotificationChannel(
-          channelKey: 'basic_channel',
+          channelKey: 'posts',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
           defaultColor: Palette.primary,
@@ -41,14 +41,18 @@ class NotificationService {
             title: title,
             body: body,
             bigPicture:
-                'https://tecnoblog.net/wp-content/uploads/2019/09/emoji.jpg',
+                'https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/eureka.png?alt=media&token=9d806524-caa7-4d72-a006-e4ae6e578e0b',
             notificationLayout: NotificationLayout.BigPicture,
           ),
           actionButtons: [
             NotificationActionButton(
                 buttonType: ActionButtonType.InputField,
                 label: "Comment",
-                key: "alpha")
+                key: "alpha"),
+            NotificationActionButton(
+                buttonType: ActionButtonType.Default,
+                label: "Like",
+                key: "beta")
           ]);
     });
   }
