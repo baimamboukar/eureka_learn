@@ -26,6 +26,7 @@ class Signup extends HookWidget {
     final email = useProvider(emailProvider);
     final password = useProvider(passwordProvider);
     final phone = useProvider(phoneProvider);
+    final school = useProvider(schoolProvider);
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
@@ -142,6 +143,7 @@ class Signup extends HookWidget {
                             email.state = emailController.value.text;
                             password.state = passwordController.value.text;
                             phone.state = phoneController.value.text;
+                            school.state = schoolController.value.text;
                           },
                           child: Button(
                             label: "Continue...",
@@ -205,23 +207,24 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
     final section = useProvider(sectionProvider);
     final level = useProvider(levelProvider);
     final classe = useProvider(classeProvider);
+    final school = useProvider(schoolProvider);
     final chosenSubjects = useProvider(subjectsProvider);
 
     return Column(
       children: [
-        GestureDetector(
-          onTap: () {
-            section.state = "";
-            classe.state = "";
-            chosenSubjects.state = [];
-            level.state = "";
-          },
-          child: Button(
-            color: Palette.primary,
-            label: "Reset",
-            icon: LineIcons.signature,
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {
+        //     section.state = "";
+        //     classe.state = "";
+        //     chosenSubjects.state = [];
+        //     level.state = "";
+        //   },
+        //   child: Button(
+        //     color: Palette.primary,
+        //     label: "Reset",
+        //     icon: LineIcons.signature,
+        //   ),
+        // ),
         Logo(withIcon: false),
         AnimatedTextKit(
           animatedTexts: [
@@ -480,7 +483,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                       section: section.state,
                       level: level.state,
                       avatar: "https://zety.com/about/michael-tomaszewski",
-                      school: "GBHS Maroua",
+                      school: school.state,
                       subjects: chosenSubjects.state,
                       prenium: false,
                       achievements: []);
