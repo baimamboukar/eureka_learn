@@ -9,3 +9,4 @@ final sectionProvider = StateProvider<String>((ref) => "");
 final classeProvider = StateProvider<String>((ref) => "");
 final subjectsProvider = StateProvider<List<String>>((ref) => []);
 final levelProvider = StateProvider<String>((ref) => "");
+final schoolProvider = StateProvider<String>((ref) => "");
