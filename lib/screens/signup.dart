@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 
 final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -29,6 +30,7 @@ class Signup extends HookWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final phoneController = TextEditingController();
+    final schoolController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -46,7 +48,7 @@ class Signup extends HookWidget {
                     key: _formkey,
                     child: Column(
                       children: [
-                        Text("🤓", style: TextStyle(fontSize: 64.0)),
+                        Text("💡", style: TextStyle(fontSize: 64.0)),
                         Logo(
                           withIcon: false,
                         ),
@@ -69,7 +71,13 @@ class Signup extends HookWidget {
                             label: "name",
                             hint: "enter your names",
                             isPassword: false,
-                            isPhone: false),
+                            isPhone: false,
+                            validator: (value) {
+                              if (value!.length < 6)
+                                return "Enter a valid name";
+                              else
+                                return null;
+                            }),
                         Input(
                             icon: Icons.email,
                             context: context,
@@ -82,6 +90,21 @@ class Signup extends HookWidget {
                             validator: (value) => !GetUtils.isEmail(value!)
                                 ? "Enter a valid email please"
                                 : null),
+                        Input(
+                            icon: Iconsax.book,
+                            context: context,
+                            type: TextInputType.text,
+                            controller: schoolController,
+                            label: "School",
+                            hint: "enter your school",
+                            isPassword: false,
+                            isPhone: false,
+                            validator: (value) {
+                              if (value!.length < 6)
+                                return "Enter a valid school";
+                              else
+                                return null;
+                            }),
                         Input(
                             icon: LineIcons.mobilePhone,
                             context: context,
@@ -127,25 +150,25 @@ class Signup extends HookWidget {
                           ),
                         ),
                         const SizedBox(height: 20.0),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        const SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Button(
-                              label: "With Google",
-                              icon: LineIcons.googleLogo,
-                              color: Palette.error.withOpacity(0.7),
-                            ),
-                            Button(
-                              label: "With Phone",
-                              icon: LineIcons.tablet,
-                              color: Palette.success,
-                            ),
-                          ],
-                        ),
+                        // Divider(
+                        //   height: 1.0,
+                        // ),
+                        // const SizedBox(height: 20.0),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     Button(
+                        //       label: "With Google",
+                        //       icon: LineIcons.googleLogo,
+                        //       color: Palette.error.withOpacity(0.7),
+                        //     ),
+                        //     Button(
+                        //       label: "With Phone",
+                        //       icon: LineIcons.tablet,
+                        //       color: Palette.success,
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 20.0),
                         GestureDetector(
                           onTap: () => Get.to(() => Login()),
@@ -199,10 +222,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
             icon: LineIcons.signature,
           ),
         ),
-        Text("🤓", style: TextStyle(fontSize: 64.0)),
-        Logo(
-          withIcon: false,
-        ),
+        Logo(withIcon: false),
         AnimatedTextKit(
           animatedTexts: [
             TypewriterAnimatedText("Hack your success now",
@@ -464,7 +484,6 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                       subjects: chosenSubjects.state,
                       prenium: false,
                       achievements: []);
-                  print(_student);
                   _auth
                       .signupUser(
                           mail: _student.email,
