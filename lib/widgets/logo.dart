@@ -8,11 +8,11 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(TextSpan(
-        text: withIcon ? "🤓" : "",
+        text: withIcon ? "💡" : "",
         style: TextStyle(fontSize: 22.0),
         children: [
           TextSpan(
-              text: "eureka",
+              text: "Intelli'",
               style: TextStyle(
                   fontSize: size ?? 22.0,
                   fontWeight: FontWeight.bold,
