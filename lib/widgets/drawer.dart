@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 
 class AppDrawer extends HookWidget {
@@ -21,7 +22,8 @@ class AppDrawer extends HookWidget {
     return Drawer(
         child: FlipInY(
             child: Container(
-                child: ListView(
+                child: Flex(
+      direction: Axis.vertical,
       children: [
         UserAccountsDrawerHeader(
             otherAccountsPictures: [
@@ -32,7 +34,7 @@ class AppDrawer extends HookWidget {
             accountEmail: Text(student.student.email),
             accountName: Text(student.student.names)),
         DrawerItem(
-            icon: Icon(LineIcons.themeco, color: Palette.primary),
+            icon: Icon(Iconsax.user_octagon, color: Palette.primary),
             label: "Profile",
             destination: Profile(user: student.student)),
         for (var item in items) item,
@@ -41,6 +43,10 @@ class AppDrawer extends HookWidget {
             title: Text("Logout"),
             leading: Icon(LineIcons.signature),
             trailing: Icon(LineIcons.angleRight)),
+        Expanded(
+            child: Column(
+          children: [Logo(withIcon: false)],
+        ))
       ],
     ))));
   }
@@ -48,11 +54,11 @@ class AppDrawer extends HookWidget {
 
 List<dynamic> items = [
   DrawerItem(
-      icon: Icon(LineIcons.algolia, color: Palette.primary),
+      icon: Icon(Iconsax.setting, color: Palette.primary),
       label: "Settings",
       destination: Settings()),
   DrawerItem(
-      icon: Icon(LineIcons.fileDownload, color: Palette.primary),
+      icon: Icon(Iconsax.save_2, color: Palette.primary),
       label: "Saved",
       destination: FlutterLogo()),
   DrawerItem(
