@@ -19,6 +19,16 @@ import 'package:html_character_entities/html_character_entities.dart';
 import 'package:iconsax/iconsax.dart';
 
 class QuizScreen extends HookWidget {
+  final String type;
+  final String difficulty;
+  final String topic;
+  final int numberOfQuestions;
+
+  QuizScreen(
+      {required this.type,
+      required this.difficulty,
+      required this.topic,
+      required this.numberOfQuestions});
   @override
   Widget build(BuildContext context) {
     final quizQuestions = useProvider(quizQuestionsProvider!);
