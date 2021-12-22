@@ -1,7 +1,11 @@
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
+import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Profile extends HookWidget {
@@ -10,6 +14,7 @@ class Profile extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final database = useProvider(databaseProvider);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: Text(user.names)),
@@ -106,8 +111,34 @@ class Profile extends HookWidget {
           ),
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButton:
-            FloatingActionButton(onPressed: null, child: Icon(LineIcons.edit)),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              database.pushQuestions(data: [
+                {
+                  "label": "What does LAN stands for ?",
+                  "subject": "Computer Science",
+                  "section": "Anglophone",
+                  "level": "novice",
+                  "correct_answer": "Local Area Network",
+                  "wrong_answers":
+                      "Long Area Network __ Live Area Network __ Lost Area Network",
+                  "topic": "networks",
+                  "class": "Ordinary"
+                },
+                {
+                  "label": "What does LAN stands for ?",
+                  "subject": "Biology",
+                  "section": "Anglophone",
+                  "level": "medium",
+                  "correct_answer": "Local Area Network",
+                  "wrong_answers":
+                      "Long Area Network __ Live Area Network __ Lost Area Network",
+                  "topic": "networks",
+                  "class": "Advanced"
+                }
+              ]);
+            },
+            child: Icon(LineIcons.edit)),
       ),
     );
   }
