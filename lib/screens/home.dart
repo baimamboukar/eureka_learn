@@ -9,6 +9,7 @@ import 'package:eureka_learn/widgets/tips_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -71,15 +72,17 @@ class NewsFeed extends HookWidget {
             },
             loading: () {
               return SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20.0),
-                    CircularProgressIndicator(),
-                    const SizedBox(height: 20.0),
-                    Text("Loading feeds...", style: Styles.subtitle)
-                  ],
-                ),
-              );
+                  child: Column(
+                children: [
+                  for (var i = 1; i <= 10; i++)
+                    ListTileShimmer(
+                      isRectBox: true,
+                      hasBottomBox: true,
+                      hasCustomColors: true,
+                      colors: [Palette.primary, Palette.secondary],
+                    )
+                ],
+              ));
             },
             error: (err, stack) =>
                 SliverToBoxAdapter(child: Center(child: Text(err.toString()))))
