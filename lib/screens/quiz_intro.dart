@@ -40,11 +40,11 @@ class QuizIntro extends HookWidget {
                     underline: const SizedBox.shrink(),
                     value: quizzType.state,
                     items: <String>["standard", "exam", "challenge"]
-                        .map<DropdownMenuItem<String>>((String value) {
+                        .map<DropdownMenuItem<String>>((String type) {
                       return DropdownMenuItem<String>(
-                        value: value,
+                        value: type,
                         child: Text(
-                          value,
+                          type,
                           style: TextStyle(color: Palette.dark),
                         ),
                       );
@@ -53,7 +53,7 @@ class QuizIntro extends HookWidget {
                       "Choose your level...",
                     ),
                     onChanged: (String? currentValue) {
-                      difficulty.state = currentValue!;
+                      quizzType.state = currentValue!;
                     },
                   ),
                 ),
