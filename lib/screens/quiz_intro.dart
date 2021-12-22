@@ -29,10 +29,7 @@ class QuizIntro extends HookWidget {
           padding: const EdgeInsets.all(14.0),
           child: Column(
             children: [
-              const SizedBox(height: 100),
-              Text("Quizz Intro",
-                  style: Styles.designText(
-                      color: Palette.primary, size: 22, bold: true)),
+              const SizedBox(height: 50),
               Text(
                   "Please give some information about the quizz you want to take",
                   style: Styles.subtitle),
@@ -97,6 +94,32 @@ class QuizIntro extends HookWidget {
                   ),
                 ),
               ),
+              if (quizzType.state != "exam")
+                Card(
+                  child: ListTile(
+                    leading: Icon(Iconsax.box),
+                    title: Text("Quizz topic", style: Styles.subtitle),
+                    subtitle: Text("which topic or chapter"),
+                    trailing: DropdownButton<String>(
+                      underline: const SizedBox.shrink(),
+                      value: quizzTopic.state,
+                      items: <String>["", "proficient", "expert"]
+                          .map<DropdownMenuItem<String>>((String topic) {
+                        return DropdownMenuItem<String>(
+                          value: topic,
+                          child: Text(
+                            topic,
+                            style: Styles.designText(
+                                color: Palette.primary, size: 18, bold: true),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? currentValue) {
+                        quizzTopic.state = currentValue!;
+                      },
+                    ),
+                  ),
+                ),
               Card(
                 child: ListTile(
                   leading: Icon(Iconsax.layer),
@@ -122,32 +145,6 @@ class QuizIntro extends HookWidget {
                   ),
                 ),
               ),
-              if (quizzType.state != "exam")
-                Card(
-                  child: ListTile(
-                    leading: Icon(Iconsax.layer),
-                    title: Text("", style: Styles.subtitle),
-                    subtitle: Text("how many questions"),
-                    trailing: DropdownButton<int>(
-                      underline: const SizedBox.shrink(),
-                      value: numberOfQuestions.state,
-                      items: <int>[10, 20, 30, 40, 50]
-                          .map<DropdownMenuItem<int>>((int number) {
-                        return DropdownMenuItem<int>(
-                          value: number,
-                          child: Text(
-                            "$number questions",
-                            style: Styles.designText(
-                                color: Palette.primary, size: 18, bold: true),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (int? currentValue) {
-                        numberOfQuestions.state = currentValue!;
-                      },
-                    ),
-                  ),
-                ),
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () => Get.to(() => QuizScreen()),
