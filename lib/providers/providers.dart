@@ -5,3 +5,4 @@ export 'user_provider.dart';
 export 'posts_provider.dart';
 export 'quizz_questions_provider.dart';
 export 'feeds_provider.dart';
+export 'quizz_intro_providers.dart';
