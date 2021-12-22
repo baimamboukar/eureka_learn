@@ -49,6 +49,7 @@ class NewsFeed extends HookWidget {
                           "Lorem ipsum dolor ai samet", "Geography")))),
         ),
         feedz.when(
+            // ignore: non_constant_identifier_names
             data: (feeds_data) {
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -69,15 +70,19 @@ class NewsFeed extends HookWidget {
               );
             },
             loading: () {
-              return Column(
-                children: [
-                  CircularProgressIndicator(),
-                  const SizedBox(height: 20.0),
-                  Text("Loading feeds...")
-                ],
+              return SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20.0),
+                    CircularProgressIndicator(),
+                    const SizedBox(height: 20.0),
+                    Text("Loading feeds...", style: Styles.subtitle)
+                  ],
+                ),
               );
             },
-            error: (err, stack) => Center(child: Text(err.toString())))
+            error: (err, stack) =>
+                SliverToBoxAdapter(child: Center(child: Text(err.toString()))))
       ]),
     );
   }
