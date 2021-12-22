@@ -209,8 +209,8 @@ class Database {
       required String type}) async {
     List<Question> _questions = [];
     try {
-      await _firestore.collection("questions").get().then((questions) async {
-        questions.docs.map(
+      await _firestore.collection("questions").get().then((questions) {
+        questions.docs.forEach(
             (question) => _questions.add(Question.fromMap(question.data())));
       });
       return _questions;
