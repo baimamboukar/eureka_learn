@@ -31,7 +31,7 @@ class QuizScreen extends HookWidget {
       required this.numberOfQuestions});
   @override
   Widget build(BuildContext context) {
-    final quizQuestions = useProvider(quizQuestionsProvider!);
+    final quizQuestions = useProvider(questionsProvider);
     final pageController = usePageController();
 
     return Scaffold(
