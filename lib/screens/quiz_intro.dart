@@ -147,7 +147,12 @@ class QuizIntro extends HookWidget {
               ),
               const SizedBox(height: 20),
               GestureDetector(
-                onTap: () => Get.to(() => QuizScreen()),
+                onTap: () => Get.to(() => QuizScreen(
+                      type: quizzType.state,
+                      difficulty: difficulty.state,
+                      topic: quizzTopic.state,
+                      numberOfQuestions: numberOfQuestions.state,
+                    )),
                 child: Button(
                     label: "Take quizz",
                     color: Palette.primary,
