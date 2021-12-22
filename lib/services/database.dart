@@ -187,4 +187,35 @@ class Database {
       rethrow;
     }
   }
+
+  Future<void> pushQuestions({required List<Map<String, dynamic>> data}) async {
+    try {
+      for (int i = 0; i < 10; i++)
+        await _firestore.collection('questions').doc().set(data[i]);
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Fetching error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
+      rethrow;
+    }
+  }
+
+  Future<List<Question>> getQuestions(
+      {required int numberOfQuestions,
+      required String subject,
+      required String difficulty,
+      required String type}) async {
+    List<Question> _questions = [];
+    try {
+      await _firestore.collection("questions").get().then((questions) async {
+        questions.docs.map(
+            (question) => _questions.add(Question.fromMap(question.data())));
+      });
+      return _questions;
+    } on FirebaseException catch (err) {
+      rethrow;
+    }
+  }
 }
