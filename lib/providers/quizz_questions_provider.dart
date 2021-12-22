@@ -7,14 +7,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final AutoDisposeFutureProvider<List<Question>>? quizQuestionsProvider =
     FutureProvider.autoDispose<List<Question>>(
   (ref) => ref.watch(quizRepositoryProvider).getQuestions(
-      student: ref.read(studentControllerProvider.notifier).student,
-      subject: ref.read(quizSubjectProvider).state,
+      student: ref.watch(studentControllerProvider.notifier).student,
+      subject: ref.watch(quizSubjectProvider).state,
       numQuestions: 4),
 );
 
-final questionsProvider = FutureProvider((ref) => ref
-    .read(databaseProvider)
-    .getQuestions(
+final questionsProvider = FutureProvider.autoDispose<List<Question>>((ref) =>
+    ref.watch(databaseProvider).getQuestions(
         numberOfQuestions: 3,
         subject: "Biology",
         difficulty: "medium",
