@@ -112,7 +112,7 @@ class _QuizzState extends State<Quizz> {
                   return GestureDetector(
                     onTap: () {
                       quizSubject.state = _subject.subject ?? '';
-                      Get.to(() => QuizScreen());
+                      Get.to(() => QuizIntro());
                     },
                     child: Align(
                       heightFactor: 0.6,
