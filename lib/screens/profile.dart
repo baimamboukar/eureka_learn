@@ -12,6 +12,8 @@ import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+final profileTabIndexProvider = StateProvider<int>((ref) => 0);
+
 class Profile extends HookWidget {
   final Student user;
   const Profile({Key? key, required this.user}) : super(key: key);
@@ -20,6 +22,7 @@ class Profile extends HookWidget {
   Widget build(BuildContext context) {
     final database = useProvider(databaseProvider);
     final userRefresher = useProvider(studentControllerProvider.notifier);
+    print(user.quizzes[1]);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -27,9 +30,9 @@ class Profile extends HookWidget {
           "Profile",
           style: Styles.subtitle,
         )),
-        body: SingleChildScrollView(
-          child: RefreshIndicator(
-            onRefresh: () async => userRefresher.refresh(),
+        body: RefreshIndicator(
+          onRefresh: () async => userRefresher.refresh(),
+          child: SingleChildScrollView(
             child: Flex(
               direction: Axis.vertical,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,6 +126,46 @@ class Profile extends HookWidget {
                     ),
                   ],
                 ),
+                // NavigationRail(destinations: [
+                //   NavigationRailDestination(
+                //       icon: Icon(Iconsax.activity),
+                //       label: Text("performances")),
+                //   NavigationRailDestination(
+                //       icon: Icon(LineIcons.userAlt), label: Text("Infos"))
+                // ], selectedIndex: 0),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TabLabel(0, "Activity", Iconsax.activity),
+                      TabLabel(1, "Performances", Iconsax.chart_success),
+                      TabLabel(2, "Infos", Icons.info)
+                    ]
+                        .map((label) => GestureDetector(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(label.icon, color: Palette.dark),
+                                      const SizedBox(width: 5.0),
+                                      Text(
+                                        label.title,
+                                        style: Styles.designText(
+                                            color: Palette.dark,
+                                            size: 18,
+                                            bold: true),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text("Quizz Performances",
@@ -228,4 +271,11 @@ class Profile extends HookWidget {
       ),
     );
   }
+}
+
+class TabLabel {
+  final int index;
+  final String title;
+  final IconData icon;
+  TabLabel(this.index, this.title, this.icon);
 }
