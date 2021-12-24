@@ -46,4 +46,9 @@ class QuizzModel {
 
   factory QuizzModel.fromJson(String source) =>
       QuizzModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'QuizzModel(subject: $subject, difficulty: $difficulty, type: $type, topic: $topic, numberOfQuestions: $numberOfQuestions, correct: $correct, date: $date)';
+  }
 }
