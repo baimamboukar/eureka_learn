@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:eureka_learn/controllers/quiz_state.dart';
 import 'package:eureka_learn/enum/enums.dart';
 import 'package:eureka_learn/providers/providers.dart';
@@ -17,6 +16,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:html_character_entities/html_character_entities.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class QuizScreen extends HookWidget {
   final String type;
@@ -34,10 +37,9 @@ class QuizScreen extends HookWidget {
     final quizQuestions = useProvider(questionsProvider);
     final pageController = usePageController();
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(12.0) + const EdgeInsets.only(top: 25),
-        child: quizQuestions.when(
+    return SafeArea(
+      child: Scaffold(
+        body: quizQuestions.when(
           data: (questions) => _buildBody(context, pageController, questions),
           loading: () => Center(
               child: Column(
@@ -54,57 +56,43 @@ class QuizScreen extends HookWidget {
             message: error is Failure ? error.message : 'Something went wrong!',
           ),
         ),
-      ),
-      bottomSheet: quizQuestions.maybeWhen(
-        data: (questions) {
-          final quizState = useProvider(quizControllerProvider);
-          if (!quizState.answered) return const SizedBox.shrink();
-          return Container(
-            height: 55,
-            width: Screen.width(context),
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: () {
-                context
-                    .read(quizControllerProvider.notifier)
-                    .nextQuestion(questions, pageController.page!.toInt());
-                if (pageController.page!.toInt() + 1 < questions.length) {
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.bounceOut,
-                  );
-                }
-              },
-              child: Center(
-                child: Button(
-                  color: Palette.primary,
-                  icon: Iconsax.next,
-                  label: pageController.page!.toInt() + 1 < questions.length
-                      ? 'Next Question'
-                      : 'See Results',
+        bottomSheet: quizQuestions.maybeWhen(
+          data: (questions) {
+            final quizState = useProvider(quizControllerProvider);
+            if (!quizState.answered) return const SizedBox.shrink();
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.transparent,
+                height: 55,
+                width: Screen.width(context),
+                child: GestureDetector(
+                  onTap: () {
+                    context
+                        .read(quizControllerProvider.notifier)
+                        .nextQuestion(questions, pageController.page!.toInt());
+                    if (pageController.page!.toInt() + 1 < questions.length) {
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.bounceOut,
+                      );
+                    }
+                  },
+                  child: Center(
+                    child: Button(
+                      color: Palette.primary,
+                      icon: Iconsax.next,
+                      label: pageController.page!.toInt() + 1 < questions.length
+                          ? 'Next Question'
+                          : 'See Results',
+                    ),
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-        orElse: () => const SizedBox.shrink(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (context) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text("Questions flow appear here"),
-                    ),
-                  ));
-        },
+            );
+          },
+          orElse: () => const SizedBox.shrink(),
+        ),
       ),
     );
   }
@@ -141,17 +129,17 @@ class QuizError extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            message,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
-          ),
+          Icon(Iconsax.folder_open, size: 100, color: Palette.primary),
+          const SizedBox(height: 22),
+          Text(message, style: Styles.subtitle),
           const SizedBox(height: 20.0),
-          CustomButton(
-            title: 'Retry',
+          GestureDetector(
             onTap: () => context.refresh(quizRepositoryProvider),
+            child: Button(
+              label: 'Retry',
+              icon: Iconsax.repeat_circle,
+              color: Palette.primary,
+            ),
           ),
         ],
       ),
@@ -206,7 +194,7 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class QuizResults extends StatelessWidget {
+class QuizResults extends HookWidget {
   final QuizState state;
   final List<Question> questions;
 
@@ -218,40 +206,185 @@ class QuizResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '${state.correct.length} / ${questions.length}',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 60.0,
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const Text(
-          'CORRECT',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 48.0,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 40.0),
-        CustomButton(
-          title: "Take another one",
-          onTap: () {
-            context.refresh(quizRepositoryProvider);
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0) + const EdgeInsets.only(top: 20),
+        child: Flex(
+          direction: Axis.vertical,
+          children: [
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   crossAxisAlignment: CrossAxisAlignment.end,
+            //   children: [
+            //     Container(
+            //       height: 60,
+            //       width: 50,
+            //       decoration: BoxDecoration(
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.grey.withOpacity(0.8),
+            //             spreadRadius: 10,
+            //             blurRadius: 5,
+            //             offset: Offset(0, 7), // changes position of shadow
+            //           ),
+            //         ],
+            //       ),
+            //       child: Text("1"),
+            //     ),
+            //     Container(
+            //       height: 120,
+            //       width: 50,
+            //       decoration: BoxDecoration(
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.amber.withOpacity(0.8),
+            //             spreadRadius: 10,
+            //             blurRadius: 5,
+            //             offset: Offset(0, 7), // changes position of shadow
+            //           ),
+            //         ],
+            //       ),
+            //       child: Text("1"),
+            //     ),
+            //     Container(
+            //       height: 90,
+            //       width: 50,
+            //       decoration: BoxDecoration(
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.brown.withOpacity(0.8),
+            //             spreadRadius: 10,
+            //             blurRadius: 5,
+            //             offset: Offset(0, 7), // changes position of shadow
+            //           ),
+            //         ],
+            //       ),
+            //       child: Text("1"),
+            //     ),
+            //   ],
+            // ),
+            // Text(
+            //   '${state.correct.length} / ${questions.length}',
+            //   style: const TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 60.0,
+            //     fontWeight: FontWeight.w600,
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
+            Card(
+              child: Container(
+                decoration: BoxDecoration(gradient: Palette.linearGradient),
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    children: [
+                      Text("Quizz Performances",
+                          style: Styles.designText(
+                              color: Palette.light, size: 20, bold: true)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+                        child: Divider(
+                          height: 3.0,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CircularPercentIndicator(
+                            radius: 65,
+                            animationDuration: 1500,
+                            lineWidth: 8,
+                            percent: ((state.incorrect.length * 100) /
+                                    questions.length) /
+                                100,
+                            backgroundColor: Palette.light,
+                            center: Text(((state.incorrect.length * 100) /
+                                    questions.length)
+                                .toString()),
+                            animation: true,
+                            progressColor: Palette.error,
+                            footer: Text("incorrect answers"),
+                          ),
+                          Icon(LineIcons.medal, size: 100, color: Colors.amber),
+                          CircularPercentIndicator(
+                            radius: 65,
+                            lineWidth: 8,
+                            animationDuration: 1500,
+                            percent: .35,
+                            backgroundColor: Palette.light,
+                            center: Text("20%"),
+                            animation: true,
+                            progressColor: Palette.success,
+                            footer: Text("correct answers"),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "Braavo! You're an expert",
+                        style: Styles.designText(
+                            color: Palette.light, size: 18, bold: true),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // SfCircularChart(
+            //   backgroundColor: Colors.grey,
+            //   legend: Legend(
+            //       isVisible: true,
+            //       isResponsive: true,
+            //       position: LegendPosition.bottom),
+            //   title: ChartTitle(text: "Quizz Evaluation"),
+            //   series: <CircularSeries>[
+            //     DoughnutSeries<String, String>(
+            //         legendIconType: LegendIconType.circle,
+            //         dataLabelSettings: DataLabelSettings(isVisible: true),
+            //         dataSource: ["Correct", "Wrong"],
+            //         xValueMapper: (perf, _) => perf,
+            //         yValueMapper: (perf, _) => perf == "Correct" ? 7 : 3)
+            //   ],
+            // ),
+            const SizedBox(height: 20.0),
+            Text("Share your accomplishment", style: Styles.subtitle),
+            const SizedBox(height: 12.0),
+            Wrap(
+              spacing: 10.0,
+              children: [
+                Button(
+                    color: Palette.primary,
+                    icon: Iconsax.activity,
+                    label: "Profile"),
+                Button(
+                    color: Palette.success,
+                    icon: LineIcons.whatSApp,
+                    label: "Whatsapp"),
+              ],
+            ),
+            const SizedBox(height: 50.0),
+            GestureDetector(
+              onTap: () {
+                context.refresh(quizRepositoryProvider);
 
-            context.read(quizControllerProvider.notifier).reset();
-          },
+                context.read(quizControllerProvider.notifier).reset();
+              },
+              child: Button(
+                  label: "Retry again",
+                  color: Palette.primary,
+                  icon: Iconsax.activity),
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
+}
+
+class Perform {
+  final String label;
+  final int data;
+  const Perform({required this.label, required this.data});
 }
 
 class QuizQuestions extends StatelessWidget {
@@ -268,58 +401,176 @@ class QuizQuestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: pageController,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: questions.length,
-      itemBuilder: (BuildContext context, int index) {
-        final question = questions[index];
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Question ${index + 1} of ${questions.length}",
-                    style: Styles.subtitle),
-                Container(
-                  height: 50.0,
-                  width: 50.0,
-                  child: Center(
-                    child: Text(
-                      state.correct.length.toString(),
-                      style: Styles.designText(
-                          color: Palette.light, size: 22, bold: true),
+    return Scaffold(
+      body: PageView.builder(
+        controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: questions.length,
+        itemBuilder: (BuildContext context, int index) {
+          final question = questions[index];
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: 150.0 + 120,
+                width: Screen.width(context),
+                child: Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    // LinearPercentIndicator(
+                    //   width: Screen.width(context) * .8,
+                    //   lineHeight: 14.0,
+                    //   percent: ((questions.length *
+                    //           (state.correct.length + state.incorrect.length)) /
+                    //       100),
+                    //   animation: true,
+                    //   leading: Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         top: 4.0, right: 4.0, left: 4.0),
+                    //     child: CircularCountDownTimer(
+                    //       controller: controller,
+                    //       isReverse: true,
+                    //       isReverseAnimation: true,
+                    //       textFormat: CountdownTextFormat.S,
+                    //       isTimerTextShown: true,
+                    //       width: 50.0,
+                    //       height: 50.0,
+                    //       strokeWidth: 6.5,
+                    //       duration: 20,
+                    //       fillColor: Palette.secondary,
+                    //       ringColor: Colors.white24,
+                    //       onComplete: () {},
+                    //     ),
+                    //   ),
+                    //   center: Text(
+                    //       "${((questions.length * (state.correct.length + state.incorrect.length)) / 100).toStringAsFixed(0)} %"),
+                    //   backgroundColor: Palette.light,
+                    //   progressColor: Palette.success,
+                    // ),
+                    const SizedBox(height: 15),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, right: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              height: 50.0,
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                  color: question.level == "medium"
+                                      ? Colors.grey
+                                      : question.level == "novice"
+                                          ? Colors.brown
+                                          : Colors.amber,
+                                  shape: BoxShape.circle),
+                              child: Center(
+                                  child: Text(
+                                "${question.level}",
+                                style: Styles.designText(
+                                    color: Palette.light,
+                                    size: 12,
+                                    bold: false),
+                              ))),
+                          Text("Question ${index + 1} of ${questions.length}",
+                              style: Styles.subtitle),
+                          Container(
+                              height: 50.0,
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                  color: Palette.success,
+                                  shape: BoxShape.circle),
+                              child: Center(
+                                  child: Text(
+                                "${state.correct.length}",
+                                style: Styles.designText(
+                                    color: Palette.light, size: 20, bold: true),
+                              ))),
+                        ],
+                      ),
                     ),
+                    const SizedBox(height: 15),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 6),
+                      child: Text(HtmlCharacterEntities.decode(question.label),
+                          style: Styles.designText(
+                              color: Palette.light, size: 24, bold: false)),
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 6.0,
+                      ),
+                      child: Container(
+                        height: 120,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/eureka.png?alt=media&token=9d806524-caa7-4d72-a006-e4ae6e578e0b")),
+                          color: Palette.light,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.elliptical(
+                                Screen.width(context) * 0.5, 30),
+                            bottomRight: Radius.elliptical(
+                                Screen.width(context) * 0.5, 30),
+                          ),
+                        ),
+                      ),
+                    ))
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  gradient: Palette.customGradientWith([
+                    Palette.primary,
+                    Palette.primary.withOpacity(.4),
+                    Palette.primary
+                  ]),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft:
+                        Radius.elliptical(Screen.width(context) * 0.5, 30),
+                    bottomRight:
+                        Radius.elliptical(Screen.width(context) * 0.5, 30),
                   ),
-                  decoration: BoxDecoration(
-                      color: Palette.success, shape: BoxShape.circle),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 12.0),
-              child: Text(HtmlCharacterEntities.decode(question.label),
-                  style: Styles.subtitle),
-            ),
-            Column(
-              children: question.incorrectAnswers
-                  .map(
-                    (e) => AnswerCard(
-                      answer: e,
-                      isSelected: e == state.selectedAnswer,
-                      isCorrect: e == question.correctAnswer,
-                      isDisplayingAnswer: state.answered,
-                      onTap: () => context
-                          .read(quizControllerProvider.notifier)
-                          .submitAnswer(question, e),
+                ),
+              ),
+              Column(
+                children: question.incorrectAnswers
+                    .map(
+                      (e) => AnswerCard(
+                        answer: e,
+                        isSelected: e == state.selectedAnswer,
+                        isCorrect: e == question.correctAnswer,
+                        isDisplayingAnswer: state.answered,
+                        onTap: () => context
+                            .read(quizControllerProvider.notifier)
+                            .submitAnswer(question, e),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Iconsax.chart),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Container(
+                    decoration: BoxDecoration(
+                      color: Palette.light,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
                     ),
-                  )
-                  .toList(),
-            ),
-          ],
-        );
-      },
+                    child: Center(
+                      child: Text("Questions flow appear here"),
+                    ),
+                  ));
+        },
+      ),
     );
   }
 }
