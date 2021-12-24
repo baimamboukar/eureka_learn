@@ -239,4 +239,34 @@ class Database {
       rethrow;
     }
   }
+
+  Stream<List<PostModel>> getFeedsBy(String id) {
+    final stream = _firestore
+        .collection("posts")
+        .where("ownerId", isEqualTo: id)
+        .snapshots();
+    return stream.map((snapshot) => snapshot.docs
+        .map((doc) => PostModel.fromDocumentSnapshot(doc.data()))
+        .toList());
+  }
+
+  Future<void> commentPost(PostModel post, String comment) async {
+    try {
+      await _firestore
+          .collection("posts")
+          .where("ownerId", isEqualTo: post.ownerId)
+          .where("timeAgo", isEqualTo: post.timeAgo)
+          .get()
+          .then((snapshot) async {
+        snapshot.docs.forEach((doc) async {
+          String documentID = doc.id;
+          await _firestore.collection("posts").doc(documentID).update({
+            "comments": FieldValue.arrayUnion([comment])
+          });
+        });
+      });
+    } on FirebaseException catch (err) {
+      throw err;
+    }
+  }
 }
