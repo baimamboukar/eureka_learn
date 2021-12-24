@@ -178,7 +178,17 @@ class Profile extends HookWidget {
                 IndexedStack(
                   index: profileTabIndex.state,
                   children: [
-                    Text("Activity"),
+                    StreamBuilder<List<PostModel>>(
+                        stream: database.getFeedsBy(user.id!),
+                        builder: (context, data) => data.hasData
+                            ? Column(
+                                children: [
+                                  ...data.data!.map((post) => Post(
+                                        model: post,
+                                      ))
+                                ],
+                              )
+                            : Loading()),
                     Column(
                       children: [
                         Padding(
@@ -196,13 +206,33 @@ class Profile extends HookWidget {
                                 height: 150.0,
                                 child: SfCartesianChart(
                                   primaryXAxis: CategoryAxis(),
+                                  isTransposed: true,
+                                  enableAxisAnimation: true,
+                                  palette: [
+                                    Palette.primary,
+                                    Palette.secondary,
+                                    Palette.error,
+                                    Palette.success,
+                                    Palette.dark
+                                  ],
                                   series: <ChartSeries>[
-                                    BarSeries<QuizzModel, String>(
+                                    ColumnSeries<QuizzModel, String>(
+                                        dataSource: user.quizzes,
+                                        xAxisName: "Subject",
+                                        yAxisName: "Score",
+                                        isVisible: true,
+                                        xValueMapper: (QuizzModel quizz, _) =>
+                                            quizz.subject,
+                                        yValueMapper: (QuizzModel quizz, _) =>
+                                            quizz.correct),
+                                    LineSeries<QuizzModel, String>(
+                                        width: 1.5,
+                                        color: Palette.success,
                                         dataSource: user.quizzes,
                                         xValueMapper: (QuizzModel quizz, _) =>
                                             quizz.subject,
                                         yValueMapper: (QuizzModel quizz, _) =>
-                                            quizz.correct)
+                                            quizz.correct),
                                   ],
                                 ))),
                         Padding(
@@ -221,8 +251,8 @@ class Profile extends HookWidget {
                                 isResponsive: true,
                                 position: LegendPosition.right),
                             series: <CircularSeries>[
-                              RadialBarSeries<String, String>(
-                                  maximumValue: 20,
+                              RadialBarSeries<QuizzModel, String>(
+                                  maximumValue: 10,
                                   cornerStyle: CornerStyle.endCurve,
                                   trackColor: Palette.light,
                                   legendIconType: LegendIconType.circle,
@@ -232,27 +262,29 @@ class Profile extends HookWidget {
                                           color: Palette.dark,
                                           size: 4,
                                           bold: false)),
-                                  dataSource: [
-                                    "Biology",
-                                    "Computer",
-                                    "Maths",
-                                    "Physics",
-                                    "Chemistry"
-                                  ],
+                                  dataSource: user.quizzes,
                                   sortingOrder: SortingOrder.descending,
                                   sortFieldValueMapper: (datum, index) {
-                                    return datum;
+                                    return datum.topic;
                                   },
-                                  xValueMapper: (perf, _) => perf,
-                                  yValueMapper: (perf, _) => perf == "Biology"
-                                      ? 8
-                                      : perf == "Computer"
-                                          ? 14
-                                          : perf == "Physics"
-                                              ? 9
-                                              : perf == "Maths"
-                                                  ? 11
-                                                  : 12)
+                                  xValueMapper: (quizz, _) => quizz.subject,
+                                  yValueMapper: (quizz, _) => quizz.correct),
+                              PieSeries<QuizzModel, String>(
+                                  legendIconType: LegendIconType.circle,
+                                  dataLabelSettings: DataLabelSettings(
+                                      isVisible: true,
+                                      textStyle: Styles.designText(
+                                          color: Palette.dark,
+                                          size: 4,
+                                          bold: false)),
+                                  groupMode: CircularChartGroupMode.value,
+                                  dataSource: user.quizzes,
+                                  sortingOrder: SortingOrder.descending,
+                                  sortFieldValueMapper: (datum, index) {
+                                    return datum.topic;
+                                  },
+                                  xValueMapper: (quizz, _) => quizz.subject,
+                                  yValueMapper: (quizz, _) => quizz.correct)
                             ],
                           ),
                         ),
