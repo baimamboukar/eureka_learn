@@ -14,6 +14,8 @@ class NotificationService {
   void init() {
     _notiff.initialize(null, [
       NotificationChannel(
+          channelShowBadge: true,
+          playSound: true,
           channelKey: 'posts',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
@@ -36,6 +38,10 @@ class NotificationService {
       init();
       _notiff.createNotification(
           content: NotificationContent(
+            showWhen: true,
+            displayOnBackground: true,
+            displayOnForeground: true,
+            ticker: "Post alert",
             id: Random().nextInt(100000),
             channelKey: channel,
             title: title,
@@ -53,7 +59,7 @@ class NotificationService {
                 buttonType: ActionButtonType.Default,
                 label: "Like",
                 key: "beta")
-          ]);
+          ]).then((response) async {});
     });
   }
 }
