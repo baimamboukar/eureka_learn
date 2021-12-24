@@ -524,6 +524,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                       school: school.state,
                       subjects: chosenSubjects.state,
                       prenium: false,
+                      quizzes: [],
                       achievements: []);
                   _auth
                       .signupUser(
