@@ -1,5 +1,6 @@
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
+import 'package:eureka_learn/providers/user_provider.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class Profile extends HookWidget {
   final Student user;
@@ -15,99 +19,181 @@ class Profile extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final database = useProvider(databaseProvider);
+    final userRefresher = useProvider(studentControllerProvider.notifier);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text(user.names)),
+        appBar: AppBar(
+            title: Text(
+          "Profile",
+          style: Styles.subtitle,
+        )),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 12.0, left: 12.0, right: 12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+          child: RefreshIndicator(
+            onRefresh: () async => userRefresher.refresh(),
+            child: Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 140.0,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          colorFilter: ColorFilter.mode(
+                              Palette.primary.withOpacity(0.45),
+                              BlendMode.color),
+                          image: OptimizedCacheImageProvider(
+                              "https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/eureka.png?alt=media&token=9d806524-caa7-4d72-a006-e4ae6e578e0b",
+                              maxHeight: 140))),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                      padding: const EdgeInsets.only(left: 6.0, right: 4.0),
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage:
+                            OptimizedCacheImageProvider(user.avatar),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 38.0,
-                                    backgroundImage: AssetImage(
-                                        "assets/icons/png/student.png"),
-                                  ),
-                                  const SizedBox(width: 20.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(user.names,
-                                          style: Styles.designText(
-                                              bold: true,
-                                              color: Palette.primary,
-                                              size: 24.0)),
-                                      const SizedBox(height: 8.0),
-                                      Text("student at ${user.school}"),
-                                      const SizedBox(height: 5.0),
-                                      Text(user.email),
-                                    ],
-                                  )
-                                ],
+                              Text(
+                                user.names,
+                                style: Styles.designText(
+                                    color: Palette.primary,
+                                    size: 20,
+                                    bold: true),
                               ),
-                              Wrap(
-                                spacing: 1.5,
-                                children: user.subjects
-                                    .map((subject) => Chip(
-                                          backgroundColor:
-                                              Palette.primary.withOpacity(0.5),
-                                          label: Text(subject,
-                                              style: Styles.designText(
-                                                  bold: false,
-                                                  size: 12.0,
-                                                  color: Palette.dark)),
-                                        ))
-                                    .toList(),
-                              )
+                              user.achievements.length == 0
+                                  ? Icon(Icons.verified,
+                                      color: Palette.primary, size: 14)
+                                  : SizedBox.shrink(),
                             ],
                           ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Column(
-                              children: [
-                                Icon(LineIcons.medal,
-                                    size: 38.0, color: Palette.secondary),
-                                Text("Brave Achiever")
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Text(
+                              "${user.level} Advanced level student at ${user.school}",
+                              style: Styles.designText(
+                                  color: Palette.dark, size: 12, bold: true),
                             ),
-                            Column(
-                              children: [
-                                Icon(LineIcons.trophy,
-                                    size: 38.0, color: Palette.dark),
-                                Text("Best Achievement")
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Icon(LineIcons.certificate,
-                                    size: 38.0, color: Colors.brown),
-                                Text("Exams winner")
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
+                          ),
+                          Wrap(
+                            spacing: 3.0,
+                            children: [
+                              ...["Bronz", "Gold", "Silver"]
+                                  .map((medal) => Chip(
+                                        backgroundColor: medal == "Bronz"
+                                            ? Colors.brown
+                                            : medal == "Gold"
+                                                ? Palette.secondary
+                                                : Colors.grey,
+                                        side: BorderSide(
+                                            color: medal == "Bronz"
+                                                ? Colors.brown
+                                                : medal == "Gold"
+                                                    ? Palette.secondary
+                                                    : Colors.grey),
+                                        label: Text(
+                                          "$medal 10",
+                                          style: Styles.designText(
+                                              color: Palette.dark,
+                                              size: 10.0,
+                                              bold: false),
+                                        ),
+                                        avatar: Icon(
+                                          medal == "Bronz"
+                                              ? LineIcons.award
+                                              : medal == "Gold"
+                                                  ? LineIcons.medal
+                                                  : Iconsax.award,
+                                        ),
+                                      ))
+                            ],
+                          )
+                        ],
+                      ),
                     ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text("Quizz Performances",
+                      style: Styles.designText(
+                          color: Palette.primary, size: 18, bold: true)),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 18.0, left: 10, right: 10),
+                    child: Container(
+                        height: 150.0,
+                        child: SfCartesianChart(
+                          primaryXAxis: CategoryAxis(),
+                          series: <ChartSeries>[
+                            BarSeries<QuizzModel, String>(
+                                dataSource: user.quizzes,
+                                xValueMapper: (QuizzModel quizz, _) =>
+                                    quizz.subject,
+                                yValueMapper: (QuizzModel quizz, _) =>
+                                    quizz.correct)
+                          ],
+                        ))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text("Learning Performances",
+                      style: Styles.designText(
+                          color: Palette.primary, size: 18, bold: true)),
+                ),
+                Container(
+                  height: 150.0,
+                  child: SfCircularChart(
+                    legend: Legend(
+                        isVisible: true,
+                        isResponsive: true,
+                        position: LegendPosition.right),
+                    series: <CircularSeries>[
+                      RadialBarSeries<String, String>(
+                          maximumValue: 20,
+                          cornerStyle: CornerStyle.endCurve,
+                          trackColor: Palette.light,
+                          legendIconType: LegendIconType.circle,
+                          dataLabelSettings: DataLabelSettings(
+                              isVisible: true,
+                              textStyle: Styles.designText(
+                                  color: Palette.dark, size: 4, bold: false)),
+                          dataSource: [
+                            "Biology",
+                            "Computer",
+                            "Maths",
+                            "Physics",
+                            "Chemistry"
+                          ],
+                          sortingOrder: SortingOrder.descending,
+                          sortFieldValueMapper: (datum, index) {
+                            return datum;
+                          },
+                          xValueMapper: (perf, _) => perf,
+                          yValueMapper: (perf, _) => perf == "Biology"
+                              ? 8
+                              : perf == "Computer"
+                                  ? 14
+                                  : perf == "Physics"
+                                      ? 9
+                                      : perf == "Maths"
+                                          ? 11
+                                          : 12)
+                    ],
                   ),
-                  decoration:
-                      BoxDecoration(color: Palette.primary.withOpacity(0.25))),
-              const SizedBox(height: 25.0),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -138,7 +224,7 @@ class Profile extends HookWidget {
                 }
               ]);
             },
-            child: Icon(LineIcons.edit)),
+            child: Icon(Iconsax.edit)),
       ),
     );
   }
