@@ -199,7 +199,7 @@ class RegistrationInfos extends StatefulHookWidget {
 class _RegistrationInfosState extends State<RegistrationInfos> {
   @override
   Widget build(BuildContext context) {
-    final _auth = useProvider(authProvider);
+    final _auth = useProvider(authProvider).state;
     final name = useProvider(nameProvider);
     final email = useProvider(emailProvider);
     final password = useProvider(passwordProvider);
@@ -212,19 +212,19 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
 
     return Column(
       children: [
-        // GestureDetector(
-        //   onTap: () {
-        //     section.state = "";
-        //     classe.state = "";
-        //     chosenSubjects.state = [];
-        //     level.state = "";
-        //   },
-        //   child: Button(
-        //     color: Palette.primary,
-        //     label: "Reset",
-        //     icon: LineIcons.signature,
-        //   ),
-        // ),
+        GestureDetector(
+          onTap: () {
+            section.state = "";
+            classe.state = "";
+            chosenSubjects.state = [];
+            level.state = "";
+          },
+          child: Button(
+            color: Palette.primary,
+            label: "Reset",
+            icon: LineIcons.signature,
+          ),
+        ),
         Logo(withIcon: false),
         AnimatedTextKit(
           animatedTexts: [
@@ -406,6 +406,43 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
         if (section.state != "" &&
             section.state == "Francophone" &&
             classe.state == "")
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () => level.state = "Ordinary",
+                child: Chip(
+                  backgroundColor: level.state == "Ordinary"
+                      ? Palette.primary.withOpacity(0.8)
+                      : Colors.grey,
+                  avatar: Icon(LineIcons.barChartAlt),
+                  label: Text("Ordinary"),
+                  side: BorderSide(
+                      color: level.state == "Ordinary"
+                          ? Palette.primary.withOpacity(0.8)
+                          : Colors.grey,
+                      width: 2.0),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => level.state = "Advanced",
+                child: Chip(
+                    backgroundColor: level.state == "Advanced"
+                        ? Palette.primary.withOpacity(0.8)
+                        : Colors.grey,
+                    avatar: Icon(LineIcons.barChart),
+                    label: Text("Advanced"),
+                    side: BorderSide(
+                        color: level.state == "Advanced"
+                            ? Palette.primary.withOpacity(0.8)
+                            : Colors.grey,
+                        width: 2.0)),
+              ),
+            ],
+          ),
+        if (section.state != "" &&
+            section.state == "Francophone" &&
+            level.state == "")
           FlipInY(
             duration: Duration(milliseconds: 1750),
             child: Container(
@@ -482,7 +519,8 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                       phone: phone.state,
                       section: section.state,
                       level: level.state,
-                      avatar: "https://zety.com/about/michael-tomaszewski",
+                      avatar:
+                          "https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/profile_images%2Favatar.jpeg?alt=media&token=62d23abe-93d0-439d-9fd4-93c7b496b82f",
                       school: school.state,
                       subjects: chosenSubjects.state,
                       prenium: false,
@@ -492,7 +530,11 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                           mail: _student.email,
                           pass: password.state,
                           student: _student)
-                      .then((response) => "done");
+                      .then((response) {
+                    setState(() {
+                      context.refresh(authStateProvider);
+                    });
+                  });
                 },
                 child: Button(
                   label: "Continue...",
