@@ -1,10 +1,13 @@
 import 'package:eureka_learn/models/models.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
@@ -12,7 +15,9 @@ import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Post extends StatefulWidget {
+final commentToglerProvider = StateProvider<bool>((ref) => false);
+
+class Post extends StatefulHookWidget {
   final PostModel model;
   const Post({Key? key, required this.model}) : super(key: key);
 
@@ -23,6 +28,10 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
+    final commentController = TextEditingController();
+    final database = useProvider(databaseProvider);
+    final commentToggler = useProvider(commentToglerProvider);
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Card(
@@ -123,15 +132,18 @@ class _PostState extends State<Post> {
                       likeCount: widget.model.likesCount,
                       likeCountAnimationType: LikeCountAnimationType.all,
                     ),
-                    Row(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.envelopeOpenText,
-                          color: Palette.dark,
-                          size: 18,
-                        ),
-                        const Text(" comment"),
-                      ],
+                    GestureDetector(
+                      onTap: () => commentToggler.state = !commentToggler.state,
+                      child: Row(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.envelopeOpenText,
+                            color: Palette.dark,
+                            size: 18,
+                          ),
+                          const Text(" comment"),
+                        ],
+                      ),
                     ),
                     Row(
                       children: [
@@ -153,16 +165,37 @@ class _PostState extends State<Post> {
                   ],
                 ),
                 Divider(),
-                Row(
-                  children: [
-                    Chip(
-                      backgroundColor: Palette.primary.withOpacity(0.15),
-                      side: BorderSide(
-                          color: Palette.primary.withOpacity(0.5), width: 0.60),
-                      label: Text('comment'),
-                    )
-                  ],
-                )
+                commentToggler.state
+                    ? Container(
+                        decoration: BoxDecoration(
+                            color: Palette.primary.withOpacity(.3),
+                            borderRadius: BorderRadius.circular(24.0)),
+                        child: TextFormField(
+                          controller: commentController,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(10),
+                              border: InputBorder.none,
+                              suffixIcon: GestureDetector(
+                                  onTap: () async {
+                                    await database
+                                        .commentPost(widget.model,
+                                            commentController.text)
+                                        .then((response) {
+                                      commentController.clear();
+                                      commentToggler.state = false;
+                                    });
+                                  },
+                                  child: Icon(LineIcons.telegramPlane,
+                                      color: Palette.primary))),
+                        ),
+                      )
+                    : widget.model.comments.length >= 1
+                        ? Chip(
+                            label: Text(widget.model.comments.last),
+                            backgroundColor: Palette.primary.withOpacity(.4),
+                            side: BorderSide(color: Palette.primary),
+                          )
+                        : SizedBox.shrink(),
               ],
             ),
           ),
