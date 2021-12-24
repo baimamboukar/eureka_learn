@@ -1,6 +1,8 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:eureka_learn/controllers/quiz_state.dart';
 import 'package:eureka_learn/enum/enums.dart';
+import 'package:eureka_learn/models/quizz_model.dart';
+import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -18,8 +20,6 @@ import 'package:html_character_entities/html_character_entities.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class QuizScreen extends HookWidget {
   final String type;
@@ -45,11 +45,12 @@ class QuizScreen extends HookWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(
-                color: Colors.white,
-              ),
+              CircularProgressIndicator(),
               const SizedBox(height: 20),
-              const Text("Loading quiz...")
+              Text(
+                "Loading quiz...",
+                style: Styles.subtitle,
+              )
             ],
           )),
           error: (error, _) => QuizError(
@@ -206,175 +207,233 @@ class QuizResults extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0) + const EdgeInsets.only(top: 20),
-        child: Flex(
-          direction: Axis.vertical,
-          children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [
-            //     Container(
-            //       height: 60,
-            //       width: 50,
-            //       decoration: BoxDecoration(
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.grey.withOpacity(0.8),
-            //             spreadRadius: 10,
-            //             blurRadius: 5,
-            //             offset: Offset(0, 7), // changes position of shadow
-            //           ),
-            //         ],
-            //       ),
-            //       child: Text("1"),
-            //     ),
-            //     Container(
-            //       height: 120,
-            //       width: 50,
-            //       decoration: BoxDecoration(
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.amber.withOpacity(0.8),
-            //             spreadRadius: 10,
-            //             blurRadius: 5,
-            //             offset: Offset(0, 7), // changes position of shadow
-            //           ),
-            //         ],
-            //       ),
-            //       child: Text("1"),
-            //     ),
-            //     Container(
-            //       height: 90,
-            //       width: 50,
-            //       decoration: BoxDecoration(
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.brown.withOpacity(0.8),
-            //             spreadRadius: 10,
-            //             blurRadius: 5,
-            //             offset: Offset(0, 7), // changes position of shadow
-            //           ),
-            //         ],
-            //       ),
-            //       child: Text("1"),
-            //     ),
-            //   ],
-            // ),
-            // Text(
-            //   '${state.correct.length} / ${questions.length}',
-            //   style: const TextStyle(
-            //     color: Colors.white,
-            //     fontSize: 60.0,
-            //     fontWeight: FontWeight.w600,
-            //   ),
-            //   textAlign: TextAlign.center,
-            // ),
-            Card(
-              child: Container(
-                decoration: BoxDecoration(gradient: Palette.linearGradient),
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    children: [
-                      Text("Quizz Performances",
-                          style: Styles.designText(
-                              color: Palette.light, size: 20, bold: true)),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-                        child: Divider(
-                          height: 3.0,
+    String resultMessage;
+    Icon resultIcon;
+    int correct = state.correct.length;
+    if (correct < questions.length * 0.5) {
+      resultMessage = "Novice ! Need to practice more";
+      resultIcon = Icon(LineIcons.award, color: Colors.brown, size: 100);
+    } else if (correct >= questions.length * 0.5 &&
+        correct <= questions.length * 0.75) {
+      resultMessage = "Proficient! Keep it up";
+      resultIcon = Icon(Iconsax.award, color: Colors.grey, size: 100);
+    } else {
+      resultMessage = "Expert! You are ready for the next level";
+      resultIcon = Icon(LineIcons.medal, color: Colors.amberAccent, size: 100);
+    }
+
+    final database = useProvider(databaseProvider);
+    final user = useProvider(studentControllerProvider.notifier);
+    database.addQuizz(
+        userID: user.student.id ?? "",
+        quizz: QuizzModel(
+            subject: useProvider(quizSubjectProvider).state,
+            difficulty: useProvider(difficultyProvider).state,
+            numberOfQuestions: useProvider(numberOfQuestionsProvider).state,
+            correct: state.correct.length,
+            date: DateTime.now().toString()));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Quiz Results',
+          style: Styles.subtitle,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0) + const EdgeInsets.only(top: 20),
+          child: Flex(
+            direction: Axis.vertical,
+            children: [
+              const SizedBox(height: 20),
+              Text("The results will be added to your profile",
+                  style: Styles.subtitle),
+              Card(
+                child: Container(
+                  decoration: BoxDecoration(gradient: Palette.linearGradient),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Column(
+                      children: [
+                        Text("QUIZZ PERFORMANCES",
+                            style: Styles.designText(
+                                color: Colors.yellow, size: 18, bold: true)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+                          child: Divider(
+                            height: 3.0,
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CircularPercentIndicator(
-                            radius: 65,
-                            animationDuration: 1500,
-                            lineWidth: 8,
-                            percent: ((state.incorrect.length * 100) /
-                                    questions.length) /
-                                100,
-                            backgroundColor: Palette.light,
-                            center: Text(((state.incorrect.length * 100) /
-                                    questions.length)
-                                .toString()),
-                            animation: true,
-                            progressColor: Palette.error,
-                            footer: Text("incorrect answers"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(LineIcons.checkCircleAlt,
+                                        color: Colors.yellow),
+                                    const SizedBox(width: 4.0),
+                                    Text("Subject ➦ ", style: Styles.subtitle),
+                                    const SizedBox(width: 4.0),
+                                    Text(
+                                        context.read(quizSubjectProvider).state,
+                                        style: Styles.designText(
+                                            bold: true,
+                                            color: Palette.light,
+                                            size: 18)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(LineIcons.checkCircleAlt,
+                                        color: Colors.yellow),
+                                    const SizedBox(width: 4.0),
+                                    Text("Type ➦ ", style: Styles.subtitle),
+                                    const SizedBox(width: 4.0),
+                                    Text(context.read(quizzTypeProvider).state,
+                                        style: Styles.designText(
+                                            bold: true,
+                                            color: Palette.light,
+                                            size: 18)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(LineIcons.checkCircleAlt,
+                                        color: Colors.yellow),
+                                    const SizedBox(width: 4.0),
+                                    Text("Difficulty ➦ ",
+                                        style: Styles.subtitle),
+                                    const SizedBox(width: 4.0),
+                                    Text(context.read(difficultyProvider).state,
+                                        style: Styles.designText(
+                                            bold: true,
+                                            color: Palette.light,
+                                            size: 18)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            CircularPercentIndicator(
+                                lineWidth: 6.0,
+                                percent: ((state.correct.length * 100) /
+                                        questions.length) /
+                                    100,
+                                linearGradient: Palette.customGradientWith(
+                                    [Colors.amberAccent, Colors.greenAccent]),
+                                header: Text("Score"),
+                                center: Text(
+                                    "${state.correct.length} / ${questions.length}",
+                                    style: Styles.designText(
+                                        color: Colors.white,
+                                        size: 18,
+                                        bold: true)),
+                                radius: 60,
+                                backgroundColor: Colors.white)
+                          ],
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 10.0, bottom: 4.0),
+                          child: Divider(
+                            height: 3.0,
                           ),
-                          Icon(LineIcons.medal, size: 100, color: Colors.amber),
-                          CircularPercentIndicator(
-                            radius: 65,
-                            lineWidth: 8,
-                            animationDuration: 1500,
-                            percent: .35,
-                            backgroundColor: Palette.light,
-                            center: Text("20%"),
-                            animation: true,
-                            progressColor: Palette.success,
-                            footer: Text("correct answers"),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        "Braavo! You're an expert",
-                        style: Styles.designText(
-                            color: Palette.light, size: 18, bold: true),
-                      ),
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 65,
+                              animationDuration: 1500,
+                              lineWidth: 8,
+                              percent: ((state.incorrect.length * 100) /
+                                      questions.length) /
+                                  100,
+                              backgroundColor: Palette.light,
+                              center: Text(((state.incorrect.length * 100) /
+                                      questions.length)
+                                  .toString()),
+                              animation: true,
+                              progressColor: Palette.error,
+                              footer: Text("incorrect answers"),
+                            ),
+                            resultIcon,
+                            CircularPercentIndicator(
+                              radius: 65,
+                              lineWidth: 8,
+                              animationDuration: 1500,
+                              percent: ((state.correct.length * 100) /
+                                      questions.length) /
+                                  100,
+                              backgroundColor: Palette.light,
+                              center: Text(((state.correct.length * 100) /
+                                      questions.length)
+                                  .toString()),
+                              animation: true,
+                              progressColor: Palette.success,
+                              footer: Text("correct answers"),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          resultMessage,
+                          style: Styles.designText(
+                              color: Palette.light, size: 18, bold: true),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            // SfCircularChart(
-            //   backgroundColor: Colors.grey,
-            //   legend: Legend(
-            //       isVisible: true,
-            //       isResponsive: true,
-            //       position: LegendPosition.bottom),
-            //   title: ChartTitle(text: "Quizz Evaluation"),
-            //   series: <CircularSeries>[
-            //     DoughnutSeries<String, String>(
-            //         legendIconType: LegendIconType.circle,
-            //         dataLabelSettings: DataLabelSettings(isVisible: true),
-            //         dataSource: ["Correct", "Wrong"],
-            //         xValueMapper: (perf, _) => perf,
-            //         yValueMapper: (perf, _) => perf == "Correct" ? 7 : 3)
-            //   ],
-            // ),
-            const SizedBox(height: 20.0),
-            Text("Share your accomplishment", style: Styles.subtitle),
-            const SizedBox(height: 12.0),
-            Wrap(
-              spacing: 10.0,
-              children: [
-                Button(
-                    color: Palette.primary,
-                    icon: Iconsax.activity,
-                    label: "Profile"),
-                Button(
-                    color: Palette.success,
-                    icon: LineIcons.whatSApp,
-                    label: "Whatsapp"),
-              ],
-            ),
-            const SizedBox(height: 50.0),
-            GestureDetector(
-              onTap: () {
-                context.refresh(quizRepositoryProvider);
+              // SfCircularChart(
+              //   backgroundColor: Colors.grey,
+              //   legend: Legend(
+              //       isVisible: true,
+              //       isResponsive: true,
+              //       position: LegendPosition.bottom),
+              //   title: ChartTitle(text: "Quizz Evaluation"),
+              //   series: <CircularSeries>[
+              //     DoughnutSeries<String, String>(
+              //         legendIconType: LegendIconType.circle,
+              //         dataLabelSettings: DataLabelSettings(isVisible: true),
+              //         dataSource: ["Correct", "Wrong"],
+              //         xValueMapper: (perf, _) => perf,
+              //         yValueMapper: (perf, _) => perf == "Correct" ? 7 : 3)
+              //   ],
+              // ),
+              const SizedBox(height: 20.0),
+              // Text("Share your accomplishment", style: Styles.subtitle),
+              // const SizedBox(height: 12.0),
+              // Wrap(
+              //   spacing: 10.0,
+              //   children: [
+              //     Button(
+              //         color: Palette.primary,
+              //         icon: Iconsax.activity,
+              //         label: "Profile"),
+              //     Button(
+              //         color: Palette.success,
+              //         icon: LineIcons.whatSApp,
+              //         label: "Whatsapp"),
+              //   ],
+              // ),
+              const SizedBox(height: 50.0),
+              GestureDetector(
+                onTap: () {
+                  context.refresh(quizRepositoryProvider);
 
-                context.read(quizControllerProvider.notifier).reset();
-              },
-              child: Button(
-                  label: "Retry again",
-                  color: Palette.primary,
-                  icon: Iconsax.activity),
-            )
-          ],
+                  context.read(quizControllerProvider.notifier).reset();
+                },
+                child: Button(
+                    label: "Retry again",
+                    color: Palette.primary,
+                    icon: Iconsax.activity),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -414,8 +473,7 @@ class QuizQuestions extends StatelessWidget {
               Container(
                 height: 150.0 + 120,
                 width: Screen.width(context),
-                child: Flex(
-                  direction: Axis.vertical,
+                child: Column(
                   children: [
                     // LinearPercentIndicator(
                     //   width: Screen.width(context) * .8,
