@@ -14,7 +14,7 @@ final AutoDisposeFutureProvider<List<Question>>? quizQuestionsProvider =
 
 final questionsProvider = FutureProvider.autoDispose<List<Question>>((ref) =>
     ref.watch(databaseProvider).getQuestions(
-        numberOfQuestions: 3,
-        subject: "Biology",
-        difficulty: "medium",
-        type: "exam"));
+        numberOfQuestions: ref.watch(numberOfQuestionsProvider).state,
+        subject: ref.watch(quizSubjectProvider).state,
+        difficulty: ref.watch(difficultyProvider).state,
+        type: ref.watch(quizzTypeProvider).state));
