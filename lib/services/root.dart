@@ -19,7 +19,7 @@ class Root extends ConsumerWidget {
         data: (authenticatedUser) {
           if (authenticatedUser != null) {
             database.getUser(authenticatedUser.uid);
-            database.getUserFeeds();
+            //database.getUserFeeds();
             return Home();
           } else {
             return Welcome();
