@@ -41,6 +41,7 @@ class _InputState extends State<Input> {
       child: TextFormField(
         controller: widget.controller,
         validator: widget.validator,
+        
         style: TextStyle(
           color: Palette.primary,
           fontWeight: FontWeight.w400,
