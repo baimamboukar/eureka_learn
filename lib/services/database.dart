@@ -223,4 +223,20 @@ class Database {
       rethrow;
     }
   }
+
+  Future<void> addQuizz(
+      {required String userID, required QuizzModel quizz}) async {
+    try {
+      _firestore.collection("students").doc(userID).update({
+        "quizzes": FieldValue.arrayUnion([quizz.toMap()])
+      });
+    } on FirebaseException catch (err) {
+      Toast.toast(
+          color: Palette.error,
+          title: "Firestore error",
+          message: err.message ?? "",
+          icon: LineIcons.times);
+      rethrow;
+    }
+  }
 }
