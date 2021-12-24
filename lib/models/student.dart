@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:eureka_learn/models/models.dart';
+
 class Student {
   // ignore: slash_for_doc_comments
   /**
@@ -15,6 +17,7 @@ class Student {
   final String avatar;
 
   final List<String> achievements;
+  final List<QuizzModel> quizzes;
   List<String> subjects;
 
   final bool prenium;
@@ -28,6 +31,7 @@ class Student {
     this.school,
     required this.level,
     required this.avatar,
+    required this.quizzes,
     required this.achievements,
     required this.subjects,
     required this.prenium,
@@ -43,6 +47,7 @@ class Student {
     String? level,
     String? avatar,
     List<String>? achievements,
+    List<QuizzModel>? quizzes,
     List<String>? subjects,
     bool? prenium,
   }) =>
@@ -56,6 +61,7 @@ class Student {
         level: level ?? this.level,
         avatar: avatar ?? this.avatar,
         achievements: achievements ?? this.achievements,
+        quizzes: quizzes ?? this.quizzes,
         subjects: subjects ?? this.subjects,
         prenium: prenium ?? this.prenium,
       );
@@ -71,6 +77,7 @@ class Student {
       'level': student.level,
       'avatar': student.avatar,
       'achievements': student.achievements,
+      'quizzes': student.quizzes,
       'subjects': student.subjects,
       'prenium': student.prenium,
     };
@@ -87,6 +94,8 @@ class Student {
       level: map['level'],
       avatar: map['avatar'],
       achievements: List<String>.from(map['achievements']),
+      quizzes: List<QuizzModel>.from(
+          map['quizzes'].map((quizz) => QuizzModel.fromMap(quizz))),
       subjects: List<String>.from(map['subjects']),
       prenium: map['prenium'],
     );
@@ -103,6 +112,7 @@ class Student {
         school: "GBHS Garoua",
         subjects: ["Maths", "Physics", "Biology", "Csc"],
         prenium: false,
+        quizzes: [],
         achievements: ["Star", "Bronz", "Alpha"]);
   }
   String toJson(Student student) => json.encode(toDocumentSnapshot(student));
