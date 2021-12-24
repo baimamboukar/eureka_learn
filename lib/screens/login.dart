@@ -11,12 +11,12 @@ import 'package:line_icons/line_icons.dart';
 
 final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-class Login extends HookWidget {
+class Login extends ConsumerWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final _auth = useProvider(authProvider);
+  Widget build(BuildContext context, ScopedReader watch) {
+    final _auth = watch(authProvider).state;
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     return SafeArea(
@@ -78,9 +78,13 @@ class Login extends HookWidget {
                     const SizedBox(height: 20.0),
                     GestureDetector(
                       onTap: () {
-                        _auth.loginUser(
-                            mail: emailController.text,
-                            pass: passwordController.text);
+                        _auth
+                            .loginUser(
+                                mail: emailController.text,
+                                pass: passwordController.text)
+                            .then((user) {
+                          context.refresh(authStateProvider);
+                        });
                       },
                       child: Button(
                         label: "Login",
@@ -92,22 +96,22 @@ class Login extends HookWidget {
                     Divider(
                       height: 1.0,
                     ),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Button(
-                          label: "With Google",
-                          icon: LineIcons.googleLogo,
-                          color: Palette.error.withOpacity(0.7),
-                        ),
-                        Button(
-                          label: "With Phone",
-                          icon: LineIcons.tablet,
-                          color: Palette.success,
-                        ),
-                      ],
-                    ),
+                    // const SizedBox(height: 20.0),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     Button(
+                    //       label: "With Google",
+                    //       icon: LineIcons.googleLogo,
+                    //       color: Palette.error.withOpacity(0.7),
+                    //     ),
+                    //     Button(
+                    //       label: "With Phone",
+                    //       icon: LineIcons.tablet,
+                    //       color: Palette.success,
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(height: 20.0),
                     GestureDetector(
                       onTap: () => Get.to(() => Signup()),
