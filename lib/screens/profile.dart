@@ -22,6 +22,7 @@ class Profile extends HookWidget {
   Widget build(BuildContext context) {
     final database = useProvider(databaseProvider);
     final userRefresher = useProvider(studentControllerProvider.notifier);
+    final profileTabIndex = useProvider(profileTabIndexProvider);
     print(user.quizzes[1]);
     return SafeArea(
       child: Scaffold(
@@ -135,7 +136,7 @@ class Profile extends HookWidget {
                 // ], selectedIndex: 0),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -144,16 +145,24 @@ class Profile extends HookWidget {
                       TabLabel(2, "Infos", Icons.info)
                     ]
                         .map((label) => GestureDetector(
+                              onTap: () => profileTabIndex.state = label.index,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(label.icon, color: Palette.dark),
+                                      Icon(label.icon,
+                                          color: label.index ==
+                                                  profileTabIndex.state
+                                              ? Palette.primary
+                                              : Palette.dark),
                                       const SizedBox(width: 5.0),
                                       Text(
                                         label.title,
                                         style: Styles.designText(
-                                            color: Palette.dark,
+                                            color: label.index ==
+                                                    profileTabIndex.state
+                                                ? Palette.primary
+                                                : Palette.dark,
                                             size: 18,
                                             bold: true),
                                       ),
@@ -166,75 +175,92 @@ class Profile extends HookWidget {
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text("Quizz Performances",
-                      style: Styles.designText(
-                          color: Palette.primary, size: 18, bold: true)),
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 18.0, left: 10, right: 10),
-                    child: Container(
-                        height: 150.0,
-                        child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          series: <ChartSeries>[
-                            BarSeries<QuizzModel, String>(
-                                dataSource: user.quizzes,
-                                xValueMapper: (QuizzModel quizz, _) =>
-                                    quizz.subject,
-                                yValueMapper: (QuizzModel quizz, _) =>
-                                    quizz.correct)
-                          ],
-                        ))),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text("Learning Performances",
-                      style: Styles.designText(
-                          color: Palette.primary, size: 18, bold: true)),
-                ),
-                Container(
-                  height: 150.0,
-                  child: SfCircularChart(
-                    legend: Legend(
-                        isVisible: true,
-                        isResponsive: true,
-                        position: LegendPosition.right),
-                    series: <CircularSeries>[
-                      RadialBarSeries<String, String>(
-                          maximumValue: 20,
-                          cornerStyle: CornerStyle.endCurve,
-                          trackColor: Palette.light,
-                          legendIconType: LegendIconType.circle,
-                          dataLabelSettings: DataLabelSettings(
-                              isVisible: true,
-                              textStyle: Styles.designText(
-                                  color: Palette.dark, size: 4, bold: false)),
-                          dataSource: [
-                            "Biology",
-                            "Computer",
-                            "Maths",
-                            "Physics",
-                            "Chemistry"
-                          ],
-                          sortingOrder: SortingOrder.descending,
-                          sortFieldValueMapper: (datum, index) {
-                            return datum;
-                          },
-                          xValueMapper: (perf, _) => perf,
-                          yValueMapper: (perf, _) => perf == "Biology"
-                              ? 8
-                              : perf == "Computer"
-                                  ? 14
-                                  : perf == "Physics"
-                                      ? 9
-                                      : perf == "Maths"
-                                          ? 11
-                                          : 12)
-                    ],
-                  ),
-                ),
+                IndexedStack(
+                  index: profileTabIndex.state,
+                  children: [
+                    Text("Activity"),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text("Quizz Performances",
+                              style: Styles.designText(
+                                  color: Palette.primary,
+                                  size: 18,
+                                  bold: true)),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 18.0, left: 10, right: 10),
+                            child: Container(
+                                height: 150.0,
+                                child: SfCartesianChart(
+                                  primaryXAxis: CategoryAxis(),
+                                  series: <ChartSeries>[
+                                    BarSeries<QuizzModel, String>(
+                                        dataSource: user.quizzes,
+                                        xValueMapper: (QuizzModel quizz, _) =>
+                                            quizz.subject,
+                                        yValueMapper: (QuizzModel quizz, _) =>
+                                            quizz.correct)
+                                  ],
+                                ))),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text("Learning Performances",
+                              style: Styles.designText(
+                                  color: Palette.primary,
+                                  size: 18,
+                                  bold: true)),
+                        ),
+                        Container(
+                          height: 150.0,
+                          child: SfCircularChart(
+                            legend: Legend(
+                                isVisible: true,
+                                isResponsive: true,
+                                position: LegendPosition.right),
+                            series: <CircularSeries>[
+                              RadialBarSeries<String, String>(
+                                  maximumValue: 20,
+                                  cornerStyle: CornerStyle.endCurve,
+                                  trackColor: Palette.light,
+                                  legendIconType: LegendIconType.circle,
+                                  dataLabelSettings: DataLabelSettings(
+                                      isVisible: true,
+                                      textStyle: Styles.designText(
+                                          color: Palette.dark,
+                                          size: 4,
+                                          bold: false)),
+                                  dataSource: [
+                                    "Biology",
+                                    "Computer",
+                                    "Maths",
+                                    "Physics",
+                                    "Chemistry"
+                                  ],
+                                  sortingOrder: SortingOrder.descending,
+                                  sortFieldValueMapper: (datum, index) {
+                                    return datum;
+                                  },
+                                  xValueMapper: (perf, _) => perf,
+                                  yValueMapper: (perf, _) => perf == "Biology"
+                                      ? 8
+                                      : perf == "Computer"
+                                          ? 14
+                                          : perf == "Physics"
+                                              ? 9
+                                              : perf == "Maths"
+                                                  ? 11
+                                                  : 12)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text("Infos")
+                  ],
+                )
               ],
             ),
           ),
