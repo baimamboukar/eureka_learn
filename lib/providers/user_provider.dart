@@ -4,4 +4,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final studentControllerProvider =
     StateNotifierProvider.autoDispose<StudentController, Student>(
-        (ref) => StudentController(ref.read, Student.initial()));
+        (ref) =>  StudentController(ref.read, Student.initial()));
