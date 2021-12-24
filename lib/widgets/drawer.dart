@@ -11,13 +11,14 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class AppDrawer extends HookWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _auth = useProvider(authProvider);
+    final _auth = useProvider(authProvider).state;
     final student = useProvider(studentControllerProvider.notifier);
     return Drawer(
         child: FlipInY(
@@ -27,12 +28,16 @@ class AppDrawer extends HookWidget {
       children: [
         UserAccountsDrawerHeader(
             otherAccountsPictures: [
-              Logo(withIcon: true),
+              CircleAvatar(
+                  radius: 80,
+                  backgroundImage:
+                      OptimizedCacheImageProvider(student.student.avatar))
             ],
             decoration: BoxDecoration(gradient: Palette.linearGradient),
             margin: null,
+            currentAccountPictureSize: Size(200, 150),
             accountEmail: Text(student.student.email),
-            accountName: Text(student.student.names)),
+            accountName: Text(student.student.names, style: Styles.subtitle)),
         DrawerItem(
             icon: Icon(Iconsax.user_octagon, color: Palette.primary),
             label: "Profile",
