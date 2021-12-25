@@ -1,11 +1,11 @@
 {
-    "name": "eureka_learn",
-    "short_name": "eureka_learn",
+    "name": "Intelli'learn",
+    "short_name": "Intelli'learn",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "All inclusive academic platform for all cameroonians.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
