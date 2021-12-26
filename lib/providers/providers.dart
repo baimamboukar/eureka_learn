@@ -6,3 +6,4 @@ export 'posts_provider.dart';
 export 'quizz_questions_provider.dart';
 export 'feeds_provider.dart';
 export 'quizz_intro_providers.dart';
+export 'fcm_provider.dart';
