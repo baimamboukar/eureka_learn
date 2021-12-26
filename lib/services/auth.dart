@@ -19,7 +19,7 @@ class Authentication {
       await _firebaseAuth
           .signInWithEmailAndPassword(email: mail, password: pass)
           .then((response) async {
-        if (_read(databaseProvider).getUser(response.user!.uid))
+        if (await _read(databaseProvider).getUser(response.user!.uid))
           Fluttertoast.showToast(
               msg: "Successful signed in", backgroundColor: Palette.success);
       });
