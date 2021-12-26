@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/quizz.dart';
@@ -8,6 +7,7 @@ import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
@@ -26,6 +26,23 @@ void main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft
   ]);
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging.instance.setAutoInitEnabled(true);
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: true,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("********************************");
+    debugPrint(message.notification!.body!);
+  });
+
   runApp(ProviderScope(child: Intellilearn()));
 }
 
