@@ -532,9 +532,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                           pass: password.state,
                           student: _student)
                       .then((response) {
-                    setState(() {
-                      context.refresh(authStateProvider);
-                    });
+                  
                   });
                 },
                 child: Button(
