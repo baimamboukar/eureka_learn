@@ -83,6 +83,7 @@ class Login extends ConsumerWidget {
                                 mail: emailController.text,
                                 pass: passwordController.text)
                             .then((user) {
+                          Navigator.pop(context);
                           context.refresh(authStateProvider);
                         });
                       },
