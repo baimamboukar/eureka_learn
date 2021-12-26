@@ -39,13 +39,13 @@ class Database {
     }
   }
 
-  bool getUser(String uid) {
+  Future<bool> getUser(String uid) async {
     try {
-      _firestore
+      await _firestore
           .collection('students')
           .doc(uid)
           .get(GetOptions(source: Source.serverAndCache))
-          .then((doc) {
+          .then((doc) async {
         Student _student = Student.fromDocumentSnapshot(doc.data());
         _read(studentControllerProvider.notifier).data = _student;
       });
