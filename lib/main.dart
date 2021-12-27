@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/quizz.dart';
@@ -18,6 +19,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,8 +36,19 @@ Future<void> main() async {
     DeviceOrientation.landscapeLeft
   ]);
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  FirebaseMessaging.instance.setAutoInitEnabled(true);
-
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        importance: NotificationImportance.High,
+        defaultPrivacy: NotificationPrivacy.Public,
+        criticalAlerts: true,
+        channelShowBadge: true,
+        playSound: true,
+        channelKey: 'posts',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Palette.primary,
+        ledColor: Colors.white)
+  ]);
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: true,
@@ -38,9 +58,48 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print("********************************");
-    debugPrint(message.notification!.body!);
+    // Get.dialog(AlertDialog(
+    //   title: Text('Notification'),
+    //   content: Text(message.notification?.body ?? 'No message'),
+    //   actions: <Widget>[
+    //     Text("Exit"),
+    //   ],
+    // ));
+    print("*********From json data*********");
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          showWhen: true,
+          fullScreenIntent: true,
+          category: NotificationCategory.Social,
+          wakeUpScreen: true,
+          displayOnBackground: true,
+          displayOnForeground: true,
+          ticker: "Post alert",
+          id: 123412,
+          channelKey: 'posts',
+          title: message.notification?.title ?? 'No title',
+          body: message.notification?.body ?? 'No message',
+          bigPicture: message.notification?.android?.imageUrl ?? '',
+          notificationLayout: NotificationLayout.BigPicture,
+        ),
+        actionButtons: [
+          NotificationActionButton(
+              buttonType: ActionButtonType.InputField,
+              key: "FCM_NOTIFF",
+              label: "Let's see"),
+          NotificationActionButton(
+              buttonType: ActionButtonType.Default, label: "Like", key: "beta")
+        ]);
+    AwesomeNotifications().createNotificationFromJsonData(message.data);
+  });
+
+  AwesomeNotifications()
+      .actionStream
+      .listen((ReceivedNotification receivedNotification) {
+    print(receivedNotification.payload);
   });
 
   runApp(ProviderScope(child: Intellilearn()));
