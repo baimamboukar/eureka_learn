@@ -8,13 +8,13 @@ class Toast {
       required String title,
       required String message,
       required IconData icon}) {
-    Get.showSnackbar(GetBar(
+    Get.showSnackbar(GetSnackBar(
         duration: Duration(seconds: 5),
         icon: Icon(LineIcons.checkCircle),
         message: message,
         backgroundColor: color,
         title: title,
         showProgressIndicator: true,
-        dismissDirection: SnackDismissDirection.HORIZONTAL));
+        dismissDirection: DismissDirection.horizontal));
   }
 }
