@@ -6,13 +6,11 @@ import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 final profileTabIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -25,7 +23,7 @@ class Profile extends HookWidget {
     final database = useProvider(databaseProvider);
     final userRefresher = useProvider(studentControllerProvider.notifier);
     final profileTabIndex = useProvider(profileTabIndexProvider);
-    print(user.quizzes[1]);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,7 +39,7 @@ class Profile extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: context.responsiveValue<double>(mobile: 140) ?? 140,
+                  height: 140,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           colorFilter: ColorFilter.mode(
