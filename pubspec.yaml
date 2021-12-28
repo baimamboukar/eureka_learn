@@ -13,18 +13,18 @@ environment:
 dependencies:
   animate_do: ^2.0.0
   animated_text_kit: ^4.2.1
-  awesome_notifications: ^0.0.6+10
+  awesome_notifications: ^0.6.19
   card_swiper: ^1.0.2
-  cloud_firestore: ^2.3.0
+  cloud_firestore: ^3.1.5
   cupertino_icons: ^1.0.2
   dio: null
   enum_to_string: null
   equatable: null
   file_picker: ^3.0.4
-  firebase_auth: ^2.0.0
-  firebase_core: ^1.3.0
-  firebase_dynamic_links: ^2.0.9
-  firebase_storage: ^9.0.0
+  firebase_auth: ^3.3.4
+  firebase_core: ^1.10.6
+  firebase_dynamic_links: ^4.0.3
+  firebase_storage: ^10.2.4
   flutter:
     sdk: flutter
   flutter_hooks: ^0.17.0
@@ -33,12 +33,12 @@ dependencies:
   flutter_screen_lock: ^4.0.4+2
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
-  get: ^4.1.4
-  google_fonts: ^2.1.0
+  get: ^4.6.1
+  google_fonts: ^2.1.1
   hooks_riverpod: ^0.14.0+4
   html_character_entities: null
   iconsax: ^0.0.8
-  like_button: ^2.0.2
+  like_button: ^2.0.4
   line_icons: ^2.0.1
   optimized_cached_image: ^3.0.0
   qr_flutter: ^4.0.0
