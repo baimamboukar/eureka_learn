@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
@@ -20,8 +22,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
   print("Handling a background message: ${message.messageId}");
@@ -49,26 +49,19 @@ Future<void> main() async {
         defaultColor: Palette.primary,
         ledColor: Colors.white)
   ]);
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: true,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
+  if (Platform.isIOS) {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: true,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  }
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    // Get.dialog(AlertDialog(
-    //   title: Text('Notification'),
-    //   content: Text(message.notification?.body ?? 'No message'),
-    //   actions: <Widget>[
-    //     Text("Exit"),
-    //   ],
-    // ));
-    print("*********From json data*********");
     AwesomeNotifications().createNotification(
         content: NotificationContent(
           showWhen: true,
