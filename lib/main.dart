@@ -6,6 +6,7 @@ import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/quizz.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
+import 'package:eureka_learn/utils/app_theme.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
@@ -20,6 +21,9 @@ import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'services/local/shared_preferences.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -94,38 +98,31 @@ Future<void> main() async {
       .listen((ReceivedNotification receivedNotification) {
     print(receivedNotification.payload);
   });
-
-  runApp(ProviderScope(child: Intellilearn()));
+  final sharedPreferences = await SharedPreferences.getInstance();
+  runApp(ProviderScope(overrides: [
+    sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+  ], child: Intellilearn()));
 }
 
-class Intellilearn extends HookWidget {
+class Intellilearn extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final theme = useProvider(darkModeProvider);
+  Widget build(BuildContext context, ScopedReader watch) {
+    final theme = watch(darkModeProvider);
+
+    final _appThemeState = watch(appThemeStateProvider.notifier);
+
     return GetMaterialApp(
       title: "intelli'learn",
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColorBrightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.blue,
-        scaffoldBackgroundColor: Colors.grey.shade200,
-        textTheme:
-            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-        iconTheme: IconThemeData(size: 22.0, opacity: 1),
-        appBarTheme: AppBarTheme(
-            centerTitle: true,
-            color: Palette.light,
-            elevation: 0.0,
-            systemOverlayStyle:
-                SystemUiOverlayStyle(statusBarColor: Colors.blue),
-            actionsIconTheme: IconThemeData(color: Palette.primary),
-            iconTheme: IconThemeData(color: Palette.primary, size: 16.0)),
-      ),
       darkTheme: ThemeData.dark().copyWith(
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
-      themeMode: theme.state ? ThemeMode.dark : ThemeMode.light,
+      theme: context
+          .read(appThemeProvider)
+          .getAppThemedata(context, _appThemeState.isDarkModeEnabled)
+          .copyWith(
+            textTheme:
+                GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+          ),
       home: Root(),
     );
   }
