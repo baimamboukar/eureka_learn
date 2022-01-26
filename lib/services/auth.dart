@@ -42,7 +42,7 @@ class Authentication {
         } else
           BotToast.showText(text: "Something went wrong !");
       });
-    } on FirebaseAuthException catch (err) {
+    } on FirebaseAuthException {
       // handle different firebase exceptions
       BotToast.showText(text: "Errrrrrror up");
     }
