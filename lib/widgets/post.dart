@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
@@ -11,7 +12,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:like_button/like_button.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -94,7 +94,7 @@ class _PostState extends State<Post> {
                         onTap: () => Get.to(() =>
                             ImageView(imageURL: widget.model.photoURL ?? "")),
                         child: Center(
-                            child: OptimizedCacheImage(
+                            child: CachedNetworkImage(
                                 imageUrl: widget.model.photoURL ?? "")),
                       )
                     : const SizedBox.shrink(),
