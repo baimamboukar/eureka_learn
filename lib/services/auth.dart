@@ -4,7 +4,6 @@ import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Authentication {
   final FirebaseAuth _firebaseAuth;
@@ -21,13 +20,10 @@ class Authentication {
           .signInWithEmailAndPassword(email: mail, password: pass)
           .then((response) async {
         if (await _read(databaseProvider).getUser(response.user!.uid))
-          Fluttertoast.showToast(
-              msg: "Successful signed in", backgroundColor: Palette.success);
+          BotToast.showText(text: "Successful signed up");
       });
     } on FirebaseAuthException catch (err) {
-      Fluttertoast.showToast(
-          msg: err.message ?? "Something went wrong !",
-          backgroundColor: Palette.error);
+      BotToast.showText(text: "Successful signed up ${err.message}");
     }
   }
 
@@ -56,12 +52,11 @@ class Authentication {
   //simply logs out the user
   Future<void> logoutUser() async {
     try {
-      await _firebaseAuth.signOut().then((response) => Fluttertoast.showToast(
-          msg: "Successful logged out", backgroundColor: Palette.success));
+      await _firebaseAuth
+          .signOut()
+          .then((response) => BotToast.showText(text: "Successful signed out"));
     } on FirebaseAuthException catch (err) {
-      Fluttertoast.showToast(
-          msg: err.message ?? "Something went wrong !",
-          backgroundColor: Palette.error);
+      BotToast.showText(text: "Successful signed up ${err.message}");
     }
   }
 }
