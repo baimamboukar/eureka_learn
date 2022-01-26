@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class AppDrawer extends HookWidget {
   const AppDrawer({Key? key}) : super(key: key);
