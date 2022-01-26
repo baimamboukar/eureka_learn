@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/providers/user_provider.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 final profileTabIndexProvider = StateProvider<int>((ref) => 0);
@@ -44,7 +44,7 @@ class Profile extends HookWidget {
                           colorFilter: ColorFilter.mode(
                               Palette.primary.withOpacity(0.45),
                               BlendMode.color),
-                          image: OptimizedCacheImageProvider(
+                          image: CachedNetworkImageProvider(
                               "https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/eureka.png?alt=media&token=9d806524-caa7-4d72-a006-e4ae6e578e0b",
                               maxHeight: 140))),
                 ),
@@ -57,7 +57,7 @@ class Profile extends HookWidget {
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage:
-                            OptimizedCacheImageProvider(user.avatar),
+                            CachedNetworkImageProvider(user.avatar),
                       ),
                     ),
                     Padding(
