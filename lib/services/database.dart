@@ -219,7 +219,7 @@ class Database {
             (question) => _questions.add(Question.fromMap(question.data())));
       });
       return _questions;
-    } on FirebaseException catch (err) {
+    } on FirebaseException {
       rethrow;
     }
   }
