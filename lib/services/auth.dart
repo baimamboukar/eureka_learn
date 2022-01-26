@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/utils/utils.dart';
@@ -41,17 +42,14 @@ class Authentication {
           .then((response) async {
         student.id = response.user!.uid;
         if (await _read(databaseProvider)
-            .createUser(id: response.user!.uid, student: student))
-          Fluttertoast.showToast(
-              msg: "Successful signed up", backgroundColor: Palette.success);
-        else
-          Fluttertoast.showToast(
-              msg: "error while signing up", backgroundColor: Palette.error);
+            .createUser(id: response.user!.uid, student: student)) {
+          BotToast.showText(text: "Successful signed up");
+        } else
+          BotToast.showText(text: "Something went wrong !");
       });
     } on FirebaseAuthException catch (err) {
-      Fluttertoast.showToast(
-          msg: err.message ?? "Something went wrong !",
-          backgroundColor: Palette.error);
+      // handle different firebase exceptions
+      BotToast.showText(text: "Errrrrrror up");
     }
   }
 
