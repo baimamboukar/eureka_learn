@@ -17,7 +17,6 @@ dependencies:
   awesome_notifications: ^0.6.19
   bot_toast: ^4.0.1
   card_swiper: ^1.0.2
-  circular_countdown_timer: ^0.2.0
   cloud_firestore: ^3.1.5
   cupertino_icons: ^1.0.2
   dio: null
@@ -32,13 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.17.0
-  flutter_platform_widgets: ^1.9.5
   flutter_riverpod: ^0.14.0+3
-  flutter_screen_lock: ^4.0.4+2
-  flutter_shimmer: ^2.1.2
-  flutterfire: ^0.0.1
   flutterfire_ui: ^0.3.0
-  fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
   get: ^4.6.1
   google_fonts: ^2.1.1
@@ -48,9 +42,8 @@ dependencies:
   infinite_scroll_pagination: ^3.1.0
   like_button: ^2.0.4
   line_icons: ^2.0.1
-  optimized_cached_image: ^3.0.0
+  cached_network_image: ^3.2.0
   percent_indicator: ^3.4.0
-  qr_flutter: ^4.0.0
   share_plus: ^2.1.4
   shared_preferences: ^2.0.6
   syncfusion_flutter_charts: ^19.3.44+1
