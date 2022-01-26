@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/providers.dart';
@@ -31,7 +32,7 @@ class AppDrawer extends HookWidget {
               CircleAvatar(
                   radius: 80,
                   backgroundImage:
-                      OptimizedCacheImageProvider(student.student.avatar))
+                      CachedNetworkImageProvider(student.student.avatar))
             ],
             decoration: BoxDecoration(gradient: Palette.linearGradient),
             margin: null,
