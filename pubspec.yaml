@@ -31,11 +31,10 @@ dependencies:
   firebase_storage: ^10.2.4
   flutter:
     sdk: flutter
-    generate: true
-  flutter_hooks: ^0.17.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^0.14.0+3
+  flutter_hooks: ^0.17.0
   flutter_shimmer: ^2.1.2
   flutterfire_ui: ^0.3.0
   font_awesome_flutter: ^9.1.0
@@ -69,6 +68,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
