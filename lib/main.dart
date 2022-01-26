@@ -107,7 +107,6 @@ Future<void> main() async {
 class Intellilearn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-
     final _appThemeState = watch(appThemeStateProvider.notifier);
 
     return GetMaterialApp(
