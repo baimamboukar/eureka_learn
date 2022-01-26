@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class ImageView extends StatelessWidget {
   final String imageURL;
@@ -23,7 +23,7 @@ class ImageView extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Container(child: OptimizedCacheImage(imageUrl: imageURL)),
+        child: Container(child: CachedNetworkImage(imageUrl: imageURL)),
       ),
     );
   }
