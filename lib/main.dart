@@ -1,6 +1,18 @@
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/quizz.dart';
@@ -10,18 +22,6 @@ import 'package:eureka_learn/utils/app_theme.dart';
 import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'services/local/shared_preferences.dart';
 
@@ -107,7 +107,6 @@ Future<void> main() async {
 class Intellilearn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final theme = watch(darkModeProvider);
 
     final _appThemeState = watch(appThemeStateProvider.notifier);
 
