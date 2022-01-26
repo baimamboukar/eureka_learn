@@ -1,7 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
-import 'package:eureka_learn/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
