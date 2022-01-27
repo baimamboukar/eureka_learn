@@ -23,6 +23,7 @@ import 'package:eureka_learn/utils/palette.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 
+import 'generated/l10n.dart';
 import 'services/local/shared_preferences.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -110,7 +111,8 @@ class Intellilearn extends ConsumerWidget {
     final _appThemeState = watch(appThemeStateProvider.notifier);
 
     return GetMaterialApp(
-      title: "intelli'learn",
+      supportedLocales: S.delegate.supportedLocales,
+      title: "Eureka",
       darkTheme: ThemeData.dark().copyWith(
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme)),
