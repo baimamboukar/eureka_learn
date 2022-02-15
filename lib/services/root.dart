@@ -2,7 +2,6 @@ import 'package:eureka_learn/main.dart';
 import 'package:eureka_learn/providers/auth_providers.dart';
 import 'package:eureka_learn/providers/database_providers.dart';
 import 'package:eureka_learn/screens/screens.dart';
-import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
