@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:eureka_learn/models/failure_model.dart';
 import 'package:eureka_learn/models/models.dart';
-import 'package:eureka_learn/models/question_model.dart';
 import 'package:eureka_learn/services/base_quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
