@@ -531,9 +531,7 @@ class _RegistrationInfosState extends State<RegistrationInfos> {
                           mail: _student.email,
                           pass: password.state,
                           student: _student)
-                      .then((response) {
-                  
-                  });
+                      .then((response) {});
                 },
                 child: Button(
                   label: "Continue...",
