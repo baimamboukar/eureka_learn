@@ -13,7 +13,7 @@ class Storage {
 
   static Future<String?> setDarkmode(bool mode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("themeMode", mode).then((value) => "done");
+    return prefs.setBool("themeMode", mode).then((value) => "done");
   }
 
   static Future<bool> getDarkmode() async {
