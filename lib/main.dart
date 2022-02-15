@@ -13,7 +13,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/screens/home_screen.dart';
 import 'package:eureka_learn/screens/quizz.dart';
 import 'package:eureka_learn/screens/screens.dart';
@@ -64,6 +63,7 @@ Future<void> main() async {
       provisional: false,
       sound: true,
     );
+    print(settings);
   }
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
