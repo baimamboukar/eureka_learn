@@ -1,5 +1,4 @@
 import 'package:eureka_learn/models/models.dart';
-import 'package:eureka_learn/models/paper_model.dart';
 
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
