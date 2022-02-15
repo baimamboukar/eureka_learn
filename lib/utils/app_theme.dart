@@ -12,7 +12,6 @@ class AppTheme {
   //Modify to add more colors here
   static ThemeData _lightThemeData = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColorBrightness: Brightness.light,
     primarySwatch: Colors.blue,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.grey.shade200,
@@ -27,7 +26,6 @@ class AppTheme {
   );
   static ThemeData _darkThemeData = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColorBrightness: Brightness.light,
     primarySwatch: Colors.blue,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.black12,
