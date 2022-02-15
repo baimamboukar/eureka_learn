@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:eureka_learn/providers/providers.dart';
-import 'package:eureka_learn/providers/quiz_subject_provider.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
