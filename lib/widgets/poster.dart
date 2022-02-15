@@ -10,11 +10,8 @@ import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -46,11 +43,8 @@ class _PosterState extends State<Poster> {
     final file = useProvider(fileProvider);
     // ignore: unused_local_variable
     final photos = useProvider(photoProvider);
-    final background = useProvider(backgroundColorProvider);
     final displayTags = useProvider(displayTagsProvider);
     final isBusy = useProvider(isBusyProvider);
-    final uploadTask = useProvider(uploadTaskProvider);
-    final downloadedURL = useProvider(downloadedURLProvider);
     final notifications = useProvider(notificationsProvider);
     void pickFile() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
