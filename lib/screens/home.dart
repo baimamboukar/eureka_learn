@@ -65,7 +65,8 @@ class NewsFeed extends HookWidget {
             },
             loading: () {
               return SliverToBoxAdapter(
-                  child: LottieBuilder.asset("loadfeed.json"));
+                  child:
+                      LottieBuilder.asset("assets/animations/loadfeed.json"));
             },
             error: (err, stack) =>
                 SliverToBoxAdapter(child: Center(child: Text(err.toString()))))
