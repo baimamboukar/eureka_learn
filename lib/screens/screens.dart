@@ -12,3 +12,4 @@ export 'topic_details.dart';
 export 'image_view.dart';
 export 'quizz_screen.dart';
 export 'quiz_intro.dart';
+export 'paper_view.dart';
