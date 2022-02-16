@@ -31,6 +31,7 @@ dependencies:
   firebase_storage: ^10.2.4
   flutter:
     sdk: flutter
+  flutter_cached_pdfview: ^0.4.1
   flutter_hooks: ^0.17.0
   flutter_localizations:
     sdk: flutter
