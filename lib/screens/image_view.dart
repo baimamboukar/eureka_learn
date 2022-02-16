@@ -23,7 +23,9 @@ class ImageView extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Container(child: CachedNetworkImage(imageUrl: imageURL)),
+        child: Container(
+            child: InteractiveViewer(
+                child: CachedNetworkImage(imageUrl: imageURL))),
       ),
     );
   }
