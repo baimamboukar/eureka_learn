@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eureka_learn/models/paper_model.dart';
+import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,9 +19,7 @@ class Paper extends HookWidget {
     final value = useProvider(valueProvider);
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/paper',
-            arguments:
-                "https://firebasestorage.googleapis.com/v0/b/eurekalearn-d63d4.appspot.com/o/documents%2F0750-AGEOGRAPHY3-1.pdf?alt=media&token=81cf5285-cbe0-4fb6-bdf2-11829baee7bb");
+        Get.to(() => PaperView());
       },
       child: FadeInDown(
         child: Align(
