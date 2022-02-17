@@ -9,6 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 final profileTabIndexProvider = StateProvider<int>((ref) => 0);
@@ -126,14 +127,6 @@ class Profile extends HookWidget {
                     ),
                   ],
                 ),
-                // NavigationRail(destinations: [
-                //   NavigationRailDestination(
-                //       icon: Icon(Iconsax.activity),
-                //       label: Text("performances")),
-                //   NavigationRailDestination(
-                //       icon: Icon(LineIcons.userAlt), label: Text("Infos"))
-                // ], selectedIndex: 0),
-
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
@@ -173,7 +166,6 @@ class Profile extends HookWidget {
                         .toList(),
                   ),
                 ),
-
                 IndexedStack(
                   index: profileTabIndex.state,
                   children: [
@@ -242,51 +234,56 @@ class Profile extends HookWidget {
                                   size: 18,
                                   bold: true)),
                         ),
-                        Container(
-                          height: 150.0,
-                          child: SfCircularChart(
-                            legend: Legend(
-                                isVisible: true,
-                                isResponsive: true,
-                                position: LegendPosition.right),
-                            series: <CircularSeries>[
-                              RadialBarSeries<QuizzModel, String>(
-                                  maximumValue: 10,
-                                  cornerStyle: CornerStyle.endCurve,
-                                  trackColor: Palette.light,
-                                  legendIconType: LegendIconType.circle,
-                                  dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      textStyle: Styles.designText(
-                                          color: Palette.dark,
-                                          size: 4,
-                                          bold: false)),
-                                  dataSource: user.quizzes,
-                                  sortingOrder: SortingOrder.descending,
-                                  sortFieldValueMapper: (datum, index) {
-                                    return datum.topic;
-                                  },
-                                  xValueMapper: (quizz, _) => quizz.subject,
-                                  yValueMapper: (quizz, _) => quizz.correct),
-                              PieSeries<QuizzModel, String>(
-                                  legendIconType: LegendIconType.circle,
-                                  dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      textStyle: Styles.designText(
-                                          color: Palette.dark,
-                                          size: 4,
-                                          bold: false)),
-                                  groupMode: CircularChartGroupMode.value,
-                                  dataSource: user.quizzes,
-                                  sortingOrder: SortingOrder.descending,
-                                  sortFieldValueMapper: (datum, index) {
-                                    return datum.topic;
-                                  },
-                                  xValueMapper: (quizz, _) => quizz.subject,
-                                  yValueMapper: (quizz, _) => quizz.correct)
-                            ],
+                        if (user.quizzes.length > 0)
+                          Container(
+                            height: 150.0,
+                            child: SfCircularChart(
+                              legend: Legend(
+                                  isVisible: true,
+                                  isResponsive: true,
+                                  position: LegendPosition.right),
+                              series: <CircularSeries>[
+                                RadialBarSeries<QuizzModel, String>(
+                                    maximumValue: 10,
+                                    cornerStyle: CornerStyle.endCurve,
+                                    trackColor: Palette.light,
+                                    legendIconType: LegendIconType.circle,
+                                    dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        textStyle: Styles.designText(
+                                            color: Palette.dark,
+                                            size: 4,
+                                            bold: false)),
+                                    dataSource: user.quizzes,
+                                    sortingOrder: SortingOrder.descending,
+                                    sortFieldValueMapper: (datum, index) {
+                                      return datum.topic;
+                                    },
+                                    xValueMapper: (quizz, _) => quizz.subject,
+                                    yValueMapper: (quizz, _) => quizz.correct),
+                                PieSeries<QuizzModel, String>(
+                                    legendIconType: LegendIconType.circle,
+                                    dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        textStyle: Styles.designText(
+                                            color: Palette.dark,
+                                            size: 4,
+                                            bold: false)),
+                                    groupMode: CircularChartGroupMode.value,
+                                    dataSource: user.quizzes,
+                                    sortingOrder: SortingOrder.descending,
+                                    sortFieldValueMapper: (datum, index) {
+                                      return datum.topic;
+                                    },
+                                    xValueMapper: (quizz, _) => quizz.subject,
+                                    yValueMapper: (quizz, _) => quizz.correct)
+                              ],
+                            ),
                           ),
-                        ),
+                        if (user.quizzes.length < 1)
+                          LottieBuilder.asset(
+                            "assets/animations/empty.json",
+                          ),
                       ],
                     ),
                     Text("Infos")
