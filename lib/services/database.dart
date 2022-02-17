@@ -97,13 +97,20 @@ class Database {
   //   });
   // }
 
-  Stream getUserPapers(Student user) {
+  Future<List<PaperModel>> getUserPapers(Student user) async {
+    List<PaperModel> papers = <PaperModel>[];
     try {
-      Stream papers = _firestore
+      await _firestore
           .collection("papers")
           .where("level", isEqualTo: user.level)
-          .snapshots();
-      return papers;
+          .where("subject", whereIn: user.subjects)
+          .get()
+          .then((snapshot) {
+        snapshot.docs.forEach((doc) {
+          PaperModel paper = PaperModel.fromDocumentSnapshot(doc.data());
+          papers.add(paper);
+        });
+      });
     } on FirebaseException catch (err) {
       Toast.toast(
           color: Palette.error,
@@ -112,6 +119,7 @@ class Database {
           icon: LineIcons.times);
       rethrow;
     }
+    return papers;
   }
 
   Future<void> getUserFeeds() async {
