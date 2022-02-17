@@ -159,6 +159,23 @@ class Profile extends HookWidget {
                                             bold: true),
                                       ),
                                     ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Visibility(
+                                          visible: label.index ==
+                                              profileTabIndex.state,
+                                          child: Container(
+                                            height: 5,
+                                            width: 25.0,
+                                            decoration: BoxDecoration(
+                                              color: Palette.primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          )),
+                                    ],
                                   )
                                 ],
                               ),
@@ -172,12 +189,19 @@ class Profile extends HookWidget {
                     StreamBuilder<List<PostModel>>(
                         stream: database.getFeedsBy(user.id!),
                         builder: (context, data) => data.hasData
-                            ? Column(
-                                children: [
-                                  ...data.data!.map((post) => Post(
-                                        model: post,
-                                      ))
-                                ],
+                            ? Visibility(
+                                visible: data.data!.length > 0,
+                                replacement: LottieBuilder.asset(
+                                  "assets/animations/nothing.json",
+                                  height: 200,
+                                ),
+                                child: Column(
+                                  children: [
+                                    ...data.data!.map((post) => Post(
+                                          model: post,
+                                        ))
+                                  ],
+                                ),
                               )
                             : Loading()),
                     Column(
@@ -190,42 +214,48 @@ class Profile extends HookWidget {
                                   size: 18,
                                   bold: true)),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 18.0, left: 10, right: 10),
-                            child: Container(
-                                height: 150.0,
-                                child: SfCartesianChart(
-                                  primaryXAxis: CategoryAxis(),
-                                  isTransposed: true,
-                                  enableAxisAnimation: true,
-                                  palette: [
-                                    Palette.primary,
-                                    Palette.secondary,
-                                    Palette.error,
-                                    Palette.success,
-                                    Palette.dark
-                                  ],
-                                  series: <ChartSeries>[
-                                    ColumnSeries<QuizzModel, String>(
-                                        dataSource: user.quizzes,
-                                        xAxisName: "Subject",
-                                        yAxisName: "Score",
-                                        isVisible: true,
-                                        xValueMapper: (QuizzModel quizz, _) =>
-                                            quizz.subject,
-                                        yValueMapper: (QuizzModel quizz, _) =>
-                                            quizz.correct),
-                                    LineSeries<QuizzModel, String>(
-                                        width: 1.5,
-                                        color: Palette.success,
-                                        dataSource: user.quizzes,
-                                        xValueMapper: (QuizzModel quizz, _) =>
-                                            quizz.subject,
-                                        yValueMapper: (QuizzModel quizz, _) =>
-                                            quizz.correct),
-                                  ],
-                                ))),
+                        if (user.quizzes.length > 0)
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 18.0, left: 10, right: 10),
+                              child: Container(
+                                  height: 150.0,
+                                  child: SfCartesianChart(
+                                    primaryXAxis: CategoryAxis(),
+                                    isTransposed: true,
+                                    enableAxisAnimation: true,
+                                    palette: [
+                                      Palette.primary,
+                                      Palette.secondary,
+                                      Palette.error,
+                                      Palette.success,
+                                      Palette.dark
+                                    ],
+                                    series: <ChartSeries>[
+                                      ColumnSeries<QuizzModel, String>(
+                                          dataSource: user.quizzes,
+                                          xAxisName: "Subject",
+                                          yAxisName: "Score",
+                                          isVisible: true,
+                                          xValueMapper: (QuizzModel quizz, _) =>
+                                              quizz.subject,
+                                          yValueMapper: (QuizzModel quizz, _) =>
+                                              quizz.correct),
+                                      LineSeries<QuizzModel, String>(
+                                          width: 1.5,
+                                          color: Palette.success,
+                                          dataSource: user.quizzes,
+                                          xValueMapper: (QuizzModel quizz, _) =>
+                                              quizz.subject,
+                                          yValueMapper: (QuizzModel quizz, _) =>
+                                              quizz.correct),
+                                    ],
+                                  ))),
+                        if (user.quizzes.length < 1)
+                          LottieBuilder.asset(
+                            "assets/animations/data.json",
+                            height: 200,
+                          ),
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text("Learning Performances",
@@ -282,7 +312,7 @@ class Profile extends HookWidget {
                           ),
                         if (user.quizzes.length < 1)
                           LottieBuilder.asset(
-                            "assets/animations/empty.json",
+                            "assets/animations/nothing.json",
                           ),
                       ],
                     ),
