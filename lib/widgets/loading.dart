@@ -1,5 +1,6 @@
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class Loading extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          CircularProgressIndicator(),
+          LottieBuilder.asset("assets/animations/loading.json"),
           SizedBox(
             height: 25.0,
           ),
