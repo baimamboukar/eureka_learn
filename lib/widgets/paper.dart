@@ -19,7 +19,9 @@ class Paper extends HookWidget {
     final value = useProvider(valueProvider);
     return GestureDetector(
       onTap: () {
-        Get.to(() => PaperView());
+        Get.to(() => PaperView(
+              paper: model,
+            ));
       },
       child: FadeInDown(
         child: Align(
