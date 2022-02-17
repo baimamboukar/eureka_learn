@@ -36,7 +36,7 @@ class Paper extends HookWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: ListTile(
-                  leading: Image.asset("assets/icons/png/pdf.svg",
+                  leading: Image.asset("assets/icons/png/pdf.png",
                       height: 50, width: 50, fit: BoxFit.cover),
                   title: Text("${model.type}",
                       overflow: TextOverflow.ellipsis,
