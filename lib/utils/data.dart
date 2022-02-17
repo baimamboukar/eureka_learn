@@ -150,7 +150,7 @@ List<SubjectBox> subjectsBox = [
       imagePath: "$imagesRosot/geography.png"),
   SubjectBox(
       color: Palette.randomColor(),
-      subject: "FurtherMaths",
+      subject: "Further Maths",
       imagePath: "$imagesRosot/maths.png"),
   SubjectBox(
       color: Palette.randomColor(),
