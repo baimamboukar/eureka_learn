@@ -182,7 +182,7 @@ class Home extends HookWidget {
                 NavItem(icon: Iconsax.activity, position: 0, label: "Feeds"),
                 NavItem(icon: LineIcons.school, position: 1, label: "Quizz"),
                 NavItem(
-                    icon: Iconsax.reserve, position: 2, label: "Ressources"),
+                    icon: Iconsax.wifi, position: 2, label: "Ressources"),
                 NavItem(icon: LineIcons.infinity, position: 3, label: "i-Space")
               ],
             ),
