@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,12 @@ final showSearchProvider = StateProvider<bool>((ref) => false);
 class ExplorePapers extends HookWidget {
   final String subject;
   final String classe;
-  const ExplorePapers({Key? key, required this.subject, required this.classe})
+  final List<PaperModel> papers;
+  const ExplorePapers(
+      {Key? key,
+      required this.subject,
+      required this.papers,
+      required this.classe})
       : super(key: key);
 
   @override
@@ -67,10 +73,10 @@ class ExplorePapers extends HookWidget {
                     IndexedStack(
                       index: activeTypesMenu.state,
                       children: [
-                        Papers(feed: "Sequence"),
-                        Papers(feed: "Exams"),
-                        Papers(feed: "Quizz"),
-                        Papers(feed: "Mock"),
+                        Papers(feed: "Sequence", feedPapers: papers),
+                        Papers(feed: "Exams", feedPapers: papers),
+                        Papers(feed: "Quizz", feedPapers: papers),
+                        Papers(feed: "Mock", feedPapers: papers),
                       ],
                     )
                   ],
@@ -81,7 +87,9 @@ class ExplorePapers extends HookWidget {
 
 class Papers extends StatelessWidget {
   final String feed;
-  const Papers({Key? key, required this.feed}) : super(key: key);
+  final List<PaperModel> feedPapers;
+  const Papers({Key? key, required this.feed, required this.feedPapers})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +170,7 @@ class Papers extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0),
             child: Text("Papers you may like", style: Styles.subtitle),
           ),
-          for (int i = 0; i < papers.length; i++) Paper(model: papers[i]),
+          ...feedPapers.map((paper) => Paper(model: paper))
         ],
       ),
     ));
