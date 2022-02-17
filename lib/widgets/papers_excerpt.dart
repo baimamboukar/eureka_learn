@@ -24,6 +24,46 @@ class PapersExcerpt extends HookWidget {
       child: userPapers.when(
           data: (papers) => Column(
                 children: [
+                  const SizedBox(
+                    height: 50.0,
+                  ),
+                  Container(
+                      height: Screen.height(context) * 0.25,
+                      decoration: BoxDecoration(
+                        color: Palette.primary,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.elliptical(200, 50),
+                          bottomRight: Radius.elliptical(200, 50),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Stack(
+                                      children: [
+                                        Image.asset(
+                                            "assets/icons/png/group.png"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              height: 100.0,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                  color: Palette.error,
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                          ],
+                        ),
+                      )),
+                  const SizedBox(height: 50),
                   ...subjectsBox
                       .where((subject) =>
                           student.student.subjects.contains(subject.subject))
