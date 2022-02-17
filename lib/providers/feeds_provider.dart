@@ -8,3 +8,8 @@ final feedsProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
       .map((doc) => PostModel.fromDocumentSnapshot(doc.data()))
       .toList());
 });
+
+final papersProvider =
+    FutureProvider.autoDispose.family<List<PaperModel>, Student>(((ref, user) {
+  return ref.read(databaseProvider).getUserPapers(user);
+}));
