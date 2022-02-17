@@ -191,9 +191,11 @@ class Profile extends HookWidget {
                         builder: (context, data) => data.hasData
                             ? Visibility(
                                 visible: data.data!.length > 0,
-                                replacement: LottieBuilder.asset(
-                                  "assets/animations/nothing.json",
-                                  height: 200,
+                                replacement: Center(
+                                  child: LottieBuilder.asset(
+                                    "assets/animations/nothing.json",
+                                    height: 200,
+                                  ),
                                 ),
                                 child: Column(
                                   children: [
