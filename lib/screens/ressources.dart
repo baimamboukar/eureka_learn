@@ -32,7 +32,7 @@ class _RessourcesState extends State<Ressources> {
           ),
           TabBarView(
             children: [
-              PapersExcerpt(papers: papers),
+              PapersExcerpt(papersz: papers),
               NotesExcerpt(notes: notes),
               BookStore(),
             ],
