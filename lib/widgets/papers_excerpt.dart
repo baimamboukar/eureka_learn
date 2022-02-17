@@ -28,25 +28,35 @@ class PapersExcerpt extends HookWidget {
                       .where((subject) =>
                           student.student.subjects.contains(subject.subject))
                       .map((subject) {
-                    return Card(
-                      elevation: 0.0,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                          side: BorderSide(color: subject.color!, width: 3)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: ListTile(
-                            title: Text(subject.subject ?? "Subject",
-                                style: Styles.subtitle),
-                            subtitle: Text("80 papers"),
-                            leading: Image.asset(
-                              subject.imagePath ??
-                                  "assets/icons/png/geography.png",
-                              height: 35.0,
-                              width: 35.0,
-                            ),
-                            trailing: Icon(Iconsax.slider)),
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(ExplorePapers(
+                          subject: subject.subject ?? "unkown",
+                          papers: papers,
+                          classe: subject.subject ?? "unknow",
+                        ));
+                      },
+                      child: Card(
+                        elevation: 0.0,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.0),
+                            side: BorderSide(color: subject.color!, width: 3)),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: ListTile(
+                              title: Text(subject.subject ?? "Subject",
+                                  style: Styles.subtitle),
+                              subtitle: Text("80 papers"),
+                              leading: Image.asset(
+                                subject.imagePath ??
+                                    "assets/icons/png/geography.png",
+                                height: 35.0,
+                                width: 35.0,
+                              ),
+                              trailing: Icon(Iconsax.arrow_right)),
+                        ),
                       ),
                     );
                   })
