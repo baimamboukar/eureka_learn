@@ -23,7 +23,11 @@ class _RessourcesState extends State<Ressources> {
               labelColor: Palette.primary,
               unselectedLabelColor: Palette.dark,
               labelStyle: Styles.subtitle,
-              tabs: [Text("Papers"), Text("Notes"), Text("Books"),],
+              tabs: [
+                Text("Papers"),
+                Text("Notes"),
+                Text("Books"),
+              ],
             ),
           ),
           TabBarView(
