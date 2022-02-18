@@ -10,7 +10,7 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(TextSpan(
-        text: withIcon ? "eureka" : "",
+        text: "eureka",
         style: GoogleFonts.novaSlim(
           fontSize: 18,
           fontWeight: FontWeight.bold,
