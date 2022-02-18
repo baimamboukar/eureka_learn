@@ -1,4 +1,6 @@
+import 'package:eureka_learn/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Logo extends StatelessWidget {
   final bool withIcon;
@@ -8,16 +10,19 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(TextSpan(
-        text: withIcon ? "💡" : "",
-        style: TextStyle(fontSize: 22.0),
+        text: withIcon ? "eureka" : "",
+        style: GoogleFonts.novaSlim(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Palette.primary,
+        ),
         children: [
           TextSpan(
-              text: "Intelli'",
-              style: TextStyle(
-                  fontSize: size ?? 22.0,
-                  fontWeight: FontWeight.bold,
+              text: "learn'",
+              style: GoogleFonts.novaSlim(
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
                   color: Colors.amber)),
-          TextSpan(text: "learn"),
         ]));
   }
 }
