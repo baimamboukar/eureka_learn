@@ -27,64 +27,21 @@ class PapersExcerpt extends HookWidget {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  Container(
-                      height: Screen.height(context) * 0.25,
-                      decoration: BoxDecoration(
-                        color: Palette.primary,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.elliptical(200, 50),
-                          bottomRight: Radius.elliptical(200, 50),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 110.0,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          PaperBox(),
+                          PaperBox(),
+                          PaperBox(),
+                          PaperBox()
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Stack(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        children: [
-                                          Positioned(
-                                            left: 31.0,
-                                            top: 42.0,
-                                            child: const Text("Exams"),
-                                          ),
-                                           Positioned(
-                                            left: 31.0,
-                                            top: 42.0,
-                                            child: CircleAvatar()
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Image.asset(
-                                              "assets/icons/png/group.png",
-                                              height: 90,
-                                              width: 120,
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              height: 100.0,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  color: Palette.light,
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                          ],
-                        ),
-                      )),
+                    ),
+                  ),
                   const SizedBox(height: 50),
                   ...subjectsBox
                       .where((subject) =>
@@ -127,6 +84,54 @@ class PapersExcerpt extends HookWidget {
           loading: () =>
               LottieBuilder.asset("assets/animations/loadingeffect.json"),
           error: (err, trace) => const Text("err")),
+    );
+  }
+}
+
+class PaperBox extends StatelessWidget {
+  const PaperBox({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Stack(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  children: [
+                    Positioned(
+                      left: 35.0,
+                      top: 58.0,
+                      child: Text(
+                        "Exams",
+                        style: Styles.subtitle,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Image.asset(
+                        "assets/icons/png/group.png",
+                        height: 90,
+                        width: 120,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        height: 100.0,
+        width: 120,
+        decoration: BoxDecoration(
+            color: Palette.light, borderRadius: BorderRadius.circular(20)),
+      ),
     );
   }
 }
