@@ -17,33 +17,44 @@ class TipsBanner extends StatelessWidget {
             builder: DotSwiperPaginationBuilder(
                 color: Colors.grey, activeColor: Palette.primary, size: 6.0)),
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            color: Colors.grey.shade300,
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                children: [
-                  Text(tips.content),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Chip(
-                        backgroundColor: Palette.primary.withOpacity(0.5),
-                        side: BorderSide(
-                            color: Palette.primary.withOpacity(0.5),
-                            width: 0.60),
-                        label: Text(tips.subject),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
+          return Hacktitude(
+            model: tips,
           );
         },
         itemCount: 10,
         viewportFraction: 0.8,
         autoplayDelay: 2,
         autoplay: true);
+  }
+}
+
+class Hacktitude extends StatelessWidget {
+  final Tips model;
+  const Hacktitude({Key? key, required this.model}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey.shade300,
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          children: [
+            Text(model.content),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Chip(
+                  backgroundColor: Palette.primary.withOpacity(0.5),
+                  side: BorderSide(
+                      color: Palette.primary.withOpacity(0.5), width: 0.60),
+                  label: Text(model.subject),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
