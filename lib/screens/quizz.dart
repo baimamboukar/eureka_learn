@@ -102,7 +102,7 @@ class _QuizzState extends State<Quizz> {
                       .where((subject) =>
                           student.student.subjects.contains(subject.subject))
                       .toList();
-                  var _subject = subjectsBox[index];
+                  var _subject = subjects[index];
 
                   double scale = 1.0;
                   if (topContainer > 0.1) {
