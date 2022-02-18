@@ -8,24 +8,24 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Iconsax.folder_open),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.add_photo_alternate),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Center(
-        child: Container(
-            child: InteractiveViewer(
-                child: CachedNetworkImage(imageUrl: imageURL))),
+    return InteractiveViewer(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Iconsax.folder_open),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.add_photo_alternate),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: Center(
+          child: Container(child: CachedNetworkImage(imageUrl: imageURL)),
+        ),
       ),
     );
   }
