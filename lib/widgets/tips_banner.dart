@@ -35,23 +35,16 @@ class Hacktitude extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100.0,
       color: Colors.grey.shade300,
       child: Padding(
         padding: const EdgeInsets.all(18.0),
-        child: Column(
+        child: Stack(
           children: [
-            Text(model.content),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Chip(
-                  backgroundColor: Palette.primary.withOpacity(0.5),
-                  side: BorderSide(
-                      color: Palette.primary.withOpacity(0.5), width: 0.60),
-                  label: Text(model.subject),
-                )
-              ],
-            )
+            Text(
+                "The beautiful thing with learning is that no one can tell you what to do.",
+                style: Styles.designText(
+                    color: Palette.dark, size: 25, bold: false))
           ],
         ),
       ),
