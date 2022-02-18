@@ -11,15 +11,15 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(TextSpan(
         text: "eureka",
-        style: GoogleFonts.novaSlim(
+        style: GoogleFonts.novaOval(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: Palette.primary,
         ),
         children: [
           TextSpan(
-              text: "learn'",
-              style: GoogleFonts.novaSlim(
+              text: "learn",
+              style: GoogleFonts.novaOval(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   color: Colors.amber)),
