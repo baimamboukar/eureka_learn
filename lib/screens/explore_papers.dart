@@ -28,7 +28,7 @@ class ExplorePapers extends HookWidget {
     final showSearch = useProvider(showSearchProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explore $subject Papers", style: Styles.subtitle),
+        title: Text("$subject Papers", style: Styles.subtitle),
         bottom: PreferredSize(
           preferredSize: Size(Screen.width(context), 30.0),
           child: Padding(
