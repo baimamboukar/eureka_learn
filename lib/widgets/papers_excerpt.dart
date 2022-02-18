@@ -27,22 +27,27 @@ class PapersExcerpt extends HookWidget {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 110.0,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          PaperBox(),
-                          PaperBox(),
-                          PaperBox(),
-                          PaperBox()
-                        ],
-                      ),
+                  SizedBox(
+                    height: 110.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        PaperBox(
+                          name: "Exams",
+                        ),
+                        PaperBox(
+                          name: "GCE",
+                        ),
+                        PaperBox(
+                          name: "Tests",
+                        ),
+                        PaperBox(
+                          name: "Quizz",
+                        )
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
                   ...subjectsBox
                       .where((subject) =>
                           student.student.subjects.contains(subject.subject))
@@ -89,40 +94,40 @@ class PapersExcerpt extends HookWidget {
 }
 
 class PaperBox extends StatelessWidget {
-  const PaperBox({Key? key}) : super(key: key);
+  final String name;
+
+  const PaperBox({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(3.0),
       child: Container(
         child: Stack(
           children: [
             Align(
               alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Stack(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  children: [
-                    Positioned(
-                      left: 35.0,
-                      top: 58.0,
-                      child: Text(
-                        "Exams",
-                        style: Styles.subtitle,
-                      ),
+              child: Stack(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                children: [
+                  Positioned(
+                    left: 35.0,
+                    top: 55.0,
+                    child: Text(
+                      name,
+                      style: Styles.designText(
+                          color: Palette.primary, size: 20, bold: true),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Image.asset(
-                        "assets/icons/png/group.png",
-                        height: 90,
-                        width: 120,
-                      ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      "assets/icons/png/group.png",
+                      height: 90,
+                      width: 120,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -130,7 +135,11 @@ class PaperBox extends StatelessWidget {
         height: 100.0,
         width: 120,
         decoration: BoxDecoration(
-            color: Palette.light, borderRadius: BorderRadius.circular(20)),
+            color: Palette.light,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.elliptical(50, 20),
+              bottomRight: Radius.elliptical(50, 20),
+            )),
       ),
     );
   }
