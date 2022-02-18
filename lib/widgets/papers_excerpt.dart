@@ -45,11 +45,33 @@ class PapersExcerpt extends HookWidget {
                                 children: [
                                   Align(
                                     alignment: Alignment.center,
-                                    child: Stack(
-                                      children: [
-                                        Image.asset(
-                                            "assets/icons/png/group.png"),
-                                      ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Stack(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        children: [
+                                          Positioned(
+                                            left: 31.0,
+                                            top: 42.0,
+                                            child: const Text("Exams"),
+                                          ),
+                                           Positioned(
+                                            left: 31.0,
+                                            top: 42.0,
+                                            child: CircleAvatar()
+                                          ),
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Image.asset(
+                                              "assets/icons/png/group.png",
+                                              height: 90,
+                                              width: 120,
+                                            ),
+                                          ),
+                                          
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -57,7 +79,7 @@ class PapersExcerpt extends HookWidget {
                               height: 100.0,
                               width: 120,
                               decoration: BoxDecoration(
-                                  color: Palette.error,
+                                  color: Palette.light,
                                   borderRadius: BorderRadius.circular(20)),
                             ),
                           ],
