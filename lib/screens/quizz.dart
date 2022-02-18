@@ -43,6 +43,7 @@ class _QuizzState extends State<Quizz> {
   Widget build(BuildContext context) {
     final quizSubject = useProvider(quizSubjectProvider);
     final user = useProvider(studentControllerProvider);
+    final student = useProvider(studentControllerProvider.notifier);
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -97,6 +98,10 @@ class _QuizzState extends State<Quizz> {
                 physics: BouncingScrollPhysics(),
                 itemCount: subjectsBox.length,
                 itemBuilder: (BuildContext context, int index) {
+                  List<SubjectBox> subjects = subjectsBox
+                      .where((subject) =>
+                          student.student.subjects.contains(subject.subject))
+                      .toList();
                   var _subject = subjectsBox[index];
 
                   double scale = 1.0;
