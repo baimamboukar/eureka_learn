@@ -44,6 +44,9 @@ class _QuizzState extends State<Quizz> {
     final quizSubject = useProvider(quizSubjectProvider);
     final user = useProvider(studentControllerProvider);
     final student = useProvider(studentControllerProvider.notifier);
+    List<SubjectBox> subjects = subjectsBox
+        .where((subject) => student.student.subjects.contains(subject.subject))
+        .toList();
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -98,10 +101,6 @@ class _QuizzState extends State<Quizz> {
                 physics: BouncingScrollPhysics(),
                 itemCount: subjects.length,
                 itemBuilder: (BuildContext context, int index) {
-                  List<SubjectBox> subjects = subjectsBox
-                      .where((subject) =>
-                          student.student.subjects.contains(subject.subject))
-                      .toList();
                   var _subject = subjects[index];
 
                   double scale = 1.0;
