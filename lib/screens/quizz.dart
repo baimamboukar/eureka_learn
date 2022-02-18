@@ -96,7 +96,7 @@ class _QuizzState extends State<Quizz> {
             child: ListView.builder(
                 controller: scrollController,
                 physics: BouncingScrollPhysics(),
-                itemCount: subjectsBox.length,
+                itemCount: subjects.length,
                 itemBuilder: (BuildContext context, int index) {
                   List<SubjectBox> subjects = subjectsBox
                       .where((subject) =>
