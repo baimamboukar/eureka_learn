@@ -13,7 +13,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:eureka_learn/screens/home_screen.dart';
+import 'package:eureka_learn/screens/ispace.dart';
 import 'package:eureka_learn/screens/quizz.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
@@ -130,7 +130,7 @@ class Intellilearn extends ConsumerWidget {
 
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 
-List<Widget> _screens = [NewsFeed(), Quizz(), Ressources(), HomePage()];
+List<Widget> _screens = [NewsFeed(), Quizz(), Ressources(), Ispace()];
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class Home extends HookWidget {
@@ -181,8 +181,7 @@ class Home extends HookWidget {
               children: [
                 NavItem(icon: Iconsax.activity, position: 0, label: "Feeds"),
                 NavItem(icon: LineIcons.school, position: 1, label: "Quizz"),
-                NavItem(
-                    icon: Iconsax.wifi, position: 2, label: "Ressources"),
+                NavItem(icon: Iconsax.wifi, position: 2, label: "Ressources"),
                 NavItem(icon: LineIcons.infinity, position: 3, label: "i-Space")
               ],
             ),
