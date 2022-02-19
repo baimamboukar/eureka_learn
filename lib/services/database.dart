@@ -8,6 +8,7 @@ import 'package:eureka_learn/widgets/widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:translator/translator.dart';
 
 class Database {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
