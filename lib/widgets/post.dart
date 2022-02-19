@@ -139,7 +139,6 @@ class _PostState extends State<Post> {
                       likeCount: widget.model.likesCount,
                       likeCountAnimationType: LikeCountAnimationType.all,
                       onTap: (liked) async {
-                        await database.likePost(widget.model.id, liked);
                         return true;
                       },
                     ),
