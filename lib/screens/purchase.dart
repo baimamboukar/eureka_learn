@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class Purchase extends StatelessWidget {
   const Purchase({Key? key}) : super(key: key);
@@ -85,7 +86,15 @@ class Purchase extends StatelessWidget {
                             height: 20,
                           ),
                           GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return WebViewPlus(
+                                        initialUrl: "www.google.com/",
+                                      );
+                                    });
+                              },
                               child: LottieBuilder.asset(
                                   "assets/animations/prenium.json"))
                         ],
