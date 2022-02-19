@@ -129,8 +129,19 @@ class _PostState extends State<Post> {
                             size: 25.0,
                             color: liked ? Colors.amberAccent : Colors.grey);
                       },
+                      countBuilder: (count, liked, text) {
+                        return Text(
+                          "$count",
+                          style: Styles.designText(
+                              color: Palette.primary, size: 16.0, bold: false),
+                        );
+                      },
                       likeCount: widget.model.likesCount,
                       likeCountAnimationType: LikeCountAnimationType.all,
+                      onTap: (liked) async {
+                        await database.likePost(widget.model.id, liked);
+                        return true;
+                      },
                     ),
                     GestureDetector(
                       onTap: () => commentToggler.state = !commentToggler.state,
