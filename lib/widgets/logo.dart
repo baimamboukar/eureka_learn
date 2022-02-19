@@ -10,8 +10,8 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(TextSpan(
-        text: "eureka",
-        style: GoogleFonts.novaOval(
+        text: "Eureka",
+        style: GoogleFonts.waitingForTheSunrise (
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: Palette.primary,
@@ -19,7 +19,7 @@ class Logo extends StatelessWidget {
         children: [
           TextSpan(
               text: "learn",
-              style: GoogleFonts.novaOval(
+              style: GoogleFonts.novaSlim(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   color: Colors.amber)),
