@@ -30,13 +30,15 @@ class QuizRepository extends BaseQuizRepository {
         print("progress: $x / $y");
       });
 
-      print("response data index: ${response.data["data"]}");
-      print(response.runtimeType);
+      print("response data index: ${response.data}");
+      print(response.data.runtimeType);
       print("Code ${response.statusCode}");
       if (response.statusCode == 200) {
-        // final data = Map<String, dynamic>.from(response.data);
-        final results =
-            List<Map<String, dynamic>>.from(response.data['data'] ?? []);
+        final data = Map<String, dynamic>.from(response.data);
+        print("api respinse data: $data");
+        print("begining");
+        final results = List<Map<String, dynamic>>.from(data['data'] ?? []);
+        print("created");
         print("quizz set: $results");
         if (results.isNotEmpty) {
           print("returned data");
