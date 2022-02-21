@@ -8,6 +8,7 @@ final AutoDisposeFutureProvider<List<Question>>? quizQuestionsProvider =
     FutureProvider.autoDispose<List<Question>>(
   (ref) => ref.watch(quizRepositoryProvider).getQuestions(
       student: ref.watch(studentControllerProvider.notifier).student,
+      level: "medium",
       subject: ref.watch(quizSubjectProvider).state,
       numQuestions: 4),
 );
