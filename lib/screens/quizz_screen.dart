@@ -15,6 +15,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:html_character_entities/html_character_entities.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class QuizScreen extends HookWidget {
@@ -41,7 +42,7 @@ class QuizScreen extends HookWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(),
+              LottieBuilder.asset("assets/animations/loading.json"),
               const SizedBox(height: 20),
               Text(
                 "Loading quiz...",
