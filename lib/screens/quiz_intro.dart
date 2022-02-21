@@ -73,14 +73,14 @@ class QuizIntro extends HookWidget {
                   trailing: DropdownButton<String>(
                     underline: const SizedBox.shrink(),
                     value: difficulty.state,
-                    items: <String>["novice", "proficient", "expert"]
+                    items: <String>["novice", "medium", "expert"]
                         .map<DropdownMenuItem<String>>((String diff) {
                       return DropdownMenuItem<String>(
                         value: diff,
                         child: Text(
                           diff == "novice"
                               ? "$diff 🥉"
-                              : diff == "proficient"
+                              : diff == "medium"
                                   ? "$diff 🥈"
                                   : "$diff 🥇",
                           style: Styles.designText(
@@ -103,7 +103,7 @@ class QuizIntro extends HookWidget {
                     trailing: DropdownButton<String>(
                       underline: const SizedBox.shrink(),
                       value: quizzTopic.state,
-                      items: <String>["", "proficient", "expert"]
+                      items: <String>["novice", "medium", "expert"]
                           .map<DropdownMenuItem<String>>((String topic) {
                         return DropdownMenuItem<String>(
                           value: topic,
