@@ -30,7 +30,7 @@ class QuizScreen extends HookWidget {
       required this.numberOfQuestions});
   @override
   Widget build(BuildContext context) {
-    final quizQuestions = useProvider(questionsProvider);
+    final quizQuestions = useProvider(quizQuestionsProvider);
     final pageController = usePageController();
 
     return SafeArea(
