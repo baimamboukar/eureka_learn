@@ -176,6 +176,14 @@ List<SubjectBox> subjectsBox = [
       color: Palette.randomColor(),
       subject: "Csc",
       imagePath: "$imagesRosot/atom.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "ICT",
+      imagePath: "$imagesRosot/atom.png"),
+  SubjectBox(
+      color: Palette.randomColor(),
+      subject: "Computer Science",
+      imagePath: "$imagesRosot/atom.png"),
 ];
 
 List<PostModel> posts = [
