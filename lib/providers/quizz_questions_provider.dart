@@ -4,13 +4,12 @@ import 'package:eureka_learn/providers/providers.dart';
 import 'package:eureka_learn/services/quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final  quizQuestionsProvider =
-    FutureProvider.autoDispose<List<Question>>(
+final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
   (ref) => ref.watch(quizRepositoryProvider).getQuestions(
       student: ref.watch(studentControllerProvider.notifier).student,
-      level: "medium",
+      level: ref.watch(difficultyProvider).state,
       subject: ref.watch(quizSubjectProvider).state,
-      numQuestions: 4),
+      numQuestions: ref.watch(numberOfQuestionsProvider).state),
 );
 
 final questionsProvider = FutureProvider.autoDispose<List<Question>>((ref) =>
