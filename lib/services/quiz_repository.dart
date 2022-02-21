@@ -16,19 +16,20 @@ class QuizRepository extends BaseQuizRepository {
   QuizRepository(this._read);
 
   @override
-  Future<List<Question>> getQuestions({
-    required Student student,
-    int? numQuestions = 4,
-    required String subject,
-  }) async {
+  Future<List<Question>> getQuestions(
+      {required Student student,
+      int? numQuestions = 10,
+      required String subject,
+      required String level,
+      String? topic}) async {
     try {
       final response = await _read(dioProvider).get(
-          'http://intelliquizz.herokuapp.com/Biology/Advanced/3/',
+          'http://intelliquizz.herokuapp.com/$subject/$level/$numQuestions',
           onReceiveProgress: (x, y) {});
 
       if (response.statusCode == 200) {
         final data = Map<String, dynamic>.from(response.data);
-        final results = List<Map<String, dynamic>>.from(data["results"] ?? []);
+        final results = List<Map<String, dynamic>>.from(data["data"] ?? []);
         if (results.isNotEmpty) {
           return results.map((e) => Question.fromMap(e)).toList();
         }
