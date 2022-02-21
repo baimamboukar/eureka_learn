@@ -29,8 +29,10 @@ class QuizRepository extends BaseQuizRepository {
           onReceiveProgress: (x, y) {
         print("progress: $x / $y");
       });
-      print("response data index: ${response.data['data']}");
 
+      print("response data index: ${response.data["data"]}");
+      print(response.runtimeType);
+      print("Code ${response.statusCode}");
       if (response.statusCode == 200) {
         // final data = Map<String, dynamic>.from(response.data);
         final results =
