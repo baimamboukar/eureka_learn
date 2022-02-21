@@ -17,7 +17,7 @@ class QuizRepository extends BaseQuizRepository {
   @override
   Future<List<Question>> getQuestions(
       {required Student student,
-      int? numQuestions = 10,
+      int? numQuestions ,
       required String subject,
       required String level,
       String? topic}) async {
