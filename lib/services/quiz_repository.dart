@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:eureka_learn/models/models.dart';
 import 'package:eureka_learn/services/base_quiz_repository.dart';
@@ -24,20 +25,17 @@ class QuizRepository extends BaseQuizRepository {
     try {
       print(
           "mapping url:http://intelliquizz.herokuapp.com/$subject/$level/$numQuestions");
-      final response = await _read(dioProvider).get(
+      final Response response = await _read(dioProvider).get(
           "http://intelliquizz.herokuapp.com/$subject/$level/$numQuestions",
-          onReceiveProgress: (x, y) {
-        print("progress: $x / $y");
+          options: Options(
+              contentType: "application/json",
+              listFormat: ListFormat.csv), onReceiveProgress: (x, y) {
+        
       });
-
-      print("response data index: ${response.data}");
-      print(response.data.runtimeType);
-      print("Code ${response.statusCode}");
+      print("Data type: ${jsonDecode(response.data).runtimeType}");
       if (response.statusCode == 200) {
-        final data = Map<String, dynamic>.from(response.data);
-        print("api respinse data: $data");
-        print("begining");
-        final results = List<Map<String, dynamic>>.from(data['data'] ?? []);
+        final data = Map<String, dynamic>.from(jsonDecode(response.data));
+        final results = List<Map<String, dynamic>>.from(data["data"] ?? []);
         print("created");
         print("quizz set: $results");
         if (results.isNotEmpty) {
