@@ -91,7 +91,7 @@ class Purchase extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return WebViewPlus(
-                                        initialUrl: "www.google.com/",
+                                        initialUrl: "https://www.google.com",
                                       );
                                     });
                               },

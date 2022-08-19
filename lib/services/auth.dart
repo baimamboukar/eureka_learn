@@ -18,11 +18,11 @@ class Authentication {
       await _firebaseAuth
           .signInWithEmailAndPassword(email: mail, password: pass)
           .then((response) async {
-        if (await _read(databaseProvider).getUser(response.user!.uid))
-          BotToast.showText(text: "Successful signed up");
+        if (await _read(databaseProvider).getUser(response.user!.uid)) {}
+        //BotToast.showText(text: "Successful signed up");
       });
     } on FirebaseAuthException catch (err) {
-      BotToast.showText(text: "Successful signed up ${err.message}");
+      //BotToast.showText(text: "Successful signed up ${err.message}");
     }
   }
 
@@ -38,13 +38,13 @@ class Authentication {
         student.id = response.user!.uid;
         if (await _read(databaseProvider)
             .createUser(id: response.user!.uid, student: student)) {
-          BotToast.showText(text: "Successful signed up");
-        } else
-          BotToast.showText(text: "Something went wrong !");
+          //BotToast.showText(text: "Successful signed up");
+        }
+        // BotToast.showText(text: "Something went wrong !");
       });
     } on FirebaseAuthException {
       // handle different firebase exceptions
-      BotToast.showText(text: "Errrrrrror up");
+      // BotToast.showText(text: "Errrrrrror up");
     }
   }
 

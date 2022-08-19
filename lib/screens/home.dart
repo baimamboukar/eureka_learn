@@ -16,7 +16,7 @@ class NewsFeed extends HookWidget {
   Widget build(BuildContext context) {
     final database = useProvider(databaseProvider);
 
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await database.getUserFeeds();
     });
     final feedz = useProvider(feedsProvider);
