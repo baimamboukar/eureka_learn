@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "557552000377",
+    "project_id": "eurekalearn-d63d4",
+    "storage_bucket": "eurekalearn-d63d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557552000377:android:958927bd698e25453323a8",
+        "android_client_info": {
+          "package_name": "app.eurekalearn.anora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK9AsPIeCrV9eisQYsMthi-hGjdWMXxDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "557552000377-3ea5962vba1b1hkup12v204k0omrqgrm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.intellisoft.eureka"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557552000377:android:eb6c87c5ceb1f27d3323a8",
+        "android_client_info": {
+          "package_name": "com.eureka_learn.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557552000377-6rmlts1q6r7vpuqj0d7hps5o6m0amu35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eureka_learn.com",
+            "certificate_hash": "68e195492ebf59442f01127f7a62c3915d31943d"
+          }
+        },
+        {
+          "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK9AsPIeCrV9eisQYsMthi-hGjdWMXxDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "557552000377-3ea5962vba1b1hkup12v204k0omrqgrm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.intellisoft.eureka"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557552000377:android:33309cb1cc6949203323a8",
+        "android_client_info": {
+          "package_name": "com.example.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK9AsPIeCrV9eisQYsMthi-hGjdWMXxDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "557552000377-3ea5962vba1b1hkup12v204k0omrqgrm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.intellisoft.eureka"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
