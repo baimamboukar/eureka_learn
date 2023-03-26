@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "557552000377",
-    "project_id": "eurekalearn-d63d4",
-    "storage_bucket": "eurekalearn-d63d4.appspot.com"
+    "project_number": "23841223173",
+    "project_id": "eurekalearn-apps",
+    "storage_bucket": "eurekalearn-apps.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:557552000377:android:eb6c87c5ceb1f27d3323a8",
+        "mobilesdk_app_id": "1:23841223173:android:8ee3eca077f9557159e26c",
         "android_client_info": {
           "package_name": "com.eureka_learn.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "557552000377-s1bsmt19ec9rr1b0u1jmpd7pbe4383bd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.eureka_learn.com",
-            "certificate_hash": "68e195492ebf59442f01127f7a62c3915d31943d"
-          }
-        },
-        {
-          "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+          "client_id": "23841223173-s7u6mpa86c8kke8hhousa9mapmj407ad.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAK9AsPIeCrV9eisQYsMthi-hGjdWMXxDY"
+          "current_key": "AIzaSyBK8fx-vFDJyAItjRtVmu2NXXJ58G5XaeA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "557552000377-7ct62motb0vfcb0b5v7qvcg2c6865hb2.apps.googleusercontent.com",
+              "client_id": "23841223173-s7u6mpa86c8kke8hhousa9mapmj407ad.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

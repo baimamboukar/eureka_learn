@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -19,18 +15,16 @@ import 'package:eureka_learn/screens/quizz.dart';
 import 'package:eureka_learn/screens/screens.dart';
 import 'package:eureka_learn/services/services.dart';
 import 'package:eureka_learn/utils/app_theme.dart';
-import 'package:eureka_learn/utils/palette.dart';
-import 'package:eureka_learn/utils/utils.dart';
 import 'package:eureka_learn/widgets/widgets.dart';
 
 import 'generated/l10n.dart';
 import 'services/local/shared_preferences.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
-}
+//   print("Handling a background message: ${message.messageId}");
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,66 +34,66 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft
   ]);
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-        importance: NotificationImportance.High,
-        defaultPrivacy: NotificationPrivacy.Public,
-        criticalAlerts: true,
-        channelShowBadge: true,
-        playSound: true,
-        channelKey: 'posts',
-        channelName: 'Basic notifications',
-        channelDescription: 'Notification channel for basic tests',
-        defaultColor: Palette.primary,
-        ledColor: Colors.white)
-  ]);
-  if (Platform.isIOS) {
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: true,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    print(settings);
-  }
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          showWhen: true,
-          fullScreenIntent: true,
-          category: NotificationCategory.Social,
-          wakeUpScreen: true,
-          displayOnBackground: true,
-          displayOnForeground: true,
-          ticker: "Post alert",
-          id: 123412,
-          channelKey: 'posts',
-          title: message.notification?.title ?? 'No title',
-          body: message.notification?.body ?? 'No message',
-          bigPicture: message.notification?.android?.imageUrl ?? '',
-          notificationLayout: NotificationLayout.BigPicture,
-        ),
-        actionButtons: [
-          NotificationActionButton(
-              buttonType: ActionButtonType.InputField,
-              key: "FCM_NOTIFF",
-              label: "Let's see"),
-          NotificationActionButton(
-              buttonType: ActionButtonType.Default, label: "Like", key: "beta")
-        ]);
-    AwesomeNotifications().createNotificationFromJsonData(message.data);
-  });
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // AwesomeNotifications().initialize(null, [
+  //   NotificationChannel(
+  //       importance: NotificationImportance.High,
+  //       defaultPrivacy: NotificationPrivacy.Public,
+  //       criticalAlerts: true,
+  //       channelShowBadge: true,
+  //       playSound: true,
+  //       channelKey: 'posts',
+  //       channelName: 'Basic notifications',
+  //       channelDescription: 'Notification channel for basic tests',
+  //       defaultColor: Palette.primary,
+  //       ledColor: Colors.white)
+  // ]);
+  // if (Platform.isIOS) {
+  //   NotificationSettings settings = await messaging.requestPermission(
+  //     alert: true,
+  //     announcement: true,
+  //     badge: true,
+  //     carPlay: false,
+  //     criticalAlert: false,
+  //     provisional: false,
+  //     sound: true,
+  //   );
+  //   print(settings);
+  // }
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   AwesomeNotifications().createNotification(
+  //       content: NotificationContent(
+  //         showWhen: true,
+  //         fullScreenIntent: true,
+  //         category: NotificationCategory.Social,
+  //         wakeUpScreen: true,
+  //         displayOnBackground: true,
+  //         displayOnForeground: true,
+  //         ticker: "Post alert",
+  //         id: 123412,
+  //         channelKey: 'posts',
+  //         title: message.notification?.title ?? 'No title',
+  //         body: message.notification?.body ?? 'No message',
+  //         bigPicture: message.notification?.android?.imageUrl ?? '',
+  //         notificationLayout: NotificationLayout.BigPicture,
+  //       ),
+  //       actionButtons: [
+  //         NotificationActionButton(
+  //             buttonType: ActionButtonType.InputField,
+  //             key: "FCM_NOTIFF",
+  //             label: "Let's see"),
+  //         NotificationActionButton(
+  //             buttonType: ActionButtonType.Default, label: "Like", key: "beta")
+  //       ]);
+  //   AwesomeNotifications().createNotificationFromJsonData(message.data);
+  // });
 
-  AwesomeNotifications()
-      .actionStream
-      .listen((ReceivedNotification receivedNotification) {
-    print(receivedNotification.payload);
-  });
+  // AwesomeNotifications()
+  //     .actionStream
+  //     .listen((ReceivedNotification receivedNotification) {
+  //   print(receivedNotification.payload);
+  // });
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(ProviderScope(overrides: [
     sharedPreferencesProvider.overrideWithValue(sharedPreferences),
